@@ -1,70 +1,144 @@
 <!DOCTYPE html>
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Prototipo Web</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-        <style>
-        
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Prototipo Web</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        header {
 
-            nav{
+            background-color: #404040;
+        }
 
-                background-color:#404040;
-            }
-            footer{
-              
-                background-color:#BFBFBF;
+        footer {
 
-            }
+            background-color: #BFBFBF;
 
-            ul li a{
+        }
 
-                color: antiquewhite;
-            }
+        ul li a {
 
-           
-        
-        </style>
-    </head>
-    <body>
-        <header>          
-            <nav>
-                <img src="img\Run to Win Logo.png" alt="">   
-                <ul>
-                    <li> <a href="#">Inicio</a></li>
-                    <li> <a href="#">Que ofrecemos</a></li>
-                    <li> <a href="#">Suscripcion</a></li>
-                    <li> <a href="#">Area personal</a></li>
-                </ul>
-            </nav>
-        </header>
+            color: antiquewhite;
+        }
 
-        <div>
+        nav {
 
-            <img src="img\run-to-win-fondo.png" alt="" height="600" width="1800">
+            float: right;
+        }
 
-        </div>
+        div{
 
-        <div>
+            background-color: #F2E9E9;
+        }
+    </style>
+</head>
 
-            <p>Run to Win es la plataforma definitiva para alcanzar tus objetivos running. Si veias imposible correr una marathon, o hacer un trail exigente es que todavía no conoces nuestros servicios.
-                Nuestros algoritmos han sido desarrollados gracias al trabajo de médicos, deportistas de élite y los mejores dietistas deportivos. 
-            </p>
+<body>
+    <header>
+        <img src="img\Run to Win Logo.png" alt="">
+        <nav>
+            <ul>
+                <li> <a href="#">Inicio</a></li>
+                <li> <a href="#">Que ofrecemos</a></li>
+                <li> <a href="#">Suscripcion</a></li>
+                <li> <a href="#">Area personal</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        </div>
+    <div>
+        <img src="img\run-to-win-fondo.png" alt="" width="100%">
+    </div>
 
-        <footer>
-            <p>&copy; 2019 Run to Win</p>
-            <ol>
-                <li><a href="/acerca-de">Acerca de</a></li>
-                <li><a href="/conectar">Conectar</a></li>
-                <li><a href="/rrss">Redes Sociales</a></li>
-             </ol>
-        </footer>
+    <div>
+        <h1>¿QUE OFRECEMOS?</h1>
+        <p> <em>Run to Win</em> es la plataforma definitiva para alcanzar tus objetivos running. Si veias imposible
+            correr una marathon, o hacer un trail exigente es que todavía no conoces nuestros servicios.
+            Nuestros algoritmos han sido desarrollados por un equipo con los mejores médicos, nutricionistas y deportistas de élite.
+        </p>
+        <p>
+            Pon la ciencia de tu lado y logra tus objetivos.
+        </p>
+    </div>
 
-       
-    </body>
+    <div>
+        <h1>PLANES DE SUSCRIPCION</h1>
+
+        <table border="1px">
+            <tr>
+                <td>TARIFA BÁSICA</td>
+                <td>TARIFA PLUS</td>
+                <td>TARIFA PREMIUM</td>
+            </tr>
+            <tr>
+                <td>10€ al mes</td>
+                <td>18€ al mes</td>
+                <td>38€ al mes</td>
+            </tr>
+        </table>
+
+
+        <form action="">
+
+            <h1>FORMULARIO</h1>
+
+            <table>
+                <tr>
+                    <td>NOMBRE</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>DIRECCIÓN</td>
+                    <td><input type="text"></td>                  
+                </tr>
+                <tr>
+                    <td>CIUDAD</td>
+                    <td><input type="text"></td>                       
+                 </tr>
+                <tr>
+                    <td>PAÍS</td>
+                    <td><input type="text"></td>                  
+                 </tr>
+                 <tr>
+                     <td>ELIGE TU RETO</td>
+                     <td> <select>
+                            <option value="Maratón">Maratón</option>
+                            <option value="Media Maratón">Media Maratón</option>
+                            <option value="Trail">Trail</option>
+                            <option value="Duatlón">Duatlón</option>
+                            <option value="Triatlón">Triatlón</option>
+                          </select> </td>  
+                 </tr>
+            </table>
+
+            <input type="button" value="ENVIAR">
+
+        </form>
+
+    </div>
+
+    <div>
+
+        <h1>ÁREA PERSONAL</h1>
+        <p>User: <input type="text"> Password: <input type="text"> </p>
+
+        <img src="https://picsum.photos/200/300" alt="Foto personal">
+
+    </div>
+
+    <footer>
+        <p>&copy; 2019 Run to Win</p>
+        <ol>
+            <li><a href="/acerca-de">Acerca de</a></li>
+            <li><a href="/conectar">Conectar</a></li>
+            <li><a href="/rrss">Redes Sociales</a></li>
+        </ol>
+    </footer>
+
+
+</body>
+
 </html>
