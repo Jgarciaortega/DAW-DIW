@@ -1,0 +1,16 @@
+
+header{
+
+    background: gray;
+}
+
+
+@media(max-width:800px){
+
+    #logo{
+
+        size: 100%;
+    }
+
+}
+
