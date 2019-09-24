@@ -1,0 +1,52 @@
+
+html{
+
+    font: Arial;
+}
+
+
+header{
+
+    background-color: #404040;
+}
+
+#logo{
+
+    width:80%;
+}
+
+ul li a{
+
+    font-size: 1.5em ;
+    color: #F2E9E9;
+    text-decoration: none;
+      
+}
+
+footer{
+
+    background-color: #BFBFBF;
+}
+
+/*
+
+@media (min-width: 414px){
+
+ header{
+
+     background: gray;
+ }
+
+#logo{
+
+    width:10%;
+    
+}
+
+nav{
+
+    float: left;
+}
+
+
+}*/
