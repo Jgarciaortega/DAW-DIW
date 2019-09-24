@@ -14,17 +14,23 @@ header{
 
 #logo{
 
-    width:80%;
-    margin-left: 5%;
+    width:40%;
+    margin-left: 27%;
+}
+
+ul li {
+
+    
+    list-style: none;
+    
+      
 }
 
 ul li a{
 
-    font-size: 2em ;
+    font-size: 1.5em ;
     color: #F2E9E9;
     text-decoration: none;
-    
-      
 }
 
 iframe{
@@ -68,6 +74,8 @@ iframe{
     margin-left: 0%;
     
 }
+
+
 
 
 }
