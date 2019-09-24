@@ -7,20 +7,30 @@ html{
 
 header{
 
+    width: 100%;
     background-color: #404040;
+    float: left;
 }
 
 #logo{
 
     width:80%;
+    margin-left: 5%;
 }
 
 ul li a{
 
-    font-size: 1.5em ;
+    font-size: 2em ;
     color: #F2E9E9;
     text-decoration: none;
+    
       
+}
+
+iframe{
+
+    width: 90%;
+    margin-left: 5%;
 }
 
 footer{
@@ -28,25 +38,36 @@ footer{
     background-color: #BFBFBF;
 }
 
-/*
 
-@media (min-width: 414px){
+
+@media (min-width: 500px){
 
  header{
 
-     background: gray;
+    background-color: #404040;
  }
 
 #logo{
 
     width:10%;
+    float: left;
+    margin-left: 0%;
     
 }
 
 nav{
 
     float: left;
+    
+}
+
+iframe{
+
+    width: 40%;
+    height: 25em;
+    margin-left: 0%;
+    
 }
 
 
-}*/
+}
