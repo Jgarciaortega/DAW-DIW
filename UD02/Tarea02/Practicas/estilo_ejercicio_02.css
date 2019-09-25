@@ -1,0 +1,84 @@
+:root{
+
+    --html--bg--color: lightgray ;
+    --nav--a--fontColor: black;
+    --a--carro-url: "img/carro.svg";
+}
+
+body{
+
+    background: var(--html--bg--color);
+    font-family: sans-serif;
+
+}
+
+.navegacion{
+
+    list-style: none;
+    display: inline-block;
+    width: 
+    
+}
+
+
+h1{
+   
+    font-size: 2.4em;
+    text-align: center;
+    
+    
+}
+
+a{
+
+    text-decoration: none;
+    color: var(--nav--a--fontColor);
+    float: left;
+    margin: 6%;
+    font-size: 1.4em;
+    
+}
+
+a[rel='alternate']:after{
+
+    content:" Brexit";    
+}
+
+a[rel='next']:before{
+
+    content: url("img/noticias.svg");
+}
+
+
+a[rel='tag']:before{
+
+    content: url("img/carro.svg");
+}
+
+
+a[rel='bookmark']:before{
+
+    content: url("img/destacado.svg");
+    
+}
+
+a[rel='help']:before{
+
+    content: url("img/ayuda.svg");
+}
+
+a[rel='search']:before{
+
+    content: url("img/busqueda.svg");
+}
+
+a[rel='nofollow']:before{
+
+    content: url("img/documento.svg");
+}
+
+
+
+
+
+
