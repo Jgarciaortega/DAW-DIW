@@ -1,0 +1,67 @@
+
+:root{
+
+    --h2--color: red;
+    --p--selection: greenyellow;
+    
+}
+
+
+/* Selecciona el primer h2 que es precedido por un h1 */
+h1 + h2{
+
+    color:var(--h2--color);
+}
+
+/* Selecciona la primera letra de los h2 */
+h2::first-letter{
+
+    color:var(--h2--color);
+}
+
+/* Al seleccionar el texto del parrafo este le aplica el color indicado */
+p::selection{
+
+     color: var(--p--selection); 
+    
+}
+
+.item{
+
+    list-style: none;
+}
+
+.item::selection{
+
+    
+    color:var(--p--selection);
+}
+
+/* Afecta a los li que aparecen en posiciones pares (even) que son hijos de ul.
+ Hover = muestra al posar raton encima  */
+li:nth-child(even):hover::after{
+
+    content: "Alabado sea el Monstruo del Espagetti Volador";
+}
+
+/* Afecta a los li que aparecen en posiciones impares (odd) que son hijos de ul.
+ Hover = muestra al posar raton encima  */
+li:nth-child(odd):hover::before{
+    
+    content: "Satán !";
+    
+    
+}
+
+/* Afecta al tercer hijo li que aparece en la lista */
+li:nth-child(3){
+
+    color:var(--p--selection);
+}
+
+
+
+
+
+
+
