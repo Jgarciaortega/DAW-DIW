@@ -1,0 +1,73 @@
+
+:root{
+
+    /*COLOR INPUT*/
+    --input--bg--default: yellow;
+
+    /* INPUT INVALIDO */
+    --input--bg--invalid: red;
+
+    /* RADIO BOTÓN */
+    --input--radius--metric: 11px;
+
+    /* COLOR ENLACE */
+    --input--bg--nombre: blue;
+}
+
+body{
+
+    font-family: 'Grenze';
+    font-size: 1.4em;     
+}
+
+input{
+
+    background-color: var(--input--bg--default);
+}
+
+
+#nombre:invalid{
+
+background-color: var(--input--bg--invalid);
+
+}
+
+#nombre:target{
+
+background-color: var(--input--bg--nombre);
+}
+
+#puntosCordura:invalid{
+
+background-color: var(--input--bg--invalid);
+
+}
+
+#profesion{
+
+    border-radius: var(--input--radius--metric);
+    font-family: 'Grenze';
+
+}
+
+input[value="Crear Personaje"]{
+
+    text-transform: uppercase;
+    border-radius: var(--input--radius--metric);
+    border:none;
+    box-shadow: 2px 10px 15px 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
