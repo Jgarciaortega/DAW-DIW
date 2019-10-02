@@ -1,0 +1,88 @@
+:root{
+
+    --div--bg--color: lightgray;
+}
+
+
+body{
+
+    font-family: "Amatic SC";
+    font-size: 150%;
+    text-transform: uppercase;
+
+}
+
+li{
+
+    list-style: none;
+    padding-bottom: 4%;
+   
+}
+
+/* .header-right::after{
+
+    position: fixed;
+    content: url("cthulhu.svg"); 
+    width: 5px;
+    height: 5px;
+    transform: scale(0.1);
+    left: 50%;
+}  */
+
+a{
+    text-decoration: none;
+    color:green;
+    
+}
+
+header{
+
+    background: var(--div--bg--color);
+}
+
+.logo{
+
+    font-weight: bold;
+    color: black;   
+    padding-left: 2%;
+    padding-top: 2%;
+}
+
+article{
+    margin-left: 4%;
+    width: 55%;
+}
+
+.modulo{
+    
+   display: inline-block;
+   width: 29%;
+  
+}
+
+div:nth-child(even){
+
+    background: var(--div--bg--color);
+}
+
+h2{
+    font-size: 95%;
+    text-align: center;
+}
+
+
+
+
+@media (min-width: 700px){
+
+
+li{
+
+    display: inline;
+    margin:auto;
+}
+
+
+}
+
+
