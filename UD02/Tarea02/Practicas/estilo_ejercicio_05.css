@@ -19,15 +19,13 @@ li{
    
 }
 
-/* .header-right::after{
+.activo{
 
-    position: fixed;
-    content: url("cthulhu.svg"); 
-    width: 5px;
-    height: 5px;
-    transform: scale(0.1);
-    left: 50%;
-}  */
+    background-position: center;
+    background-image: url('cthulhu.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 
 a{
     text-decoration: none;
@@ -38,6 +36,7 @@ a{
 header{
 
     background: var(--div--bg--color);
+   
 }
 
 .logo{
@@ -76,10 +75,22 @@ h2{
 @media (min-width: 700px){
 
 
+header{
+
+    height: 100px;
+}
+
+ul{
+
+    margin-left: 67%;
+}
+
+
 li{
 
     display: inline;
     margin:auto;
+    padding: 3%;
 }
 
 
