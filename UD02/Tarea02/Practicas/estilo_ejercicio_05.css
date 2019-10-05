@@ -22,7 +22,7 @@ li{
 .activo{
 
     background-position: center;
-    background-image: url('cthulhu.svg');
+    background-image: url('img/cthulhu.svg');
     background-size: contain;
     background-repeat: no-repeat;
 }
