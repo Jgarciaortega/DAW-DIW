@@ -49,6 +49,14 @@ h6 {
 }
 
 
+.container{
+
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr;
+}
+
+
+
 /* Each item in our grid will contain numbers */
 
 .item {
@@ -65,4 +73,26 @@ h6 {
 
 .item p {
     margin: 0 0 5px 0;
+}
+
+.item2{
+
+    grid-column: span 3;
+}
+
+h1{
+
+    text-align: center;
+}
+
+#SealOfApproval{
+
+    background-image: url('cthulhu_approval.gif');
+    content: "";
+    background-size: 240px 240px;
+    bottom: 9px;
+    right: 9px;
+    position: fixed;
+    width: 150px;
+    height: 150px;
 }
