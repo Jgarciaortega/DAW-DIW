@@ -105,11 +105,9 @@ h1{
 
 
 
-
 #SealOfApproval{
 
     background-image: url('cthulhu_approval.gif');
-    content: "";
     background-size: 240px 240px;
     bottom: 9px;
     right: 9px;
