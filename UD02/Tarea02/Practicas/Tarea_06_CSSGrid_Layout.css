@@ -1,0 +1,68 @@
+:root {
+    --yellow: #ffc600;
+    --black: #272727;
+    --grey: #A1A1A1;
+}
+
+.container{
+
+    display: grid;
+    grid-template-columns: 2fr 4fr 2fr 4fr;
+    grid-gap: 20px;
+    
+}
+
+.item{
+
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.item2{
+
+    grid-column: span 3;
+}
+
+h1{
+
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.item:nth-child(odd){
+
+    background: var(--grey);
+}
+
+.item:nth-child(odd):hover{
+
+    box-shadow: 5px 10px var(--black) ;
+}
+
+.item:nth-child(odd):hover + div{
+
+    box-shadow: 5px 10px var(--black) ;
+} 
+
+
+#SealOfApproval{
+
+    /* Imagen */
+    background-image: url('img/cthulhu_approval.gif');
+
+    /* Tamaño del div */
+    width: 150px;
+    height: 150px;
+    
+    /* La imagen será más grande que el div para que no aparezca entera*/
+    background-size: 220px 220px;
+
+    /* La fijamos en los pixeles indicados del div */
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    
+    
+}
+
