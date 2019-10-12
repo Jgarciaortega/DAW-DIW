@@ -9,8 +9,7 @@
 .pagina{
 
     display:grid;
-    grid-template-columns: 250px 1fr 1fr 1fr;
-    row-gap: 5%;
+    grid-template-columns: 250px 1fr;
    
 }
 
@@ -56,7 +55,7 @@ main{
     row-gap: 25px;
 }
 
-.gallery__img{
+img{
 
     border: 1px solid white;
     box-shadow: 1px 2px 5px var(--yellow); 
@@ -67,4 +66,10 @@ main{
 img:target{
 
     box-shadow: 1px 15px 5px var(--img--shadow-selection);
+}
+
+a:visited{
+
+    color:blue;
+
 }
