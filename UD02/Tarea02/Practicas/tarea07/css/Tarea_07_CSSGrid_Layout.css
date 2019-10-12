@@ -1,0 +1,70 @@
+/*Colores*/
+:root {
+    --yellow: #ffc600;
+    --black: #272727;
+    --grey: #A1A1A1;
+    --img--shadow-selection: #008000;
+}
+
+.pagina{
+
+    display:grid;
+    grid-template-columns: 250px 1fr 1fr 1fr;
+    row-gap: 5%;
+   
+}
+
+header{
+
+    grid-column: span 4;
+   
+}
+
+footer{
+
+    grid-column: span 4;
+}
+
+h1{
+
+    text-align: center;
+    font-size: 250%;
+    margin-bottom: 5%;
+  
+}
+
+nav ul li a{
+
+    text-decoration: none;
+    font-size: 250%;;
+    
+    
+}
+
+li{
+
+    list-style: none;
+    box-shadow: 5px 5px 20px black;
+    margin-right: 13%;
+    margin-bottom: 5%;
+}
+
+main{
+
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 25px;
+}
+
+.gallery__img{
+
+    border: 1px solid white;
+    box-shadow: 1px 2px 5px var(--yellow); 
+
+}
+
+/* Aplica el estilo cuando se pulsa el enlace que esta anclado a su imagen correspondiente */
+img:target{
+
+    box-shadow: 1px 15px 5px var(--img--shadow-selection);
+}
