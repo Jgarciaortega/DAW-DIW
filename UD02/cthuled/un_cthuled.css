@@ -1,0 +1,34 @@
+:root{
+
+    --bg--camino: black;
+    
+
+}
+
+
+body{
+
+    display: grid;
+    justify-content: center;
+}
+
+
+.mapa{
+
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    width: 1100px;
+    height: 700px;
+    border: 1px solid black;
+}
+
+.camino{
+
+    background: var(--bg--camino);
+
+}
+
+
+
+
