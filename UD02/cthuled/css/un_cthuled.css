@@ -1,6 +1,7 @@
 :root{
 
     --bg--camino: black;
+    --bg--columna: #ffb833;
     
 }
 
@@ -12,24 +13,48 @@ body{
 }
 
 
-.mapa{
+#mapa{
 
     display: grid;
-    grid-template-columns: repeat(20, 1fr);
-    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(21, 1fr);
+    grid-template-rows: repeat(14, 1fr);
     width: 1100px;
     height: 700px;
-    border: 1px solid black;
+    
 }
 
 .camino{
 
     background: var(--bg--camino);
+    
+   
 
 }
 
+.columna{
 
+    background: var(--bg--columna);
+   
+    
+}
 
+.jugador{
+
+    background-image: url("../img/sonic.gif");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+} 
+
+.momia{
+
+    background-image: url("../img/eggman.png");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
 
 
 
