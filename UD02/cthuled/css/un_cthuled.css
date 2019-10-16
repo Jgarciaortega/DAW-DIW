@@ -26,28 +26,73 @@ body{
 .camino{
 
     background: var(--bg--camino);
-    
-   
 
 }
+
+
+.caminoPisado{
+
+    background-image: url("../img/pisadas.png");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+
+}
+
+
 
 .columna{
 
     background: var(--bg--columna);
    
-    
 }
 
-.jugador{
 
-    background-image: url("../img/sonic.gif");
+.sonicStatic{
+
+    background-image: url("../img/sonicStatic.png");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+
+}
+
+.sonicLeft{
+
+    background-image: url("../img/sonicLeft.gif");
     background-size: 100% 100%;
 	background-color:black; 	
 	background-blend-mode: lighten, normal;
     
 } 
 
-.momia{
+.sonicRight{
+
+    background-image: url("../img/sonicRight.gif");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+} 
+
+.sonicUp{
+
+    background-image: url("../img/sonicUp.gif");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+} 
+
+.sonicDown{
+
+    background-image: url("../img/sonicDown.gif");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+} 
+.eggmanStatic{
 
     background-image: url("../img/eggman.png");
     background-size: 100% 100%;
@@ -55,6 +100,43 @@ body{
 	background-blend-mode: lighten, normal;
     
 }
+
+.eggmanDown{
+
+    background-image: url("../img/eggmanDown.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.eggmanUp{
+
+    background-image: url("../img/eggmanUp.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.eggmanRight{
+
+    background-image: url("../img/eggmanRight.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.eggmanLeft{
+
+    background-image: url("../img/eggmanLeft.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
 
 
 
