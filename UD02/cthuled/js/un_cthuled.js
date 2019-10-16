@@ -17,6 +17,9 @@ var mapa = [
 
 ];
 
+//BOOLEAN PARA ABRIR PUERTA SALIDA
+var salida = true;
+
 //POSICION INICIAL JUGADOR
 var x = 8;
 var y = 0;
@@ -46,25 +49,36 @@ function recogerPulsacion(event) {
 
     let posJugador = document.getElementById(y + " " + x);
 
-    moverVillano();
+    // moverVillano();
 
     if (event == "ArrowDown") {
 
-        if (y < 13 && mapa[y+1][x] != 1) {
+        if (y < 13 && mapa[y + 1][x] != 2) {
 
             posJugador.classList.remove("sonic" + direccion);
-            posJugador.classList.add("caminoPisado");
+
+            if (salida) {
+
+                salida = false;
+
+            } else {
+
+                posJugador.classList.add("caminoPisado");
+
+            }
+
             y++;
             direccion = "Down";
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicDown");
+
 
         }
     }
 
     if (event == "ArrowUp") {
 
-        if (y > 1 && mapa[y-1][x] != 1) {
+        if (y > 1 && mapa[y - 1][x] != 2) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
@@ -73,13 +87,14 @@ function recogerPulsacion(event) {
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicUp");
 
+
         }
     }
 
     if (event == "ArrowRight") {
 
 
-        if (x < 20 && mapa[y][x+1] != 1) {
+        if (x < 20 && mapa[y][x + 1] != 2) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
@@ -94,7 +109,7 @@ function recogerPulsacion(event) {
 
     if (event == "ArrowLeft") {
 
-        if (x > 0 && mapa[y][x-1] != 1) {
+        if (x > 0 && mapa[y][x - 1] != 2) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
@@ -103,14 +118,104 @@ function recogerPulsacion(event) {
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicLeft");
 
+
+        }
+
+
+    }
+
+    //Marcamos a cada paso las columnas que rodeamos marcando su valor en la matriz
+    marcarColumna(y, x);
+
+}
+
+function marcarColumna(PosY, PosX) {
+
+    let hayCambio = false;
+
+
+    if (mapa[PosY][PosX + 1] == 1) {
+
+        mapa[PosY][PosX + 1] = 2;
+
+        comprobarColumna(PosY , PosX + 1);
+
+       
+
+    }
+
+
+    if (mapa[PosY][PosX - 1] == 1) {
+
+        mapa[PosY][PosX - 1] = 2;
+
+        comprobarColumna(PosY , PosX + 1);
+
+       
+    }
+
+
+    if (mapa[PosY + 1][PosX] == 1) {
+
+        mapa[PosY + 1][PosX] = 2;
+
+        comprobarColumna(PosY , PosX + 1);
+
+        
+
+    }
+
+
+    if (mapa[PosY - 1][PosX] == 1) {
+
+        mapa[PosY - 1][PosX] = 2;
+
+        comprobarColumna(PosY - 1 , PosX);
+
+       
+    }
+
+   
+}
+
+function comprobarColumna(PosY, PosX) {
+
+    let situacionVertical = "";
+    let situacionHorizontal = "";
+
+    if (PosY % 3 == 0){
+
+        situacionVertical = "abajo";
+
+    }else{
+
+        situacionVertical = "arriba";
+    }
+
+    if(PosX % 2 == 0){
+
+        situacionHorizontal = "centro";
+
+    }else{
+
+        if(PosX == 1 || PosX == 5 || PosX == 9 || PosX == 13 || PosX == 17){
+
+            situacionHorizontal = "izquierda";
+
+        }else{
+
+            situacionHorizontal = "derecha";
         }
 
     }
 
+    alert(situacionVertical + " " + situacionHorizontal);
+
+
 }
 
 
-function moverVillano(){
+function moverVillano() {
 
 
     // //ABAJO
@@ -123,12 +228,12 @@ function moverVillano(){
     // //ARRIBA
     // if (yV > 1 && mapa[y-1][x] != 1) {
 
-    
+
     // }
 
     // //DERECHA
     // if (xV < 20 && mapa[y][x+1] != 1) {
-    
+
     // }
 
     // //IZQUIERDA
@@ -137,9 +242,7 @@ function moverVillano(){
 
     // }
 
-
 }
-
 
 function crearMapa() {
 
@@ -150,39 +253,26 @@ function crearMapa() {
             imprimir(i, j, mapa);
         }
 
-
     }
-
 
     function imprimir(PosI, PosJ, mapa) {
 
         var newDiv = document.createElement("div");
         newDiv.setAttribute("id", PosI + " " + PosJ);
 
-        if (mapa[PosI][PosJ] == 0) {
+        if (PosI != 0) newDiv.classList.add("camino");
 
-            newDiv.classList.add("camino");
-        }
+        if (mapa[PosI][PosJ] == 1) newDiv.classList.add("columna");
 
-        if (mapa[PosI][PosJ] == 1) {
 
-            newDiv.classList.add("columna");
-        }
+        if (mapa[PosI][PosJ] == 2) newDiv.classList.add("sonicStatic");
 
-        if (mapa[PosI][PosJ] == 2) {
 
-            newDiv.classList.add("sonicStatic");
-        }
+        if (mapa[PosI][PosJ] == 3) newDiv.classList.add("eggmanStatic");
 
-        if (mapa[PosI][PosJ] == 3) {
-
-            newDiv.classList.add("eggmanStatic");
-        }
 
         document.getElementById("mapa").appendChild(newDiv);
 
     }
 
 }
-
-
