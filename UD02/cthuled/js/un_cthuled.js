@@ -132,37 +132,37 @@ function recogerPulsacion(event) {
 function marcarColumna(PosY, PosX) {
 
     let hayCambio = false;
+    let div;
 
 
     if (mapa[PosY][PosX + 1] == 1) {
 
         mapa[PosY][PosX + 1] = 2;
 
-        comprobarColumna(PosY , PosX + 1);
-
-       
+        comprobarColumna(PosY, PosX + 1);
+        cambiarColorColumna(PosY, PosX + 1);
+        //console.log("derecha" + PosY, PosX+1);
 
     }
-
 
     if (mapa[PosY][PosX - 1] == 1) {
 
         mapa[PosY][PosX - 1] = 2;
 
-        comprobarColumna(PosY , PosX + 1);
-
-       
+        comprobarColumna(PosY, PosX - 1);
+        cambiarColorColumna(PosY, PosX - 1);
+        //console.log("izquierda" + PosY, PosX-1);
     }
 
+    if (PosY < 13) {
 
-    if (mapa[PosY + 1][PosX] == 1) {
+        if (mapa[PosY + 1][PosX] == 1) {
 
-        mapa[PosY + 1][PosX] = 2;
+            mapa[PosY + 1][PosX] = 2;
 
-        comprobarColumna(PosY , PosX + 1);
-
-        
-
+            comprobarColumna(PosY + 1, PosX);
+            cambiarColorColumna(PosY + 1, PosX);
+        }
     }
 
 
@@ -170,48 +170,82 @@ function marcarColumna(PosY, PosX) {
 
         mapa[PosY - 1][PosX] = 2;
 
-        comprobarColumna(PosY - 1 , PosX);
+        comprobarColumna(PosY - 1, PosX);
+        cambiarColorColumna(PosY - 1, PosX);
 
-       
     }
 
-   
+
+}
+
+
+function cambiarColorColumna(y, x) {
+
+
+    div = document.getElementById(y + " " + x);
+    div.classList.remove("columna");
+    div.classList.add("columnaMarcada");
 }
 
 function comprobarColumna(PosY, PosX) {
 
-    let situacionVertical = "";
-    let situacionHorizontal = "";
+    let posicionamientoY = "";
+    let completa = false;
+    let y = PosY;
+    let x = PosX;
 
-    if (PosY % 3 == 0){
+    /**Comprobacion posicionamientoY**/
 
-        situacionVertical = "abajo";
+    //1- Arriba
+    if (mapa[PosY + 1][PosX] == 2) {
 
-    }else{
+        posicionamientoY = "abajo";
+        let y = PosY++;
+        //console.log(y + " " + x);
+        //console.log("Abajo");
 
-        situacionVertical = "arriba";
+        //2- Abajo
+    } else if (mapa[PosY - 1][PosX] == 2) {
+
+        posicionamientoY = "arriba";
+        let y = PosY--;
+        //console.log(y + " " + x);
+        //console.log("Arriba");
     }
 
-    if(PosX % 2 == 0){
+    /**Comprobacion Horizontal**/
+    if (posicionamientoY == "abajo" || posicionamientoY == "arriba") {
 
-        situacionHorizontal = "centro";
+        //1- Centro
+        if (PosX % 2 == 0) {
 
-    }else{
+            completa = comprobar(posicionamientoY, "centro");
+            console.log("centro");
 
-        if(PosX == 1 || PosX == 5 || PosX == 9 || PosX == 13 || PosX == 17){
+        //2- Esquina
+        } else {
 
-            situacionHorizontal = "izquierda";
-
-        }else{
-
-            situacionHorizontal = "derecha";
+            completa = comprobar(posicionamientoY, "esquina");
+            console.log("esquina");
         }
 
     }
 
-    alert(situacionVertical + " " + situacionHorizontal);
+    return completa;
+
+}
 
 
+function comprobar(posicionY, posicionX){
+
+    if(posicionY == "arriba" && posicionX == "centro"){
+
+
+
+    }
+
+    comprobar(posicionamientoY, posicionamientoX){
+    
 }
 
 
