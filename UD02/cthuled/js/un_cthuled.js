@@ -17,6 +17,9 @@ var mapa = [
 
 ];
 
+//Elementos que deben contener ocultas las columnas
+var elementos = ["Llave","Pergamino","Villano","Esmeralda"];
+
 //BOOLEAN PARA ABRIR PUERTA SALIDA
 var salida = true;
 
@@ -53,7 +56,7 @@ function recogerPulsacion(event) {
 
     if (event == "ArrowDown") {
 
-        if (y < 13 && mapa[y + 1][x] != 2) {
+        if (y < 13 && mapa[y + 1][x] != 1) {
 
             posJugador.classList.remove("sonic" + direccion);
 
@@ -71,14 +74,14 @@ function recogerPulsacion(event) {
             direccion = "Down";
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicDown");
-
+            mapa[y][x] = 4;
 
         }
     }
 
     if (event == "ArrowUp") {
 
-        if (y > 1 && mapa[y - 1][x] != 2) {
+        if (y > 1 && mapa[y - 1][x] != 1) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
@@ -86,6 +89,7 @@ function recogerPulsacion(event) {
             direccion = "Up";
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicUp");
+            mapa[y][x] = 4;
 
 
         }
@@ -94,7 +98,7 @@ function recogerPulsacion(event) {
     if (event == "ArrowRight") {
 
 
-        if (x < 20 && mapa[y][x + 1] != 2) {
+        if (x < 20 && mapa[y][x + 1] != 1) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
@@ -102,14 +106,14 @@ function recogerPulsacion(event) {
             direccion = "Right";
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicRight");
-
+            mapa[y][x] = 4;
 
         }
     }
 
     if (event == "ArrowLeft") {
 
-        if (x > 0 && mapa[y][x - 1] != 2) {
+        if (x > 0 && mapa[y][x - 1] != 1) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
@@ -117,166 +121,19 @@ function recogerPulsacion(event) {
             direccion = "Left";
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicLeft");
+            mapa[y][x] = 4;
 
-
-        }
-
-
-    }
-
-    //Marcamos a cada paso las columnas que rodeamos marcando su valor en la matriz
-    marcarColumna(y, x);
-
-}
-
-function marcarColumna(PosY, PosX) {
-
-    let hayCambio = false;
-    let div;
-
-
-    if (mapa[PosY][PosX + 1] == 1) {
-
-        mapa[PosY][PosX + 1] = 2;
-
-        comprobarColumna(PosY, PosX + 1);
-        cambiarColorColumna(PosY, PosX + 1);
-        //console.log("derecha" + PosY, PosX+1);
-
-    }
-
-    if (mapa[PosY][PosX - 1] == 1) {
-
-        mapa[PosY][PosX - 1] = 2;
-
-        comprobarColumna(PosY, PosX - 1);
-        cambiarColorColumna(PosY, PosX - 1);
-        //console.log("izquierda" + PosY, PosX-1);
-    }
-
-    if (PosY < 13) {
-
-        if (mapa[PosY + 1][PosX] == 1) {
-
-            mapa[PosY + 1][PosX] = 2;
-
-            comprobarColumna(PosY + 1, PosX);
-            cambiarColorColumna(PosY + 1, PosX);
-        }
-    }
-
-
-    if (mapa[PosY - 1][PosX] == 1) {
-
-        mapa[PosY - 1][PosX] = 2;
-
-        comprobarColumna(PosY - 1, PosX);
-        cambiarColorColumna(PosY - 1, PosX);
-
-    }
-
-
-}
-
-
-function cambiarColorColumna(y, x) {
-
-
-    div = document.getElementById(y + " " + x);
-    div.classList.remove("columna");
-    div.classList.add("columnaMarcada");
-}
-
-function comprobarColumna(PosY, PosX) {
-
-    let posicionamientoY = "";
-    let completa = false;
-    let y = PosY;
-    let x = PosX;
-
-    /**Comprobacion posicionamientoY**/
-
-    //1- Arriba
-    if (mapa[PosY + 1][PosX] == 2) {
-
-        posicionamientoY = "abajo";
-        let y = PosY++;
-        //console.log(y + " " + x);
-        //console.log("Abajo");
-
-        //2- Abajo
-    } else if (mapa[PosY - 1][PosX] == 2) {
-
-        posicionamientoY = "arriba";
-        let y = PosY--;
-        //console.log(y + " " + x);
-        //console.log("Arriba");
-    }
-
-    /**Comprobacion Horizontal**/
-    if (posicionamientoY == "abajo" || posicionamientoY == "arriba") {
-
-        //1- Centro
-        if (PosX % 2 == 0) {
-
-            completa = comprobar(posicionamientoY, "centro");
-            console.log("centro");
-
-        //2- Esquina
-        } else {
-
-            completa = comprobar(posicionamientoY, "esquina");
-            console.log("esquina");
         }
 
     }
 
-    return completa;
-
-}
-
-
-function comprobar(posicionY, posicionX){
-
-    if(posicionY == "arriba" && posicionX == "centro"){
-
-
-
-    }
-
-    comprobar(posicionamientoY, posicionamientoX){
     
-}
-
-
-function moverVillano() {
-
-
-    // //ABAJO
-    // if (yV < 13 && mapa[y+1][x] != 1) {
-
-
-
-    // }
-
-    // //ARRIBA
-    // if (yV > 1 && mapa[y-1][x] != 1) {
-
-
-    // }
-
-    // //DERECHA
-    // if (xV < 20 && mapa[y][x+1] != 1) {
-
-    // }
-
-    // //IZQUIERDA
-    // if (xV > 0 && mapa[y][x-1] != 1) {
-
-
-    // }
+    //Marcamos a cada paso las columnas que rodeamos marcando su valor en la matriz
+   // marcarCamino(y, x);
 
 }
+
+
 
 function crearMapa() {
 
@@ -293,12 +150,24 @@ function crearMapa() {
 
         var newDiv = document.createElement("div");
         newDiv.setAttribute("id", PosI + " " + PosJ);
+        let elemento = "";
 
         if (PosI != 0) newDiv.classList.add("camino");
 
-        if (mapa[PosI][PosJ] == 1) newDiv.classList.add("columna");
+        if (mapa[PosI][PosJ] == 1){
 
+            newDiv.classList.add("columna");
 
+            if(PosJ % 2 == 0 && PosI % 2 != 0){
+          
+                elemento = elegirElemento();
+                console.log(elemento);
+               newDiv.classList.add("columna" + elemento);
+
+            }
+                 
+        } 
+        
         if (mapa[PosI][PosJ] == 2) newDiv.classList.add("sonicStatic");
 
 
@@ -308,5 +177,21 @@ function crearMapa() {
         document.getElementById("mapa").appendChild(newDiv);
 
     }
+
+    
+    //console.table(mapa);
+
+}
+
+
+function elegirElemento(){
+
+    let aleatorio = Math.round(Math.random()*elementos.length);
+    let elemento = "";
+   
+    elemento = elementos[aleatorio]; 
+    elementos.splice(aleatorio,1);
+
+    return elemento;
 
 }

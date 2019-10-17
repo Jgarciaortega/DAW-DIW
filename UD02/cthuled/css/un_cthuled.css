@@ -41,12 +41,49 @@ body{
 }
 
 
-
 .columna{
 
     background: var(--bg--columna);
    
 }
+
+.columnaLlave{
+
+    background-image: url("../img/key.png");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.columnaPergamino{
+
+    background-image: url("../img/ring.png");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.columnaVillano{
+
+    background-image: url("../img/eggman.png");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.columnaEsmeralda{
+
+    background-image: url("../img/esmeralda.png");
+    background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+
 
 .columnaMarcada{
 
