@@ -227,11 +227,11 @@ function rodearColumna(PosY, PosX) {
     return completa;
 }
 
-
 function crearMapa() {
 
     let numColumna = 0;
     let cont1 = 0;
+    let contY = 2;
 
     for (let i = 0; i < mapa.length; i++) {
 
@@ -240,29 +240,19 @@ function crearMapa() {
             let newDiv = document.createElement("div");
             newDiv.setAttribute("id", i + " " + j);
             let elemento = "";
-    
-    
+      
             if (i != 0) newDiv.classList.add("camino");
     
-            if (mapa[i][j] == 1) {
-
-            // if (PosJ % 2 == 0 && PosI % 2 != 0) {
-
-            //     elemento = elegirElemento();
-
-            //     newDiv.classList.add("columna" + elemento);
-
-            // }
-    
+            if (mapa[i][j] == 1) {  
+                          
                 newDiv.classList.add("columna");
                 newDiv.classList.add("columna" + numColumna);
-
+                cont1++;
 
             }
     
             if (mapa[i][j] == 2) newDiv.classList.add("sonicStatic");
-    
-    
+        
             if (mapa[i][j] == 3) newDiv.classList.add("eggmanStatic");
     
     
@@ -284,5 +274,13 @@ function elegirElemento() {
     elementos.splice(aleatorio, 1);
 
     return elemento;
+
+     // if (PosJ % 2 == 0 && PosI % 2 != 0) {
+
+            //     elemento = elegirElemento();
+
+            //     newDiv.classList.add("columna" + elemento);
+
+            // }
 
 }
