@@ -18,7 +18,7 @@ var mapa = [
 ];
 
 //Elementos que deben contener ocultas las columnas
-var elementos = ["Llave","Pergamino","Villano","Esmeralda"];
+var elementos = ["Llave", "Pergamino", "Villano", "Esmeralda"];
 
 //BOOLEAN PARA ABRIR PUERTA SALIDA
 var salida = true;
@@ -75,6 +75,7 @@ function recogerPulsacion(event) {
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicDown");
             mapa[y][x] = 4;
+            //console.log("y= " + y + "x= " + x);
 
         }
     }
@@ -90,7 +91,7 @@ function recogerPulsacion(event) {
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicUp");
             mapa[y][x] = 4;
-
+            //console.log("y= " + y + "x= " + x);
 
         }
     }
@@ -107,7 +108,7 @@ function recogerPulsacion(event) {
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicRight");
             mapa[y][x] = 4;
-
+            //console.log("y= " + y + "x= " + x);
         }
     }
 
@@ -122,14 +123,73 @@ function recogerPulsacion(event) {
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicLeft");
             mapa[y][x] = 4;
-
+            //console.log("y= " + y + "x= " + x);
         }
 
     }
 
-    
+
+    comprobarColumnas();
+
     //Marcamos a cada paso las columnas que rodeamos marcando su valor en la matriz
-   // marcarCamino(y, x);
+    // marcarCamino(y, x);
+
+}
+
+function comprobarColumnas() {
+
+    for (let y = 1; y < 14; y += 3) {
+
+        for (let x = 1; x < 21; x += 4) {
+
+            rodearColumna(y, x);
+           
+        }
+    }
+
+    
+}
+
+function rodearColumna(PosY, PosX) {
+
+    let completa = false;
+    let cont = 0;
+
+    for (let x = 0; x < 4;  x++, PosX++) {
+        
+        console.log("y=" + PosY + "x=" + PosX);
+       //if(mapa[PosY][PosX] == 4) cont++;
+    }
+    PosX--;
+    PosY++;
+   // console.log("cambio1");
+    for(let y = 0; y < 3; y ++, PosY++){
+
+         console.log("y=" + PosY + "x=" + PosX);  
+       // if(mapa[PosY][PosX] == 4) cont++;
+        
+     }
+     PosY--;
+     PosX--;
+     
+    //console.log("cambio2");
+     for (let x = 0; x < 4; x++, PosX--) {
+
+        console.log("y=" + PosY + "x=" + PosX);
+       //if(mapa[PosY][PosX] == 4) cont++;
+     }
+
+     PosX++;
+     PosY--;
+
+     //console.log("cambio3");
+
+     for(let y = 0; y < 3; y ++, PosY--){
+
+         console.log("y=" + PosY + "x=" + PosX);
+        //if(mapa[PosY][PosX] == 4) cont++;
+     }
+     console.log(cont);
 
 }
 
@@ -154,20 +214,20 @@ function crearMapa() {
 
         if (PosI != 0) newDiv.classList.add("camino");
 
-        if (mapa[PosI][PosJ] == 1){
+        if (mapa[PosI][PosJ] == 1) {
 
             newDiv.classList.add("columna");
 
-            if(PosJ % 2 == 0 && PosI % 2 != 0){
-          
+            if (PosJ % 2 == 0 && PosI % 2 != 0) {
+
                 elemento = elegirElemento();
-                console.log(elemento);
-               newDiv.classList.add("columna" + elemento);
+
+                newDiv.classList.add("columna" + elemento);
 
             }
-                 
-        } 
-        
+
+        }
+
         if (mapa[PosI][PosJ] == 2) newDiv.classList.add("sonicStatic");
 
 
@@ -178,19 +238,19 @@ function crearMapa() {
 
     }
 
-    
+
     //console.table(mapa);
 
 }
 
 
-function elegirElemento(){
+function elegirElemento() {
 
-    let aleatorio = Math.round(Math.random()*elementos.length);
+    let aleatorio = Math.round(Math.random() * elementos.length);
     let elemento = "";
-   
-    elemento = elementos[aleatorio]; 
-    elementos.splice(aleatorio,1);
+
+    elemento = elementos[aleatorio];
+    elementos.splice(aleatorio, 1);
 
     return elemento;
 
