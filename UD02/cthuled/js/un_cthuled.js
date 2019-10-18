@@ -17,6 +17,9 @@ var mapa = [
 
 ];
 
+//Columna descubierta = true cubierta = false;
+var estadoColumnas = [];
+
 //Elementos que deben contener ocultas las columnas
 var elementos = ["Llave", "Pergamino", "Villano", "Esmeralda"];
 
@@ -128,7 +131,7 @@ function recogerPulsacion(event) {
 
     }
 
-
+    //console.table(mapa);
     comprobarColumnas();
 
     //Marcamos a cada paso las columnas que rodeamos marcando su valor en la matriz
@@ -136,112 +139,140 @@ function recogerPulsacion(event) {
 
 }
 
+// Esta funcion genera las coordenadas que corresponden a las esquinas de las cajas  
 function comprobarColumnas() {
 
-    for (let y = 1; y < 14; y += 3) {
+    let completa;
 
-        for (let x = 1; x < 21; x += 4) {
+    for (let y = 1; y < 13; y += 3) {
 
-            rodearColumna(y, x);
-           
+        for (let x = 1; x < 20; x += 4) {
+
+            completa = false;
+
+            completa = rodearColumna(y, x);
+            estadoColumnas.push(completa);
+
         }
+       
     }
 
-    
+    console.table(estadoColumnas);
+    estadoColumnas = [];
+
 }
 
+//Con las coordenadas de las esquinas de la caja la rodea para comprobar pisadas (si 14 pisadas devuelve true )
 function rodearColumna(PosY, PosX) {
 
     let completa = false;
     let cont = 0;
 
-    for (let x = 0; x < 4;  x++, PosX++) {
-        
-        console.log("y=" + PosY + "x=" + PosX);
-       //if(mapa[PosY][PosX] == 4) cont++;
+    for (let x = 0; x < 4; x++) {
+
+        if (x < 3) PosX++;
+
+        if (mapa[PosY][PosX] == 4) {
+
+            cont++;
+
+        }
+
     }
-    PosX--;
+
     PosY++;
-   // console.log("cambio1");
-    for(let y = 0; y < 3; y ++, PosY++){
 
-         console.log("y=" + PosY + "x=" + PosX);  
-       // if(mapa[PosY][PosX] == 4) cont++;
-        
-     }
-     PosY--;
-     PosX--;
-     
-    //console.log("cambio2");
-     for (let x = 0; x < 4; x++, PosX--) {
+    for (let y = 0; y < 3; y++) {
 
-        console.log("y=" + PosY + "x=" + PosX);
-       //if(mapa[PosY][PosX] == 4) cont++;
-     }
+        if (y < 2) PosY++;
+        if (mapa[PosY][PosX] == 4) {
 
-     PosX++;
-     PosY--;
+            cont++;
+        }
+       
 
-     //console.log("cambio3");
+    }
 
-     for(let y = 0; y < 3; y ++, PosY--){
+    PosX--;
 
-         console.log("y=" + PosY + "x=" + PosX);
-        //if(mapa[PosY][PosX] == 4) cont++;
-     }
-     console.log(cont);
+    for (let x = 0; x < 4; x++) {
 
+        if (x < 3) PosX--;
+
+        if (mapa[PosY][PosX] == 4) {
+
+            cont++;
+        }
+
+    }
+
+    PosY--;
+
+
+    for (let y = 0; y < 3; y++) {
+
+        if (y < 2) PosY--;
+
+        if (mapa[PosY][PosX] == 4) {
+
+            cont++;
+        }
+    }
+
+    if (cont == 14) {
+
+        completa = true;
+    }
+
+    return completa;
 }
 
 
-
 function crearMapa() {
+
+    let numColumna = 0;
+    let cont1 = 0;
 
     for (let i = 0; i < mapa.length; i++) {
 
         for (let j = 0; j < mapa[0].length; j++) {
 
-            imprimir(i, j, mapa);
-        }
+            let newDiv = document.createElement("div");
+            newDiv.setAttribute("id", i + " " + j);
+            let elemento = "";
+    
+    
+            if (i != 0) newDiv.classList.add("camino");
+    
+            if (mapa[i][j] == 1) {
 
-    }
+            // if (PosJ % 2 == 0 && PosI % 2 != 0) {
 
-    function imprimir(PosI, PosJ, mapa) {
+            //     elemento = elegirElemento();
 
-        var newDiv = document.createElement("div");
-        newDiv.setAttribute("id", PosI + " " + PosJ);
-        let elemento = "";
+            //     newDiv.classList.add("columna" + elemento);
 
-        if (PosI != 0) newDiv.classList.add("camino");
+            // }
+    
+                newDiv.classList.add("columna");
+                newDiv.classList.add("columna" + numColumna);
 
-        if (mapa[PosI][PosJ] == 1) {
-
-            newDiv.classList.add("columna");
-
-            if (PosJ % 2 == 0 && PosI % 2 != 0) {
-
-                elemento = elegirElemento();
-
-                newDiv.classList.add("columna" + elemento);
 
             }
-
+    
+            if (mapa[i][j] == 2) newDiv.classList.add("sonicStatic");
+    
+    
+            if (mapa[i][j] == 3) newDiv.classList.add("eggmanStatic");
+    
+    
+            document.getElementById("mapa").appendChild(newDiv);
+    
+        }
+    
         }
 
-        if (mapa[PosI][PosJ] == 2) newDiv.classList.add("sonicStatic");
-
-
-        if (mapa[PosI][PosJ] == 3) newDiv.classList.add("eggmanStatic");
-
-
-        document.getElementById("mapa").appendChild(newDiv);
-
     }
-
-
-    //console.table(mapa);
-
-}
 
 
 function elegirElemento() {
