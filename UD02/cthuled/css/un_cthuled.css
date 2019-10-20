@@ -1,9 +1,20 @@
 :root{
 
     --bg--camino: black;
-    --bg--columna: #ffb833;
-    --bg--columnaMarcada : red;
+    --bg--body: gray;
+    --font--style: Verdana;
+
     
+}
+
+html{
+
+    text-align: left; 
+    font-family: Arial Black; 
+    font-weight: bold; 
+    font-size: 38px; 
+    color:red; 
+    text-shadow: 0 1px 0 #ddd, 0 2px 0 #ccc, 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 0 #acacac, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.3), 0 3px 5px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2), 0 20px 20px rgba(0,0,0,0.15);
 }
 
 
@@ -11,8 +22,36 @@ body{
 
     display: grid;
     justify-content: center;
+    background: var(--bg--body);
+    
+
 }
 
+#header{
+
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-rows: 80px;
+    margin-top: 2%;
+}
+
+#score{
+
+    padding-top: 3%;
+}
+
+#lifes{
+
+    padding-top: 11%;
+}
+
+
+.vidas{
+
+    background-image: url("../img/sonicLife.png"); 
+    background-size: 80% 80%; 
+    background-repeat: no-repeat	
+}
 
 #mapa{
 
@@ -30,66 +69,73 @@ body{
 
 }
 
-
 .caminoPisado{
 
     background-image: url("../img/pisadas.png");
-    background-size: 100% 100%;
+    background-size: 50% 50%;
 	background-color:black; 	
 	background-blend-mode: lighten, normal;
 
 }
 
-
-.columna{
-
-    background: var(--bg--columna);
-   
-}
 
 .columnaLlave{
 
-    background-image: url("../img/key.png");
+    background-image: url("../img/key.gif");
     background-size: 100% 100%;
 	background-color:black; 	
-	background-blend-mode: lighten, normal;
+    background-blend-mode: lighten, normal;
+    border: 1px solid gray;
     
 }
 
 .columnaPergamino{
 
-    background-image: url("../img/ring.png");
+    background-image: url("../img/ring.gif");
     background-size: 100% 100%;
 	background-color:black; 	
 	background-blend-mode: lighten, normal;
-    
+    border: 1px solid gray;
 }
 
 .columnaVillano{
 
-    background-image: url("../img/eggman.png");
+    background-image: url("../img/eggman.gif");
     background-size: 100% 100%;
 	background-color:black; 	
 	background-blend-mode: lighten, normal;
-    
+    border: 1px solid gray;
 }
 
 .columnaEsmeralda{
 
-    background-image: url("../img/esmeralda.png");
+    background-image: url("../img/esmeralda.gif");
     background-size: 100% 100%;
 	background-color:black; 	
-	background-blend-mode: lighten, normal;
+    background-blend-mode: lighten, normal;
+    border: 1px solid gray;
     
 }
 
+.columnaNada{
 
-
-.columnaMarcada{
-
-
-    background: var(--bg--columnaMarcada);
+   background-image: url("../img/negacion2.gif");
+   background-size: 100% 100%;
+	background-color:black; 	
+    background-blend-mode: lighten, normal;
+    border: 1px solid gray;
 }
+
+
+.columna{
+
+    background-image: url("../img/muro.png");
+   background-size: 100% 100%;
+	background-color:black; 	
+	background-blend-mode: lighten, normal;
+   
+}
+
 
 
 .sonicStatic{
@@ -176,6 +222,8 @@ body{
 	background-blend-mode: lighten, normal;
     
 }
+
+
 
 
 
