@@ -130,7 +130,7 @@ function recogerPulsacion(event) {
 
     }
 
-    //console.table(mapa);
+    
     comprobarColumnas();
 
 
@@ -148,6 +148,7 @@ function comprobarColumnas() {
             completa = false;
 
             completa = rodearColumna(y, x);
+                     
             estadoColumnas.push(completa);
 
         }
@@ -164,62 +165,81 @@ function rodearColumna(PosY, PosX) {
 
     let completa = false;
     let cont = 0;
+    
 
     for (let x = 0; x < 4; x++) {
 
-        if (x < 3) PosX++;
+        console.log("y:" + PosY + "x:" + PosX);
 
         if (mapa[PosY][PosX] == 4) {
-
+            
             cont++;
+           
 
         }
+
+        PosX++;
 
     }
 
     PosY++;
+    PosX--;
 
     for (let y = 0; y < 3; y++) {
 
-        if (y < 2) PosY++;
+        console.log("y:" + PosY + "x:" + PosX);
+
         if (mapa[PosY][PosX] == 4) {
 
             cont++;
+           //console.log(2);
         }
 
-
+        PosY++;
     }
 
     PosX--;
+    PosY--;
 
     for (let x = 0; x < 4; x++) {
 
-        if (x < 3) PosX--;
+        console.log("y:" + PosY + "x:" + PosX);
 
         if (mapa[PosY][PosX] == 4) {
 
             cont++;
+           //console.log(3);
         }
+
+        PosX--;
 
     }
 
     PosY--;
+    PosX++;
 
 
     for (let y = 0; y < 3; y++) {
 
-        if (y < 2) PosY--;
+        console.log("y:" + PosY + "x:" + PosX);
 
         if (mapa[PosY][PosX] == 4) {
 
             cont++;
+           //console.log(4);
         }
+
+        PosY--;
     }
 
     if (cont == 14) {
 
         completa = true;
+        //console.table(mapa);
     }
+
+    console.log(cont);
+
 
     return completa;
 }
