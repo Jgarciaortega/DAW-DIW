@@ -1,3 +1,5 @@
+
+
 var mapa = [
 
     [9, 9, 9, 9, 9, 9, 9, 9, 2, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
@@ -13,14 +15,12 @@ var mapa = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
     [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 ];
 
 //Columna descubierta = true cubierta = false;
 var estadoColumnas = [];
-
-
 
 //BOOLEAN PARA ABRIR PUERTA SALIDA
 var salida = true;
@@ -30,11 +30,11 @@ var x = 8;
 var y = 0;
 var direccion = "Static";
 
-//POSICION VILLANO
-var xV = 8;
-var yV = 9;
-var direccionV = "Left";
+//Array de villanos
+var villanos = [];
 
+//Nivel de pantalla
+var nivel = 1;
 
 
 window.onload = function () {
@@ -50,11 +50,11 @@ window.addEventListener("keydown", function (event) {
 });
 
 
+//setInterval(moverVillano,200);
+
 function recogerPulsacion(event) {
 
     let posJugador = document.getElementById(y + " " + x);
-
-    // moverVillano();
 
     if (event == "ArrowDown") {
 
@@ -136,6 +136,7 @@ function recogerPulsacion(event) {
 
 }
 
+
 // Esta funcion genera las coordenadas que corresponden a las esquinas de las cajas  
 function comprobarColumnas() {
 
@@ -169,13 +170,10 @@ function rodearColumna(PosY, PosX) {
 
     for (let x = 0; x < 4; x++) {
 
-        console.log("y:" + PosY + "x:" + PosX);
-
         if (mapa[PosY][PosX] == 4) {
             
             cont++;
            
-
         }
 
         PosX++;
@@ -187,12 +185,10 @@ function rodearColumna(PosY, PosX) {
 
     for (let y = 0; y < 3; y++) {
 
-        console.log("y:" + PosY + "x:" + PosX);
-
         if (mapa[PosY][PosX] == 4) {
 
             cont++;
-           //console.log(2);
+
         }
 
         PosY++;
@@ -203,12 +199,9 @@ function rodearColumna(PosY, PosX) {
 
     for (let x = 0; x < 4; x++) {
 
-        console.log("y:" + PosY + "x:" + PosX);
-
         if (mapa[PosY][PosX] == 4) {
 
             cont++;
-           //console.log(3);
         }
 
         PosX--;
@@ -221,12 +214,10 @@ function rodearColumna(PosY, PosX) {
 
     for (let y = 0; y < 3; y++) {
 
-        console.log("y:" + PosY + "x:" + PosX);
-
         if (mapa[PosY][PosX] == 4) {
 
             cont++;
-           //console.log(4);
+    
         }
 
         PosY--;
@@ -235,11 +226,8 @@ function rodearColumna(PosY, PosX) {
     if (cont == 14) {
 
         completa = true;
-        //console.table(mapa);
+
     }
-
-    console.log(cont);
-
 
     return completa;
 }
@@ -327,8 +315,6 @@ function crearMapa() {
 
             if (mapa[y][x] == 2) newDiv.classList.add("sonicStatic");
 
-            if (mapa[y][x] == 3) newDiv.classList.add("eggmanStatic");
-
 
             document.getElementById("mapa").appendChild(newDiv);
 
@@ -337,6 +323,8 @@ function crearMapa() {
     }
 
     asignarElementosEnTablero();
+    crearVillano(nivel);
+
 
 }
 
@@ -387,3 +375,34 @@ function elegirElemento(divsColumnas, elemento) {
     }
 
 }
+
+/****  CREACION DE VILLANOS *****/
+
+//Constructor de villanos
+function Villano (nombre = "" ,x = 0 , y = 0){
+
+    this.nombre = nombre;
+    this.posX = x;
+    this.posY = y;
+
+};
+
+
+function crearVillano(cantidadDeVillanos){
+
+    for (let i = 0; i < cantidadDeVillanos; i++){
+
+        let villano = new Villano("villano" + i, i , 13);
+        villanos.push(villano);
+
+    }
+
+    for(let i = 0; i < villanos.length; i++){
+
+       let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
+       div.classList.add("eggmanStatic");
+      
+    }
+
+}
+
