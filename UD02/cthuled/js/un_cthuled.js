@@ -50,7 +50,7 @@ window.addEventListener("keydown", function (event) {
 });
 
 
-//setInterval(moverVillano,200);
+setInterval(moverVillano, 500);
 
 function recogerPulsacion(event) {
 
@@ -77,7 +77,6 @@ function recogerPulsacion(event) {
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicDown");
             mapa[y][x] = 4;
-            //console.log("y= " + y + "x= " + x);
 
         }
     }
@@ -130,7 +129,7 @@ function recogerPulsacion(event) {
 
     }
 
-    
+
     comprobarColumnas();
 
 
@@ -149,7 +148,7 @@ function comprobarColumnas() {
             completa = false;
 
             completa = rodearColumna(y, x);
-                     
+
             estadoColumnas.push(completa);
 
         }
@@ -166,14 +165,14 @@ function rodearColumna(PosY, PosX) {
 
     let completa = false;
     let cont = 0;
-    
+
 
     for (let x = 0; x < 4; x++) {
 
         if (mapa[PosY][PosX] == 4) {
-            
+
             cont++;
-           
+
         }
 
         PosX++;
@@ -217,7 +216,7 @@ function rodearColumna(PosY, PosX) {
         if (mapa[PosY][PosX] == 4) {
 
             cont++;
-    
+
         }
 
         PosY--;
@@ -323,7 +322,7 @@ function crearMapa() {
     }
 
     asignarElementosEnTablero();
-    crearVillano(nivel);
+    crearVillanos(nivel);
 
 
 }
@@ -379,30 +378,90 @@ function elegirElemento(divsColumnas, elemento) {
 /****  CREACION DE VILLANOS *****/
 
 //Constructor de villanos
-function Villano (nombre = "" ,x = 0 , y = 0){
+function Villano(nombre = "", x = 0, y = 0, direccion = "") {
 
     this.nombre = nombre;
-    this.posX = x;
-    this.posY = y;
+    this.villanoX = x;
+    this.villanoY = y;
+    this.direccion = direccion;
 
 };
 
+//Creacion y colocacion en el tablero
+function crearVillanos(cantidadDeVillanos) {
 
-function crearVillano(cantidadDeVillanos){
+    for (let i = 0; i < cantidadDeVillanos; i++) {
 
-    for (let i = 0; i < cantidadDeVillanos; i++){
-
-        let villano = new Villano("villano" + i, i , 13);
+        let villano = new Villano("villano" + i, 1, 1, "Down");
+    
         villanos.push(villano);
+       // console.log(villanos);
 
     }
 
+    for (let i = 0; i < villanos.length; i++) {
+        console.log(villanos);
+        let div = document.getElementById(villanos[i].villanoY + " " + villanos[i].villanoX);
+        div.classList.add("eggmanStatic");
+
+    }
+
+}
+
+function moverVillano() {
+
+    
     for(let i = 0; i < villanos.length; i++){
 
-       let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
-       div.classList.add("eggmanStatic");
-      
+        let div1 = document.getElementById(villanos[i].villanoY + " " + villanos[i].villanoX);
+        eligeDireccion(villanos[i]);
+
+        let div2 = document.getElementById(villanos[i].villanoY + " " + villanos[i].villanoX);
+
+        modificarDiv(div1, div2, villanos[i].direccion);
+
     }
+
+}
+
+function eligeDireccion(villano) {
+
+  
+    if (villano.direccion == "Down" && villano.villanoY < 13 && mapa[villano.villanoY+1][villano.villanoX] != 1) {
+        
+       villano.villanoY++;
+       
+    }
+
+
+    if (villano.direccion == "Up" && villano.villanoY > 1 && mapa[villano.villanoY-1][villano.villanoX] != 1) {
+        
+       villano.villanoY--;
+
+    }
+
+    if (villano.direccion == "Right" && villano.villanoX < 20 && mapa[villano.villanoY][villano.villanoX+1] != 1) {
+       
+        villano.villanoX++;
+ 
+     }
+
+     if (villano.direccion == "Left" && villano.villanoX > 0 && mapa[villano.villanoY][villano.villanoX-1] != 1) {
+        
+        villano.villanoX--;
+ 
+     }
+
+
+    
+}
+
+function modificarDiv(div1, div2,direccion) {
+
+    div1.classList.remove("eggmanStatic");
+    div1.classList.remove("eggman"+ direccion);
+    div2.classList.add("eggman" + direccion);
+
 
 }
 
