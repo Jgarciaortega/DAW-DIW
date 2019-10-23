@@ -378,12 +378,13 @@ function elegirElemento(divsColumnas, elemento) {
 /****  CREACION DE VILLANOS *****/
 
 //Constructor de villanos
-function Villano(nombre = "", x = 0, y = 0, direccion = "") {
+function Villano(nombre = "", x = 0, y = 0, direccion = "", alerta = false) {
 
     this.nombre = nombre;
-    this.villanoX = x;
-    this.villanoY = y;
+    this.posX = x;
+    this.posY = y;
     this.direccion = direccion;
+    this.alerta = alerta;
 
 };
 
@@ -392,16 +393,15 @@ function crearVillanos(cantidadDeVillanos) {
 
     for (let i = 0; i < cantidadDeVillanos; i++) {
 
-        let villano = new Villano("villano" + i, 1, 1, "Down");
-    
+        let villano = new Villano("villano" + i, i, 1, "Down", false);
+
         villanos.push(villano);
-       // console.log(villanos);
 
     }
 
     for (let i = 0; i < villanos.length; i++) {
-        console.log(villanos);
-        let div = document.getElementById(villanos[i].villanoY + " " + villanos[i].villanoX);
+
+        let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
         div.classList.add("eggmanStatic");
 
     }
@@ -410,13 +410,13 @@ function crearVillanos(cantidadDeVillanos) {
 
 function moverVillano() {
 
-    
-    for(let i = 0; i < villanos.length; i++){
 
-        let div1 = document.getElementById(villanos[i].villanoY + " " + villanos[i].villanoX);
+    for (let i = 0; i < villanos.length; i++) {
+
+        let div1 = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
         eligeDireccion(villanos[i]);
 
-        let div2 = document.getElementById(villanos[i].villanoY + " " + villanos[i].villanoX);
+        let div2 = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
 
         modificarDiv(div1, div2, villanos[i].direccion);
 
@@ -426,40 +426,106 @@ function moverVillano() {
 
 function eligeDireccion(villano) {
 
-  
-    if (villano.direccion == "Down" && villano.villanoY < 13 && mapa[villano.villanoY+1][villano.villanoX] != 1) {
-        
-       villano.villanoY++;
-       
+    if (y == 1 || y == 4 || y == 7 || y == 10 || y == 13) {
+
+        if (y == villano.posY) {
+
+            if (x < villano.posX) {
+
+                villano.direccion = "Left";
+
+            } else {
+
+                villano.direccion = "Right";
+            }
+
+            villano.alerta = true;
+
+        }
+
+    }
+
+    if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20) {
+
+        if (x == villano.posX) {
+
+            if (y < villano.posY) {
+
+                villano.direccion = "Up";
+
+            } else {
+
+                villano.direccion = "Down";
+            }
+            villano.alerta = true;
+        }
     }
 
 
-    if (villano.direccion == "Up" && villano.villanoY > 1 && mapa[villano.villanoY-1][villano.villanoX] != 1) {
-        
-       villano.villanoY--;
+    if (villano.direccion == "Down") {
+
+        if ((villano.posY != 13) && (villano.posY + 1 == 4)) {
+
+            console.log("ok");
+
+        } else {
+
+            console.log("no ok");
+        }
+
+        if (villano.posY < 13 && mapa[villano.posY + 1][villano.posX] != 1) {
+
+            villano.posY++;
+        }
+
 
     }
 
-    if (villano.direccion == "Right" && villano.villanoX < 20 && mapa[villano.villanoY][villano.villanoX+1] != 1) {
-       
-        villano.villanoX++;
- 
-     }
+    if (villano.direccion == "Up") {
 
-     if (villano.direccion == "Left" && villano.villanoX > 0 && mapa[villano.villanoY][villano.villanoX-1] != 1) {
-        
-        villano.villanoX--;
- 
-     }
+        if (villano.posY > 1 && mapa[villano.posY - 1][villano.posX] != 1) {
+
+            villano.posY--;
+
+        }
 
 
-    
+
+    }
+    if (villano.direccion == "Right") {
+
+        if (villano.posX < 20 && mapa[villano.posY][villano.posX + 1] != 1) {
+
+            villano.posX++;
+        }
+
+
+
+    }
+
+    if (villano.direccion == "Left") {
+
+        if (villano.posX > 0 && mapa[villano.posY][villano.posX - 1] != 1) {
+
+            villano.posX--;
+
+        }
+
+
+    }
+
+
+
+
 }
 
-function modificarDiv(div1, div2,direccion) {
+function modificarDiv(div1, div2, direccion) {
 
     div1.classList.remove("eggmanStatic");
-    div1.classList.remove("eggman"+ direccion);
+    div1.classList.remove("eggmanUp");
+    div1.classList.remove("eggmanDown");
+    div1.classList.remove("eggmanLeft");
+    div1.classList.remove("eggmanRight");
     div2.classList.add("eggman" + direccion);
 
 
