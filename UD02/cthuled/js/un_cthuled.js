@@ -393,7 +393,7 @@ function crearVillanos(cantidadDeVillanos) {
 
     for (let i = 0; i < cantidadDeVillanos; i++) {
 
-        let villano = new Villano("villano" + i, i, 1, "Down", false);
+        let villano = new Villano("villano" + i, i, 4, "Right", false);
 
         villanos.push(villano);
 
@@ -426,11 +426,37 @@ function moverVillano() {
 
 function eligeDireccion(villano) {
 
-    if (y == 1 || y == 4 || y == 7 || y == 10 || y == 13) {
 
-        if (y == villano.posY) {
+    if (villano.direccion == "Up" || villano.direccion == "Down") {
 
-            if (x < villano.posX) {
+        if (mapa[villano.posY][villano.posX -1] == 0 || mapa[villano.posY][villano.posX -1] == 4 || 
+            mapa[villano.posY][villano.posX +1] == 0 || mapa[villano.posY][villano.posX +1] == 4) {
+
+            villano.direccion = direccionRandom(villano.direccion);
+
+        }
+
+    }
+
+    if (villano.direccion == "Right" || villano.direccion == "Left") {
+
+
+        if (mapa[villano.posY -1][villano.posX] == 0 || mapa[villano.posY -1][villano.posX] == 4 || 
+            mapa[villano.posY + 1][villano.posX] == 0 || mapa[villano.posY + 1][villano.posX] == 4) {
+
+            villano.direccion = direccionRandom(villano.direccion);
+            console.log("entra");
+            
+
+        }
+
+    }
+
+     if (y == 1 || y == 4 || y == 7 || y == 10 || y == 13) {
+
+         if (y == villano.posY) {
+
+             if (x < villano.posX) {
 
                 villano.direccion = "Left";
 
@@ -443,36 +469,27 @@ function eligeDireccion(villano) {
 
         }
 
-    }
+     }
 
-    if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20) {
+     if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20) {
 
-        if (x == villano.posX) {
+         if (x == villano.posX) {
 
-            if (y < villano.posY) {
+             if (y < villano.posY) {
 
-                villano.direccion = "Up";
+                 villano.direccion = "Up";
 
-            } else {
+             } else {
 
                 villano.direccion = "Down";
             }
-            villano.alerta = true;
-        }
-    }
-
+             villano.alerta = true;
+         }
+     }
 
     if (villano.direccion == "Down") {
 
-        if ((villano.posY != 13) && (villano.posY + 1 == 4)) {
-
-            console.log("ok");
-
-        } else {
-
-            console.log("no ok");
-        }
-
+       
         if (villano.posY < 13 && mapa[villano.posY + 1][villano.posX] != 1) {
 
             villano.posY++;
@@ -511,11 +528,7 @@ function eligeDireccion(villano) {
 
         }
 
-
     }
-
-
-
 
 }
 
@@ -528,6 +541,44 @@ function modificarDiv(div1, div2, direccion) {
     div1.classList.remove("eggmanRight");
     div2.classList.add("eggman" + direccion);
 
+}
+
+function direccionRandom(direccionPrevia) {
+
+    let direcciones = ["Left", "Right", "Up", "Down"];
+    let direccion = "";
+    let direccionNoValida = true;
+
+    while (direccionNoValida) {
+
+        direccion = direcciones[Math.floor(Math.random() * 4)];
+
+        if (direccion == "Left" && direccionPrevia != "Right") {
+
+            direccionNoValida = false;
+        }
+        if (direccion == "Right" && direccionPrevia != "Left") {
+
+            direccionNoValida = false;
+
+        }
+        if (direccion == "Up" && direccionPrevia != "Down") {
+
+            direccionNoValida = false;
+
+        }
+        if (direccion == "Down" && direccionPrevia != "Up") {
+
+            direccionNoValida = false;
+        }
+
+    }
+
+    return direccion;
 
 }
+
+ 
+
+
 
