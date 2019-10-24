@@ -37,10 +37,14 @@ var vidas = 4;
 var villanos;
 
 //Nivel de pantalla
-var nivel = 4;
+var nivel = 2;
 
 //Interruptor inicio movimiento villanos(no se acciona hasta que jugador mueve)
 var inicio = false;
+
+//Elementos que adquiere al desbloquear columnas
+var inventario = [];
+
 
 
 window.onload = function () {
@@ -141,8 +145,14 @@ function recogerPulsacion(event) {
 
     comprobarColumnas();
 
+    for (let i = 0; i < villanos.length; i++) {
 
-    if (vidas = 0) finDeJuego();
+        if (villanos[i].posX == x && villanos[i].posY == y) {
+
+            restarVida();
+        }
+
+    }
 
 }
 
@@ -253,9 +263,9 @@ function revisarEstilos(estadoColumnas) {
             columnasModificadas = document.getElementsByClassName("columna" + i);
             modificarEstilo(columnasModificadas);
 
+            
         }
     }
-
 }
 
 function modificarEstilo(columnasModificadas) {
@@ -264,8 +274,33 @@ function modificarEstilo(columnasModificadas) {
 
         columnasModificadas[i].classList.remove("columna");
 
+        if(columnasModificadas[i].classList.contains("columnaLlave")){
+
+            inventario[0] = "llave";
+        }
+
+        if(columnasModificadas[i].classList.contains("columnaPergamino")){
+
+            inventario[1] = "pergamino";
+        }
+
+        if(columnasModificadas[i].classList.contains("columnaVillano")){
+
+            let villano = crearVillano(0,0);
+            villanos.push = villano;
+            asignarPosicionVillano(villano);
+
+        }
+
+        if(columnasModificadas[i].classList.contains("columnaEsmeralda")){
+
+            inventario[2] = "esmeralda";
+        }
+
+
     }
 
+    console.log(inventario);
 }
 
 function crearCabecera() {
@@ -361,7 +396,7 @@ function crearMapa() {
     }
 
     asignarElementosEnTablero();
-    crearVillanos(nivel);
+    crearEjercito(nivel);
 
 
 }
@@ -380,8 +415,10 @@ function asignarElementosEnTablero() {
 
         let divsColumnas = document.getElementsByClassName("columna" + serieAleatoria[i]);
         elegirElemento(divsColumnas, elementos[i]);
-
+  
     }
+   
+
 }
 
 function generarSerieAleatoria() {
@@ -409,18 +446,17 @@ function elegirElemento(divsColumnas, elemento) {
     for (let i = 0; i < divsColumnas.length; i++) {
 
         divsColumnas[i].classList.add("columna" + elemento);
+   
     }
 
+    
 }
-
-
 
 /****  CREACION DE VILLANOS *****/
 
 //Constructor de villanos
-function Villano(nombre = "", x = 0, y = 0, direccion = "", alerta = false, memoriaCoordenada = 0) {
+function Villano( x = 0, y = 0, direccion = "", alerta = false, memoriaCoordenada = 0) {
 
-    this.nombre = nombre;
     this.posX = x;
     this.posY = y;
     this.direccion = direccion;
@@ -430,24 +466,37 @@ function Villano(nombre = "", x = 0, y = 0, direccion = "", alerta = false, memo
 };
 
 //Creacion y colocacion en el tablero
-function crearVillanos(cantidadDeVillanos) {
+function crearEjercito(cantidadDeVillanos) {
 
     villanos = [];
 
     for (let i = 0; i < cantidadDeVillanos; i++) {
 
-        let villano = new Villano("villano" + i, generarAleatorioX(), Math.floor(Math.random() * (13 - 8)) + 8, "Right", false, 0);
-
+        let villano = crearVillano(generarAleatorioX(),Math.floor(Math.random() * (13 - 8)) + 8);
         villanos.push(villano);
 
     }
 
     for (let i = 0; i < villanos.length; i++) {
 
-        let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
-        div.classList.add("eggmanStatic");
+        asignarPosicionVillano(villanos[i]);      
 
     }
+
+}
+
+function crearVillano(x, y){
+
+    let villano = new Villano(x, y , "Right", false, 0);
+
+    return villano;
+
+}
+
+function asignarPosicionVillano(villano){
+
+    let div = document.getElementById(villano.posY + " " + villano.posX);
+    div.classList.add("eggmanStatic");
 
 }
 
@@ -481,7 +530,6 @@ function activarVillanos() {
 
 function eligeDireccion(villano) {
 
-
     //BUSCA SOLO ENTRE COLUMNAS
     if (y == 1 || y == 4 || y == 7 || y == 10 || y == 13) {
 
@@ -493,7 +541,7 @@ function eligeDireccion(villano) {
                 villano.alerta = true;
                 villano.memoriaCoordenada = x;
 
-            } 
+            }
 
             if (x > villano.posX && villano.direccion != "Left") {
 
@@ -501,7 +549,7 @@ function eligeDireccion(villano) {
                 villano.alerta = true;
                 villano.memoriaCoordenada = x;
 
-            }       
+            }
 
         }
 
@@ -517,7 +565,7 @@ function eligeDireccion(villano) {
                 villano.alerta = true;
                 villano.memoriaCoordenada = x;
 
-            } 
+            }
 
             if (y > villano.posY && villano.direccion != "Up") {
 
@@ -525,7 +573,7 @@ function eligeDireccion(villano) {
                 villano.alerta = true;
                 villano.memoriaCoordenada = x;
 
-            }       
+            }
         }
     }
 
@@ -583,7 +631,7 @@ function eligeDireccion(villano) {
 
             if (villano.posX != villano.memoriaCoordenada && villano.posX != 20 && villano.posX != 0) {
 
-                if (villano.posX == 19 || villano.posX == 1 || villano.posX - villano.memoriaCoordenada == 1) {
+                if (villano.posX == 19 || villano.posX == 1 || Math.abs(villano.posX - x) == 1) {
 
                     moverVillano(villano, 1);
 
@@ -599,7 +647,7 @@ function eligeDireccion(villano) {
 
 
             } else {
-                moverVillano(villano, 2);
+                moverVillano(villano, 1);
                 villano.alerta = false;
             }
 
@@ -610,7 +658,7 @@ function eligeDireccion(villano) {
 
             if (villano.posY != villano.memoriaCoordenada && villano.posY != 13 && villano.posY != 1) {
 
-                if (villano.posY == 12 || villano.posY == 2 || villano.posY - villano.memoriaCoordenada == 1) {
+                if (villano.posY == 12 || villano.posY == 2 || Math.abs(villano.posY - y) == 1) {
 
                     moverVillano(villano, 1);
 
@@ -619,19 +667,15 @@ function eligeDireccion(villano) {
                     moverVillano(villano, 2);
                 }
 
-                console.log("villano " + villano.posY + " " + villano.posX);
-                console.log("vertical memoria " + villano.memoriaCoordenada);
             } else {
 
-                moverVillano(villano, 2);
+                moverVillano(villano, 1);
                 villano.alerta = false;
             }
 
         }
 
     }
-
-
 
     if (villano.posX == x && villano.posY == y) {
 
@@ -640,6 +684,7 @@ function eligeDireccion(villano) {
 
     }
 
+    if (vidas == 0) finDeJuego();
 
 }
 
@@ -658,7 +703,7 @@ function restarVida() {
     direccion = "Static";
     div.classList.add("sonicStatic");
 
-    div = document.getElementById(vidas);
+    div = document.getElementById(vidas - 1);
     console.log(vidas);
     div.classList.remove("vidas");
 
@@ -674,13 +719,14 @@ function restarVida() {
     }
 
 
-    crearVillanos(nivel);
+    crearEjercito(nivel);
     inicio = false;
 
     vidas--;
 }
 
 function finDeJuego() {
+
 
 
 }
@@ -740,8 +786,6 @@ function moverVillano(villano, avance) {
         }
 
     }
-
-
 
 }
 
