@@ -45,6 +45,12 @@ var inicio = false;
 //Elementos que adquiere al desbloquear columnas
 var inventario = [];
 
+//Interruptor villano descubierto
+var villanoDescubierto = false;
+
+//Puntuacion
+var score = 0;
+
 
 
 window.onload = function () {
@@ -277,30 +283,36 @@ function modificarEstilo(columnasModificadas) {
         if(columnasModificadas[i].classList.contains("columnaLlave")){
 
             inventario[0] = "llave";
+            sumarPuntuacion(100);
         }
 
         if(columnasModificadas[i].classList.contains("columnaPergamino")){
 
             inventario[1] = "pergamino";
+            sumarPuntuacion(100);
         }
 
         if(columnasModificadas[i].classList.contains("columnaVillano")){
 
-            let villano = crearVillano(0,0);
-            villanos.push = villano;
-            asignarPosicionVillano(villano);
+            if(!villanoDescubierto){
+        
+                let villano = crearVillano(1,1);
+                villanos.push(villano);
+                asignarPosicionVillano(villano);
+                villanoDescubierto = true;
 
+            }
+         
         }
 
         if(columnasModificadas[i].classList.contains("columnaEsmeralda")){
 
             inventario[2] = "esmeralda";
+            sumarPuntuacion(100);
         }
 
 
     }
-
-    console.log(inventario);
 }
 
 function crearCabecera() {
@@ -311,9 +323,7 @@ function crearCabecera() {
     let texto = "";
 
     divScore.setAttribute("id", "score");
-    texto = document.createTextNode("SCORE");
-    divScore.appendChild(texto);
-
+    
     divLevel.setAttribute("id", "level");
     texto = document.createTextNode("LEVEL " + nivel);
     divLevel.appendChild(texto);
@@ -498,6 +508,11 @@ function asignarPosicionVillano(villano){
     let div = document.getElementById(villano.posY + " " + villano.posX);
     div.classList.add("eggmanStatic");
 
+    for (let index = 0; index < villanos.length; index++) {
+        
+        console.log(villanos);
+    }
+
 }
 
 
@@ -513,6 +528,8 @@ function generarAleatorioX() {
 
 function activarVillanos() {
 
+    actualizarPuntuacion();
+
     if (inicio) {
 
         for (let i = 0; i < villanos.length; i++) {
@@ -525,6 +542,8 @@ function activarVillanos() {
             modificarDiv(div, div2, villanos[i].direccion);
 
         }
+
+        
     }
 }
 
@@ -641,11 +660,6 @@ function eligeDireccion(villano) {
 
                 }
 
-                console.log("villano " + villano.posY + " " + villano.posX);
-                console.log("horizontal memoria " + villano.memoriaCoordenada);
-
-
-
             } else {
                 moverVillano(villano, 1);
                 villano.alerta = false;
@@ -704,7 +718,6 @@ function restarVida() {
     div.classList.add("sonicStatic");
 
     div = document.getElementById(vidas - 1);
-    console.log(vidas);
     div.classList.remove("vidas");
 
     for (let i = 0; i < villanos.length; i++) {
@@ -822,6 +835,22 @@ function direccionRandom(direccionPrevia) {
 
     return direccion;
 
+}
+
+
+function sumarPuntuacion(cantidad){
+
+    score += cantidad;
+
+}
+
+function actualizarPuntuacion(){
+
+    let divScore = document.getElementById("score").innerText="SCORE " + score;
+/*
+    let texto = document.createTextNode(" " + score);
+    
+    divScore.appendChild(texto);*/
 }
 
 
