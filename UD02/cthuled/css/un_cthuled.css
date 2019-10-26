@@ -12,17 +12,21 @@ html{
     text-align: left; 
     font-family: Arial Black; 
     font-weight: bold; 
-    font-size: 38px; 
+    font-size: 40px; 
     color:red; 
     text-shadow: 0 1px 0 #ddd, 0 2px 0 #ccc, 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 0 #acacac, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.3), 0 3px 5px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2), 0 20px 20px rgba(0,0,0,0.15);
+    background-image: url("../img/fondo1.png"); 
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
+
+
 
 
 body{
 
     display: grid;
     justify-content: center;
-    background: var(--bg--body);
     
 
 }
@@ -31,7 +35,7 @@ body{
 
     display: grid;
     grid-template-columns: 3fr 2fr 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 80px;
+   grid-template-rows: 80px;
     margin-top: 2%;
 }
 
@@ -58,23 +62,31 @@ body{
     display: grid;
     grid-template-columns: repeat(21, 1fr);
     grid-template-rows: repeat(14, 1fr);
-    width: 1200px;
-    height: 700px;
+    width: 1400px;
+    height: 850px;
     
 }
 
 .camino{
 
-    background: var(--bg--camino);
+    background-image: url("../img/ring.png");
+    background-size: 100% 100%;
+	background-color:black; 	
+    background-blend-mode: lighten, normal;
+   
 
 }
 
 .caminoPisado{
 
-    background-image: url("../img/pisadas.png");
-    background-size: 100% 100%;
-	background-color:black; 	
-	background-blend-mode: lighten, normal;
+    background: var(--bg--camino);
+
+}
+
+.door{
+  
+	background-color:black; 	 
+    border: 4px solid rgb(77, 55, 55);
 
 }
 
@@ -83,7 +95,7 @@ body{
 
     background-image: url("../img/key.gif");
     background-size: 100% 100%;
-	background-color:black; 	
+	background-color: black; 	
     background-blend-mode: lighten, normal;
     border: 1px solid gray;
     
@@ -91,9 +103,9 @@ body{
 
 .columnaPergamino{
 
-    background-image: url("../img/ring.gif");
+    background-image: url("../img/arma.gif");
     background-size: 100% 100%;
-	background-color:black; 	
+	background-color:  black;
 	background-blend-mode: lighten, normal;
     border: 1px solid gray;
 }
@@ -102,7 +114,7 @@ body{
 
     background-image: url("../img/eggman.gif");
     background-size: 100% 100%;
-	background-color:black; 	
+	background-color:  black;	
 	background-blend-mode: lighten, normal;
     border: 1px solid gray;
 }
@@ -111,7 +123,7 @@ body{
 
     background-image: url("../img/esmeralda.gif");
     background-size: 100% 100%;
-	background-color:black; 	
+	background-color: black;
     background-blend-mode: lighten, normal;
     border: 1px solid gray;
     
@@ -121,7 +133,7 @@ body{
 
    background-image: url("../img/negacion2.gif");
    background-size: 100% 100%;
-	background-color:black; 	
+	background-color:  black;
     background-blend-mode: lighten, normal;
     border: 1px solid gray;
 }
