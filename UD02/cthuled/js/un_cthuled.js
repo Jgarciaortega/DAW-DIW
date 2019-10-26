@@ -1,23 +1,6 @@
 
 
-var mapa = [
-
-    [9, 9, 9, 9, 9, 9, 9, 9, 2, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-];
+var mapa;
 
 //Columna descubierta = true cubierta = false;
 var estadoColumnas = [];
@@ -37,7 +20,7 @@ var vidas = 4;
 var villanos;
 
 //Nivel de pantalla
-var nivel = 2;
+var nivel = 1;
 
 //Interruptor inicio movimiento villanos(no se acciona hasta que jugador mueve)
 var inicio = false;
@@ -55,10 +38,16 @@ var momiasMuertas = 0;
 
 //Puntuacion
 var score = 0;
+var ptosMatarVillano = 500;
+var ptosPisarCamino = 20;
+var ptosSubirNivel = 1000; //(se multiplica por el nivel de pantalla en el que este)
+var ptosDesbloquearElemento = 250;
+
 
 window.onload = function () {
 
     crearCabecera();
+    mapa = activarMatrizInicial();
     crearMapa();
 
 }
@@ -71,6 +60,32 @@ window.addEventListener("keydown", function (event) {
 
 
 setInterval(activarVillanos, 500);
+
+
+function activarMatrizInicial(mapa) {
+
+    mapa = [
+
+        [9, 9, 9, 9, 9, 9, 9, 9, 2, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    ];
+
+    return mapa;
+
+}
 
 
 function recogerPulsacion(event) {
@@ -95,7 +110,7 @@ function recogerPulsacion(event) {
 
             }
 
-            if (mapa[y + 1][x] == 0) sumarPuntuacion(20);
+            if (mapa[y + 1][x] == 0) sumarPuntuacion(ptosPisarCamino);
             y++;
             direccion = "Down";
             posJugador = document.getElementById(y + " " + x);
@@ -113,7 +128,7 @@ function recogerPulsacion(event) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
-            if (mapa[y - 1][x] == 0) sumarPuntuacion(20);
+            if (mapa[y - 1][x] == 0) sumarPuntuacion(ptosPisarCamino);
             y--;
             direccion = "Up";
             posJugador = document.getElementById(y + " " + x);
@@ -122,19 +137,6 @@ function recogerPulsacion(event) {
 
         }
 
-        if (y > 0 && x == 8 && esmeraldaDescubierta && llaveDescubierta) {
-
-            posJugador.classList.remove("sonic" + direccion);
-            posJugador.classList.add("caminoPisado");
-            if (mapa[y - 1][x] == 0) sumarPuntuacion(20);
-            y--;
-            direccion = "Up";
-            posJugador = document.getElementById(y + " " + x);
-            posJugador.classList.add("sonicUp");
-
-            subirDeNivel();
-
-        }
     }
 
     if (event == "ArrowRight") {
@@ -143,7 +145,7 @@ function recogerPulsacion(event) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
-            if (mapa[y][x + 1] == 0) sumarPuntuacion(20);
+            if (mapa[y][x + 1] == 0) sumarPuntuacion(ptosPisarCamino);
             x++;
             direccion = "Right";
             posJugador = document.getElementById(y + " " + x);
@@ -159,7 +161,7 @@ function recogerPulsacion(event) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
-            if (mapa[y][x - 1] == 0) sumarPuntuacion(20);
+            if (mapa[y][x - 1] == 0) sumarPuntuacion(ptosPisarCamino);
             x--;
             direccion = "Left";
             posJugador = document.getElementById(y + " " + x);
@@ -170,20 +172,39 @@ function recogerPulsacion(event) {
 
     }
 
+     //Llegar a casa despues de liberar llave + urna
+     if (event == "ArrowUp" && esmeraldaDescubierta && llaveDescubierta && y == 1 && x == 9) {
+
+        posJugador.classList.remove("sonic" + direccion);
+        posJugador.classList.add("caminoPisado");
+        if (mapa[y - 1][x] == 0) sumarPuntuacion(ptosPisarCamino);
+        y--;
+        direccion = "Up";
+        posJugador = document.getElementById(y + " " + x);
+        posJugador.classList.add("sonicUp");
+
+        if (y == 0 && x == 9) subirDeNivel();
+
+    }
+
+    console.log("y: " + y + " " + "x: " + x);
+
     comprobarColumnas();
 
     for (let i = 0; i < villanos.length; i++) {
 
         if (villanos[i].posX == x && villanos[i].posY == y) {
 
+            matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
+            sumarPuntuacion(ptosMatarVillano);
+
             if (poderMatarActivado) {
 
-                matarMomia(villano.posX, villano.posY);
                 poderMatarActivado = false;
 
             } else {
 
-                restarVida();
+                 restarVida();
             }
 
         }
@@ -311,14 +332,17 @@ function modificarEstilo(columnasModificadas) {
 
     for (let i = 0; i < columnasModificadas.length; i++) {
 
-        columnasModificadas[i].classList.remove("columna");
+        if(i == 4){
+
+           columnasModificadas[i].classList.remove("columna");
+        }  
+       
 
         if (columnasModificadas[i].classList.contains("columnaLlave")) {
 
             if (!llaveDescubierta) {
 
-                //  inventario[0] = "llave";
-                sumarPuntuacion(500);
+                sumarPuntuacion(ptosDesbloquearElemento);
                 llaveDescubierta = true;
 
 
@@ -330,8 +354,7 @@ function modificarEstilo(columnasModificadas) {
 
             if (!pergaminoDescubierto) {
 
-                // inventario[1] = "pergamino";
-                sumarPuntuacion(500);
+                sumarPuntuacion(ptosDesbloquearElemento);
                 pergaminoDescubierto = true;
 
             }
@@ -355,17 +378,13 @@ function modificarEstilo(columnasModificadas) {
 
             if (!esmeraldaDescubierta) {
 
-                // inventario[2] = "esmeralda";
-                sumarPuntuacion(500);
+                sumarPuntuacion(ptosDesbloquearElemento);
                 esmeraldaDescubierta = true;
 
 
             }
 
-
         }
-
-
     }
 }
 
@@ -403,13 +422,25 @@ function crearMapa() {
     let cont1 = 0;
     let cont2 = 0;
     let contY = 2;
+    let nodoPadre = document.getElementById("mapa");
+    let newDiv;
 
     for (let y = 0; y < mapa.length; y++) {
 
         for (let x = 0; x < mapa[0].length; x++) {
 
-            let newDiv = document.createElement("div");
-            newDiv.setAttribute("id", y + " " + x);
+            if (nivel == 1) {
+
+                newDiv = document.createElement("div");
+                newDiv.setAttribute("id", y + " " + x);
+
+            } else {
+
+                newDiv = document.getElementById(y + " " + x);
+                newDiv.classList.remove("caminoPisado");
+                borrarRastroEnTablero(newDiv);
+            }
+
             let elemento = "";
 
             /* RELLENA CAMINO */
@@ -453,7 +484,7 @@ function crearMapa() {
             if (mapa[y][x] == 2) newDiv.classList.add("sonicStatic");
 
 
-            document.getElementById("mapa").appendChild(newDiv);
+            nodoPadre.appendChild(newDiv);
 
         }
 
@@ -590,7 +621,24 @@ function activarVillanos() {
 
             modificarDiv(div, div2, villanos[i].direccion);
 
+            if (villanos[i].posX == x && villanos[i].posY == y) {
+
+                matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
+                sumarPuntuacion(ptosMatarVillano);
+
+                if (!poderMatarActivado) {
+
+                    restarVida();
+                   
+
+                } 
+
+            }
+
+            if (vidas == 0) finDeJuego();
+
         }
+
 
 
     }
@@ -699,17 +747,18 @@ function eligeDireccion(villano) {
 
             if (villano.posX != villano.memoriaCoordenada && villano.posX != 20 && villano.posX != 0) {
 
-                if (villano.posX == 19 || villano.posX == 1 || Math.abs(villano.posX - x) == 1) {
+                if (villano.posX == 19 || villano.posX == 1 || Math.abs(villano.posX - x == 1) || Math.abs(villano.posX - x == 2)) {
 
                     moverVillano(villano, 1);
 
                 } else {
 
-                    moverVillano(villano, 2);
+                    moverVillano(villano, 1);
 
                 }
 
             } else {
+
                 moverVillano(villano, 1);
                 villano.alerta = false;
             }
@@ -721,13 +770,13 @@ function eligeDireccion(villano) {
 
             if (villano.posY != villano.memoriaCoordenada && villano.posY != 13 && villano.posY != 1) {
 
-                if (villano.posY == 12 || villano.posY == 2 || Math.abs(villano.posY - y) == 1) {
+                if (villano.posY == 12 || villano.posY == 2 || Math.abs(villano.posY - y == 1) || Math.abs(villano.posY - y == 2)) {
 
                     moverVillano(villano, 1);
 
                 } else {
 
-                    moverVillano(villano, 2);
+                    moverVillano(villano, 1);
                 }
 
             } else {
@@ -740,21 +789,6 @@ function eligeDireccion(villano) {
 
     }
 
-    if (villano.posX == x && villano.posY == y) {
-
-        if (poderMatarActivado) {
-
-            matarMomia(villano.posX, villano.posY);
-            poderMatarActivado = false;
-
-        } else {
-
-            restarVida();
-        }
-
-    }
-
-    if (vidas == 0) finDeJuego();
 
 }
 
@@ -781,7 +815,7 @@ function restarVida() {
 
     }
 
-    crearEjercito(nivel);
+    crearEjercito(villanos.length);
     inicio = false;
     salida = true;
 
@@ -898,9 +932,9 @@ function actualizarPuntuacion() {
 
 function abrirPuerta() {
 
-    let div = document.getElementById(0 + " " + 8);
+    let div = document.getElementById(0 + " " + 9);
 
-    div.classList.add("camino");
+    div.classList.add("door");
 
 }
 
@@ -909,9 +943,24 @@ function subirDeNivel() {
     nivel++;
     let divScore = document.getElementById("level").innerText = "LEVEL " + nivel;
 
+    mapa = activarMatrizInicial();
+    crearMapa();
+
+    salida = true;
+    esmeraldaDescubierta = false;
+    pergaminoDescubierto = false;
+    llaveDescubierta = false;
+    villanoDescubierto = false;
+    inicio = false;
+    direccion= "Static";
+    
+    score += ptosSubirNivel * nivel;
+    x = 8;
+    y = 0;
+
 }
 
-function matarMomia(x, y) {
+function matarMomia(x, y, direccionSonic) {
 
     for (let i = 0; i < villanos.length; i++) {
 
@@ -919,14 +968,12 @@ function matarMomia(x, y) {
 
             let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
             borrarRastroEnTablero(div);
-            div.classList.add("caminoPisado");
+            div.classList.add(direccionSonic);
             villanos.splice(i, 1);
             momiasMuertas++;
         }
 
     }
-
-    console.log(villanos);
 
 }
 
@@ -941,7 +988,12 @@ function borrarRastroEnTablero(div) {
     div.classList.remove("sonicRight");
     div.classList.remove("sonicUp");
     div.classList.remove("sonicDown");
-
+    div.classList.remove("columnaLlave");
+    div.classList.remove("columnaPergamino");
+    div.classList.remove("columnaVillano");
+    div.classList.remove("columnaEsmeralda");
+    div.classList.remove("columnaNada");
+    div.classList.remove("door");
 
 }
 
