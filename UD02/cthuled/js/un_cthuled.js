@@ -43,15 +43,18 @@ var nivel = 2;
 var inicio = false;
 
 //Elementos que adquiere al desbloquear columnas
-var inventario = [];
+//var inventario = [];
 
-//Interruptor villano descubierto
+//Interruptor elementos descubiertos
 var villanoDescubierto = false;
+var llaveDescubierta = false;
+var pergaminoDescubierto = false;
+var esmeraldaDescubierta = false;
+var poderMatarActivado = false;
+var momiasMuertas = 0;
 
 //Puntuacion
 var score = 0;
-
-
 
 window.onload = function () {
 
@@ -65,8 +68,6 @@ window.addEventListener("keydown", function (event) {
     recogerPulsacion(event.key);
 
 });
-
-
 
 
 setInterval(activarVillanos, 500);
@@ -94,6 +95,7 @@ function recogerPulsacion(event) {
 
             }
 
+            if (mapa[y + 1][x] == 0) sumarPuntuacion(20);
             y++;
             direccion = "Down";
             posJugador = document.getElementById(y + " " + x);
@@ -101,6 +103,8 @@ function recogerPulsacion(event) {
             mapa[y][x] = 4;
 
         }
+
+
     }
 
     if (event == "ArrowUp") {
@@ -109,11 +113,26 @@ function recogerPulsacion(event) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
+            if (mapa[y - 1][x] == 0) sumarPuntuacion(20);
             y--;
             direccion = "Up";
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicUp");
             mapa[y][x] = 4;
+
+        }
+
+        if (y > 0 && x == 8 && esmeraldaDescubierta && llaveDescubierta) {
+
+            posJugador.classList.remove("sonic" + direccion);
+            posJugador.classList.add("caminoPisado");
+            if (mapa[y - 1][x] == 0) sumarPuntuacion(20);
+            y--;
+            direccion = "Up";
+            posJugador = document.getElementById(y + " " + x);
+            posJugador.classList.add("sonicUp");
+
+            subirDeNivel();
 
         }
     }
@@ -124,6 +143,7 @@ function recogerPulsacion(event) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
+            if (mapa[y][x + 1] == 0) sumarPuntuacion(20);
             x++;
             direccion = "Right";
             posJugador = document.getElementById(y + " " + x);
@@ -139,6 +159,7 @@ function recogerPulsacion(event) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
+            if (mapa[y][x - 1] == 0) sumarPuntuacion(20);
             x--;
             direccion = "Left";
             posJugador = document.getElementById(y + " " + x);
@@ -155,10 +176,22 @@ function recogerPulsacion(event) {
 
         if (villanos[i].posX == x && villanos[i].posY == y) {
 
-            restarVida();
+            if (poderMatarActivado) {
+
+                matarMomia(villano.posX, villano.posY);
+                poderMatarActivado = false;
+
+            } else {
+
+                restarVida();
+            }
+
         }
 
     }
+
+    if (esmeraldaDescubierta && llaveDescubierta) abrirPuerta();
+    if (pergaminoDescubierto && momiasMuertas == 0) poderMatarActivado = true;
 
 }
 
@@ -269,7 +302,7 @@ function revisarEstilos(estadoColumnas) {
             columnasModificadas = document.getElementsByClassName("columna" + i);
             modificarEstilo(columnasModificadas);
 
-            
+
         }
     }
 }
@@ -280,35 +313,56 @@ function modificarEstilo(columnasModificadas) {
 
         columnasModificadas[i].classList.remove("columna");
 
-        if(columnasModificadas[i].classList.contains("columnaLlave")){
+        if (columnasModificadas[i].classList.contains("columnaLlave")) {
 
-            inventario[0] = "llave";
-            sumarPuntuacion(100);
+            if (!llaveDescubierta) {
+
+                //  inventario[0] = "llave";
+                sumarPuntuacion(500);
+                llaveDescubierta = true;
+
+
+            }
+
         }
 
-        if(columnasModificadas[i].classList.contains("columnaPergamino")){
+        if (columnasModificadas[i].classList.contains("columnaPergamino")) {
 
-            inventario[1] = "pergamino";
-            sumarPuntuacion(100);
+            if (!pergaminoDescubierto) {
+
+                // inventario[1] = "pergamino";
+                sumarPuntuacion(500);
+                pergaminoDescubierto = true;
+
+            }
+
         }
 
-        if(columnasModificadas[i].classList.contains("columnaVillano")){
+        if (columnasModificadas[i].classList.contains("columnaVillano")) {
 
-            if(!villanoDescubierto){
-        
-                let villano = crearVillano(1,1);
+            if (!villanoDescubierto) {
+
+                let villano = crearVillano(1, 1);
                 villanos.push(villano);
                 asignarPosicionVillano(villano);
                 villanoDescubierto = true;
 
             }
-         
+
         }
 
-        if(columnasModificadas[i].classList.contains("columnaEsmeralda")){
+        if (columnasModificadas[i].classList.contains("columnaEsmeralda")) {
 
-            inventario[2] = "esmeralda";
-            sumarPuntuacion(100);
+            if (!esmeraldaDescubierta) {
+
+                // inventario[2] = "esmeralda";
+                sumarPuntuacion(500);
+                esmeraldaDescubierta = true;
+
+
+            }
+
+
         }
 
 
@@ -323,7 +377,7 @@ function crearCabecera() {
     let texto = "";
 
     divScore.setAttribute("id", "score");
-    
+
     divLevel.setAttribute("id", "level");
     texto = document.createTextNode("LEVEL " + nivel);
     divLevel.appendChild(texto);
@@ -425,9 +479,9 @@ function asignarElementosEnTablero() {
 
         let divsColumnas = document.getElementsByClassName("columna" + serieAleatoria[i]);
         elegirElemento(divsColumnas, elementos[i]);
-  
+
     }
-   
+
 
 }
 
@@ -456,16 +510,16 @@ function elegirElemento(divsColumnas, elemento) {
     for (let i = 0; i < divsColumnas.length; i++) {
 
         divsColumnas[i].classList.add("columna" + elemento);
-   
+
     }
 
-    
+
 }
 
 /****  CREACION DE VILLANOS *****/
 
 //Constructor de villanos
-function Villano( x = 0, y = 0, direccion = "", alerta = false, memoriaCoordenada = 0) {
+function Villano(x = 0, y = 0, direccion = "", alerta = false, memoriaCoordenada = 0) {
 
     this.posX = x;
     this.posY = y;
@@ -482,36 +536,31 @@ function crearEjercito(cantidadDeVillanos) {
 
     for (let i = 0; i < cantidadDeVillanos; i++) {
 
-        let villano = crearVillano(generarAleatorioX(),Math.floor(Math.random() * (13 - 8)) + 8);
+        let villano = crearVillano(generarAleatorioX(), Math.floor(Math.random() * (13 - 8)) + 8);
         villanos.push(villano);
 
     }
 
     for (let i = 0; i < villanos.length; i++) {
 
-        asignarPosicionVillano(villanos[i]);      
+        asignarPosicionVillano(villanos[i]);
 
     }
 
 }
 
-function crearVillano(x, y){
+function crearVillano(x, y) {
 
-    let villano = new Villano(x, y , "Right", false, 0);
+    let villano = new Villano(x, y, "Right", false, 0);
 
     return villano;
 
 }
 
-function asignarPosicionVillano(villano){
+function asignarPosicionVillano(villano) {
 
     let div = document.getElementById(villano.posY + " " + villano.posX);
     div.classList.add("eggmanStatic");
-
-    for (let index = 0; index < villanos.length; index++) {
-        
-        console.log(villanos);
-    }
 
 }
 
@@ -543,7 +592,7 @@ function activarVillanos() {
 
         }
 
-        
+
     }
 }
 
@@ -693,8 +742,15 @@ function eligeDireccion(villano) {
 
     if (villano.posX == x && villano.posY == y) {
 
+        if (poderMatarActivado) {
 
-        restarVida();
+            matarMomia(villano.posX, villano.posY);
+            poderMatarActivado = false;
+
+        } else {
+
+            restarVida();
+        }
 
     }
 
@@ -706,10 +762,7 @@ function restarVida() {
 
     let div = document.getElementById(y + " " + x);
 
-    div.classList.remove("sonicLeft");
-    div.classList.remove("sonicRight");
-    div.classList.remove("sonicUp");
-    div.classList.remove("sonicDown");
+    borrarRastroEnTablero(div);
 
     div = document.getElementById(0 + " " + 8);
     x = 8;
@@ -724,16 +777,13 @@ function restarVida() {
 
         let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
 
-        div.classList.remove("eggmanUp");
-        div.classList.remove("eggmanDown");
-        div.classList.remove("eggmanLeft");
-        div.classList.remove("eggmanRight");
+        borrarRastroEnTablero(div);
 
     }
 
-
     crearEjercito(nivel);
     inicio = false;
+    salida = true;
 
     vidas--;
 }
@@ -746,11 +796,7 @@ function finDeJuego() {
 
 function modificarDiv(div, div2, direccion) {
 
-    div.classList.remove("eggmanStatic");
-    div.classList.remove("eggmanUp");
-    div.classList.remove("eggmanDown");
-    div.classList.remove("eggmanLeft");
-    div.classList.remove("eggmanRight");
+    borrarRastroEnTablero(div);
     div2.classList.add("eggman" + direccion);
 
 }
@@ -838,21 +884,66 @@ function direccionRandom(direccionPrevia) {
 }
 
 
-function sumarPuntuacion(cantidad){
+function sumarPuntuacion(cantidad) {
 
     score += cantidad;
 
 }
 
-function actualizarPuntuacion(){
+function actualizarPuntuacion() {
 
-    let divScore = document.getElementById("score").innerText="SCORE " + score;
-/*
-    let texto = document.createTextNode(" " + score);
-    
-    divScore.appendChild(texto);*/
+    let divScore = document.getElementById("score").innerText = "SCORE " + score;
+
 }
 
+function abrirPuerta() {
+
+    let div = document.getElementById(0 + " " + 8);
+
+    div.classList.add("camino");
+
+}
+
+function subirDeNivel() {
+
+    nivel++;
+    let divScore = document.getElementById("level").innerText = "LEVEL " + nivel;
+
+}
+
+function matarMomia(x, y) {
+
+    for (let i = 0; i < villanos.length; i++) {
+
+        if (villanos[i].posX == x && villanos[i].posY == y) {
+
+            let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
+            borrarRastroEnTablero(div);
+            div.classList.add("caminoPisado");
+            villanos.splice(i, 1);
+            momiasMuertas++;
+        }
+
+    }
+
+    console.log(villanos);
+
+}
+
+function borrarRastroEnTablero(div) {
+
+    div.classList.remove("eggmanUp");
+    div.classList.remove("eggmanDown");
+    div.classList.remove("eggmanLeft");
+    div.classList.remove("eggmanRight");
+    div.classList.remove("eggmanStatic");
+    div.classList.remove("sonicLeft");
+    div.classList.remove("sonicRight");
+    div.classList.remove("sonicUp");
+    div.classList.remove("sonicDown");
+
+
+}
 
 
 
