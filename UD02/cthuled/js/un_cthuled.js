@@ -59,7 +59,7 @@ window.addEventListener("keydown", function (event) {
 });
 
 
-setInterval(activarVillanos, 500);
+setInterval(activarVillanos, 400);
 
 
 function activarMatrizInicial(mapa) {
@@ -93,8 +93,6 @@ function recogerPulsacion(event) {
     let posJugador = document.getElementById(y + " " + x);
 
     if (vidas > 0) {
-
-
 
         if (event == "ArrowDown") {
 
@@ -201,11 +199,14 @@ function recogerPulsacion(event) {
 
                 matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
                 sumarPuntuacion(ptosMatarVillano);
+                console.log("Mueve sonic");
 
                 if (poderMatarActivado) {
 
                     poderMatarActivado = false;
                     console.log("poderMatarDesactivado");
+                    console.log(villanos.length);
+                    console.log("momias muertas " + momiasMuertas);
 
                 } else {
 
@@ -218,10 +219,12 @@ function recogerPulsacion(event) {
         }
 
         if (esmeraldaDescubierta && llaveDescubierta) abrirPuerta();
-        if (pergaminoDescubierto && momiasMuertas == 0) {
+        if (pergaminoDescubierto) {
 
             poderMatarActivado = true;
-            console.log("poderMatarActivado");
+            pergaminoDescubierto = false;
+            console.log("poder matar activado");
+           
         }
     }
 
@@ -367,11 +370,12 @@ function modificarEstilo(columnasModificadas) {
 
         if (columnasModificadas[i].classList.contains("columnaPergamino")) {
 
-            if (!pergaminoDescubierto) {
+            if (!pergaminoDescubierto && momiasMuertas == 0) {
 
                 console.log("columna pergamino encontrada");
                 sumarPuntuacion(ptosDesbloquearElemento);
                 pergaminoDescubierto = true;
+                momiasMuertas ++;
 
             }
 
@@ -380,7 +384,7 @@ function modificarEstilo(columnasModificadas) {
         if (columnasModificadas[i].classList.contains("columnaVillano")) {
 
             if (!villanoDescubierto) {
-
+                
                 let villano = crearVillano(1, 1);
                 villanos.push(villano);
                 asignarPosicionVillano(villano);
@@ -396,7 +400,7 @@ function modificarEstilo(columnasModificadas) {
 
                 sumarPuntuacion(ptosDesbloquearElemento);
                 esmeraldaDescubierta = true;
-
+               
 
             }
 
@@ -641,11 +645,14 @@ function activarVillanos() {
 
                 matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
                 sumarPuntuacion(ptosMatarVillano);
+                console.log("Mueve villano");
 
                 if (poderMatarActivado) {
 
                     poderMatarActivado = false;
                     console.log("poderMatarDesactivado");
+                    console.log("villano " + villanos.length);
+                    console.log("momias muertas " + momiasMuertas);
 
                 } else {
 
@@ -1003,7 +1010,7 @@ function matarMomia(x, y, direccionSonic) {
             borrarRastroEnTablero(div);
             div.classList.add(direccionSonic);
             villanos.splice(i, 1);
-            momiasMuertas++;
+            
         }
 
     }
