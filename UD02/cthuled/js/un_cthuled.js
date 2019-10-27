@@ -92,39 +92,93 @@ function recogerPulsacion(event) {
 
     let posJugador = document.getElementById(y + " " + x);
 
-    if (event == "ArrowDown") {
+    if (vidas > 0) {
 
-        inicio = true;
 
-        if (y < 13 && mapa[y + 1][x] != 1) {
 
-            posJugador.classList.remove("sonic" + direccion);
+        if (event == "ArrowDown") {
 
-            if (salida) {
+            inicio = true;
 
-                salida = false;
+            if (y < 13 && mapa[y + 1][x] != 1) {
 
-            } else {
+                posJugador.classList.remove("sonic" + direccion);
 
-                posJugador.classList.add("caminoPisado");
+                if (salida) {
+
+                    posJugador.classList.add("doorClose");
+                    salida = false;
+
+                } else {
+
+                    posJugador.classList.add("caminoPisado");
+
+                }
+
+                if (mapa[y + 1][x] == 0) sumarPuntuacion(ptosPisarCamino);
+                y++;
+                direccion = "Down";
+                posJugador = document.getElementById(y + " " + x);
+                posJugador.classList.add("sonicDown");
+                mapa[y][x] = 4;
 
             }
 
-            if (mapa[y + 1][x] == 0) sumarPuntuacion(ptosPisarCamino);
-            y++;
-            direccion = "Down";
-            posJugador = document.getElementById(y + " " + x);
-            posJugador.classList.add("sonicDown");
-            mapa[y][x] = 4;
 
         }
 
+        if (event == "ArrowUp") {
 
-    }
+            if (y > 1 && mapa[y - 1][x] != 1) {
 
-    if (event == "ArrowUp") {
+                posJugador.classList.remove("sonic" + direccion);
+                posJugador.classList.add("caminoPisado");
+                if (mapa[y - 1][x] == 0) sumarPuntuacion(ptosPisarCamino);
+                y--;
+                direccion = "Up";
+                posJugador = document.getElementById(y + " " + x);
+                posJugador.classList.add("sonicUp");
+                mapa[y][x] = 4;
 
-        if (y > 1 && mapa[y - 1][x] != 1) {
+            }
+
+        }
+
+        if (event == "ArrowRight") {
+
+            if (y > 0 && x < 20 && mapa[y][x + 1] != 1) {
+
+                posJugador.classList.remove("sonic" + direccion);
+                posJugador.classList.add("caminoPisado");
+                if (mapa[y][x + 1] == 0) sumarPuntuacion(ptosPisarCamino);
+                x++;
+                direccion = "Right";
+                posJugador = document.getElementById(y + " " + x);
+                posJugador.classList.add("sonicRight");
+                mapa[y][x] = 4;
+
+            }
+        }
+
+        if (event == "ArrowLeft") {
+
+            if (y > 0 && x > 0 && mapa[y][x - 1] != 1) {
+
+                posJugador.classList.remove("sonic" + direccion);
+                posJugador.classList.add("caminoPisado");
+                if (mapa[y][x - 1] == 0) sumarPuntuacion(ptosPisarCamino);
+                x--;
+                direccion = "Left";
+                posJugador = document.getElementById(y + " " + x);
+                posJugador.classList.add("sonicLeft");
+                mapa[y][x] = 4;
+
+            }
+
+        }
+
+        //Llegar a casa despues de liberar llave + urna
+        if (event == "ArrowUp" && esmeraldaDescubierta && llaveDescubierta && y == 1 && x == 9) {
 
             posJugador.classList.remove("sonic" + direccion);
             posJugador.classList.add("caminoPisado");
@@ -133,87 +187,48 @@ function recogerPulsacion(event) {
             direccion = "Up";
             posJugador = document.getElementById(y + " " + x);
             posJugador.classList.add("sonicUp");
-            mapa[y][x] = 4;
+
+            if (y == 0 && x == 9) subirDeNivel();
 
         }
 
-    }
 
-    if (event == "ArrowRight") {
+        comprobarColumnas();
 
-        if (y > 0 && x < 20 && mapa[y][x + 1] != 1) {
+        for (let i = 0; i < villanos.length; i++) {
 
-            posJugador.classList.remove("sonic" + direccion);
-            posJugador.classList.add("caminoPisado");
-            if (mapa[y][x + 1] == 0) sumarPuntuacion(ptosPisarCamino);
-            x++;
-            direccion = "Right";
-            posJugador = document.getElementById(y + " " + x);
-            posJugador.classList.add("sonicRight");
-            mapa[y][x] = 4;
+            if (villanos[i].posX == x && villanos[i].posY == y) {
 
-        }
-    }
+                matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
+                sumarPuntuacion(ptosMatarVillano);
 
-    if (event == "ArrowLeft") {
+                if (poderMatarActivado) {
 
-        if (y > 0 && x > 0 && mapa[y][x - 1] != 1) {
+                    poderMatarActivado = false;
+                    console.log("poderMatarDesactivado");
 
-            posJugador.classList.remove("sonic" + direccion);
-            posJugador.classList.add("caminoPisado");
-            if (mapa[y][x - 1] == 0) sumarPuntuacion(ptosPisarCamino);
-            x--;
-            direccion = "Left";
-            posJugador = document.getElementById(y + " " + x);
-            posJugador.classList.add("sonicLeft");
-            mapa[y][x] = 4;
+                } else {
 
-        }
+                    restarVida();
 
-    }
+                }
 
-     //Llegar a casa despues de liberar llave + urna
-     if (event == "ArrowUp" && esmeraldaDescubierta && llaveDescubierta && y == 1 && x == 9) {
-
-        posJugador.classList.remove("sonic" + direccion);
-        posJugador.classList.add("caminoPisado");
-        if (mapa[y - 1][x] == 0) sumarPuntuacion(ptosPisarCamino);
-        y--;
-        direccion = "Up";
-        posJugador = document.getElementById(y + " " + x);
-        posJugador.classList.add("sonicUp");
-
-        if (y == 0 && x == 9) subirDeNivel();
-
-    }
-
-    console.log("y: " + y + " " + "x: " + x);
-
-    comprobarColumnas();
-
-    for (let i = 0; i < villanos.length; i++) {
-
-        if (villanos[i].posX == x && villanos[i].posY == y) {
-
-            matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
-            sumarPuntuacion(ptosMatarVillano);
-
-            if (poderMatarActivado) {
-
-                poderMatarActivado = false;
-
-            } else {
-
-                 restarVida();
             }
 
         }
 
+        if (esmeraldaDescubierta && llaveDescubierta) abrirPuerta();
+        if (pergaminoDescubierto && momiasMuertas == 0) {
+
+            poderMatarActivado = true;
+            console.log("poderMatarActivado");
+        }
     }
 
-    if (esmeraldaDescubierta && llaveDescubierta) abrirPuerta();
-    if (pergaminoDescubierto && momiasMuertas == 0) poderMatarActivado = true;
+    if (vidas == 0){
 
+        finDeJuego();
+    } 
 }
 
 // Esta funcion genera las coordenadas que corresponden a las esquinas de las cajas  
@@ -332,11 +347,11 @@ function modificarEstilo(columnasModificadas) {
 
     for (let i = 0; i < columnasModificadas.length; i++) {
 
-        if(i == 4){
+        if (i == 4) {
 
-           columnasModificadas[i].classList.remove("columna");
-        }  
-       
+            columnasModificadas[i].classList.remove("columna");
+        }
+
 
         if (columnasModificadas[i].classList.contains("columnaLlave")) {
 
@@ -354,6 +369,7 @@ function modificarEstilo(columnasModificadas) {
 
             if (!pergaminoDescubierto) {
 
+                console.log("columna pergamino encontrada");
                 sumarPuntuacion(ptosDesbloquearElemento);
                 pergaminoDescubierto = true;
 
@@ -626,16 +642,23 @@ function activarVillanos() {
                 matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
                 sumarPuntuacion(ptosMatarVillano);
 
-                if (!poderMatarActivado) {
+                if (poderMatarActivado) {
+
+                    poderMatarActivado = false;
+                    console.log("poderMatarDesactivado");
+
+                } else {
 
                     restarVida();
-                   
 
-                } 
+                }
 
             }
 
-            if (vidas == 0) finDeJuego();
+            if (vidas == 0){
+
+                finDeJuego();
+            } 
 
         }
 
@@ -824,8 +847,16 @@ function restarVida() {
 
 function finDeJuego() {
 
+    let nodoPadre = document.querySelector("body");
+    let divGameOver =  document.createElement("div");
+    let parrafo = document.createElement("p");
+    let texto = document.createTextNode("Press F5 to play again");
 
-
+    parrafo.appendChild(texto);
+    parrafo.classList.add("parpadea");
+    divGameOver.appendChild(parrafo);
+    divGameOver.classList.add("gameOver");  
+    nodoPadre.appendChild(divGameOver);
 }
 
 function modificarDiv(div, div2, direccion) {
@@ -933,8 +964,9 @@ function actualizarPuntuacion() {
 function abrirPuerta() {
 
     let div = document.getElementById(0 + " " + 9);
-
     div.classList.add("door");
+    div = document.getElementById(0 + " " + 8);
+    div.classList.remove("doorClose");
 
 }
 
@@ -952,8 +984,9 @@ function subirDeNivel() {
     llaveDescubierta = false;
     villanoDescubierto = false;
     inicio = false;
-    direccion= "Static";
-    
+    direccion = "Static";
+    momiasMuertas = 0;
+
     score += ptosSubirNivel * nivel;
     x = 8;
     y = 0;
