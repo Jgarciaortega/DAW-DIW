@@ -159,8 +159,11 @@ body{
 
 .doorClose{
 
-    background: rgb(77, 55, 55);
-    border : 4px solid black;
+    background-image: url("../img/puerta.jpg");
+    background-size: 100% 100%;
+	background-color: black; 	
+    background-blend-mode: lighten, normal;
+    border: 1px solid gray;
 }
 
 

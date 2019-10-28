@@ -17,7 +17,7 @@ var direccion = "Static";
 var vidas = 4;
 
 //Array de villanos
-var villanos;
+var villanos = [];
 
 //Nivel de pantalla
 var nivel = 1;
@@ -204,9 +204,7 @@ function recogerPulsacion(event) {
                 if (poderMatarActivado) {
 
                     poderMatarActivado = false;
-                    console.log("poderMatarDesactivado");
-                    console.log(villanos.length);
-                    console.log("momias muertas " + momiasMuertas);
+                    
 
                 } else {
 
@@ -223,7 +221,7 @@ function recogerPulsacion(event) {
 
             poderMatarActivado = true;
             pergaminoDescubierto = false;
-            console.log("poder matar activado");
+            
            
         }
     }
@@ -511,7 +509,7 @@ function crearMapa() {
     }
 
     asignarElementosEnTablero();
-    crearEjercito(nivel);
+    crearEjercito(villanos.length + 1);
 
 
 }
@@ -645,14 +643,12 @@ function activarVillanos() {
 
                 matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
                 sumarPuntuacion(ptosMatarVillano);
-                console.log("Mueve villano");
+              
 
                 if (poderMatarActivado) {
 
                     poderMatarActivado = false;
-                    console.log("poderMatarDesactivado");
-                    console.log("villano " + villanos.length);
-                    console.log("momias muertas " + momiasMuertas);
+                   
 
                 } else {
 
