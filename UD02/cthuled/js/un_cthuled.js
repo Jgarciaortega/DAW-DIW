@@ -374,6 +374,7 @@ function modificarEstilo(columnasModificadas) {
                 sumarPuntuacion(ptosDesbloquearElemento);
                 pergaminoDescubierto = true;
                 momiasMuertas ++;
+               
 
             }
 
@@ -632,24 +633,24 @@ function activarVillanos() {
 
         for (let i = 0; i < villanos.length; i++) {
 
+           
             let div = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
             eligeDireccion(villanos[i]);
 
             let div2 = document.getElementById(villanos[i].posY + " " + villanos[i].posX);
 
-            modificarDiv(div, div2, villanos[i].direccion);
+            modificarDiv(div, div2, villanos[i].direccion, poderMatarActivado);
 
             if (villanos[i].posX == x && villanos[i].posY == y) {
 
                 matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
                 sumarPuntuacion(ptosMatarVillano);
-              
+                
 
                 if (poderMatarActivado) {
 
                     poderMatarActivado = false;
-                   
-
+                
                 } else {
 
                     restarVida();
@@ -658,15 +659,9 @@ function activarVillanos() {
 
             }
 
-            if (vidas == 0){
-
-                finDeJuego();
-            } 
+            if (vidas == 0) finDeJuego();
 
         }
-
-
-
     }
 }
 
@@ -862,10 +857,13 @@ function finDeJuego() {
     nodoPadre.appendChild(divGameOver);
 }
 
-function modificarDiv(div, div2, direccion) {
+function modificarDiv(div, div2, direccion,alerta) {
 
+    let estadoAlerta = "";
+
+    if(alerta) estadoAlerta = "Alerta";
     borrarRastroEnTablero(div);
-    div2.classList.add("eggman" + direccion);
+    div2.classList.add("eggman" + direccion + estadoAlerta);
 
 }
 
@@ -968,8 +966,13 @@ function abrirPuerta() {
 
     let div = document.getElementById(0 + " " + 9);
     div.classList.add("door");
+    div.classList.add("parpadea");
     div = document.getElementById(0 + " " + 8);
     div.classList.remove("doorClose");
+
+    div = document.getElementById(1 + " " + 9);
+    div.classList.add("flecha");
+    
 
 }
 
@@ -989,6 +992,7 @@ function subirDeNivel() {
     inicio = false;
     direccion = "Static";
     momiasMuertas = 0;
+    poderMatarActivado = false;
 
     score += ptosSubirNivel * nivel;
     x = 8;
@@ -1020,6 +1024,11 @@ function borrarRastroEnTablero(div) {
     div.classList.remove("eggmanLeft");
     div.classList.remove("eggmanRight");
     div.classList.remove("eggmanStatic");
+    div.classList.remove("eggmanUpAlerta");
+    div.classList.remove("eggmanDownAlerta");
+    div.classList.remove("eggmanLeftAlerta");
+    div.classList.remove("eggmanRightAlerta");
+    div.classList.remove("eggmanStatic");
     div.classList.remove("sonicLeft");
     div.classList.remove("sonicRight");
     div.classList.remove("sonicUp");
@@ -1030,7 +1039,9 @@ function borrarRastroEnTablero(div) {
     div.classList.remove("columnaEsmeralda");
     div.classList.remove("columnaNada");
     div.classList.remove("door");
-
+    div.classList.remove("parpadea");
+    div.classList.remove("flecha");
+   
 }
 
 

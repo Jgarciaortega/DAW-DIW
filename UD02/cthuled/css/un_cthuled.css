@@ -107,7 +107,16 @@ body{
     
 }
 
+.flecha{
 
+
+    background-image: url("../img/flecha.png");
+    background-size: 100% 100%;
+	background-color: black; 	
+    background-blend-mode: lighten, normal;
+    
+
+}
 
 .gameOver p{
 
@@ -122,12 +131,12 @@ body{
 .parpadea {
   
     animation-name: parpadeo;
-    animation-duration: 1s;
+    animation-duration: 2s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
   
     -webkit-animation-name:parpadeo;
-    -webkit-animation-duration: 1s;
+    -webkit-animation-duration: 2s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
   }
@@ -311,6 +320,41 @@ body{
     
 }
 
+.eggmanDownAlerta{
+
+    background-image: url("../img/eggmanDownAlerta.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.eggmanUpAlerta{
+
+    background-image: url("../img/eggmanUpAlerta.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.eggmanRightAlerta{
+
+    background-image: url("../img/eggmanRightAlerta.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
+
+.eggmanLeftAlerta{
+
+    background-image: url("../img/eggmanLeftAlerta.gif");
+    background-size: 100% 100%;
+    background-color:black; 	
+	background-blend-mode: lighten, normal;
+    
+}
 
 
 
