@@ -199,7 +199,6 @@ function recogerPulsacion(event) {
 
                 matarMomia(villanos[i].posX, villanos[i].posY, "sonic" + direccion);
                 sumarPuntuacion(ptosMatarVillano);
-                console.log("Mueve sonic");
 
                 if (poderMatarActivado) {
 
@@ -384,7 +383,7 @@ function modificarEstilo(columnasModificadas) {
 
             if (!villanoDescubierto) {
                 
-                let villano = crearVillano(1, 1);
+                let villano = crearVillano(generarAleatorioX(), Math.floor(Math.random() * (13 - 8)) + 8);
                 villanos.push(villano);
                 asignarPosicionVillano(villano);
                 villanoDescubierto = true;
@@ -510,7 +509,7 @@ function crearMapa() {
     }
 
     asignarElementosEnTablero();
-    crearEjercito(villanos.length + 1);
+    crearEjercito(nivel);
 
 
 }
