@@ -18,31 +18,43 @@ body{
 
 .principal{
 
-    display: grid;
-    display: flex;
-    justify-content: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 1em;
-   
-    
-
+    display: grid; 
+    margin-left: 20%;
+    grid-template-columns: repeat(4, 150px);
+    column-gap: 9%;
     
 }
 
 .boton{
-
-    display: flex;
-    flex-basis: 5%;
-    margin:5%;
-    flex-direction: column;
-    border: 1px black solid;
+  
+    display: flex; 
+    flex-direction: column; 
+    border: 2px black solid;
     background: rgba(255,255,255,0.5);
-    flex-direction: column;
+  
+    
 }
 
 kbd{
-
-    
+   
     font-size: 230%;
+    text-align: center;  
+    padding: 7%;
+    
 }
 
+span{
+
+   padding: 7%;
+   text-align: center
+
+}
+
+.trans{
+
+    border: 2px solid yellow;
+    box-shadow: 2px 2px black;
+    transform: scale(1.1);
+    color: yellow;
+    transition: 0.11s;
+}
