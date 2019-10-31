@@ -7,11 +7,11 @@ window.addEventListener('keydown', function(evento){
 }, false);
 
 
-function playSound(key){
+function playSound(evento){
 
     // let letra = '';
     let audio;
-
+   
     // if(key == '81')  letra = 'Q';
 
     // if(key == '87')  letra = 'W';
@@ -19,10 +19,12 @@ function playSound(key){
     // if(key == '69')  letra = 'E';
 
     // if(key == '82')  letra = 'R';
-
-    audio = document.querySelector(`audio [data-key=${key.keyCode}]`);
     
-    audio.play();
+    console.log(evento)
+    console.log( document.querySelector(`audio [data-key="${evento}"]`));
+    //audio = document.querySelector(`audio [data-key="${evento}"]`);
+    //console.log(audio);
+  //  audio.play();
 }
 
 function recogerPulsacion(key){
