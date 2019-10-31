@@ -31,7 +31,7 @@ body{
     flex-direction: column; 
     border: 2px black solid;
     background: rgba(255,255,255,0.5);
-  
+    transition: all 0.11s;
     
 }
 
@@ -56,5 +56,5 @@ span{
     box-shadow: 2px 2px black;
     transform: scale(1.1);
     color: yellow;
-    transition: 0.11s;
+   
 }
