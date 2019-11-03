@@ -15,28 +15,35 @@ function recogerPulsacion(key) {
     let div = document.getElementById(key);
     div.classList.add("trans");
 
-    //div.addEventListener('transitionend', removeTransition);
-
     playSound(key);
 }
 
 function removeTransition(e) {
 
-    console.log("hola");
+   
     e.target.classList.remove("trans");
 
 }
 
-window.addEventListener('keydown', function (evento) {
+function recogerClick(e){
 
-    let key = evento.keyCode;
+    recogerPulsacion(e.toElement.parentNode.id);
+}
 
-    recogerPulsacion(key);
 
-}, false);
+
+window.addEventListener('keydown', function (tecla) {
+
+    recogerPulsacion(tecla.keyCode);
+
+},);
+
 
 window.onload= function(){
+
     const keys = document.querySelectorAll('.boton');
-    console.log(keys);
     keys.forEach(tecla => tecla.addEventListener('transitionend', removeTransition));
+    keys.forEach(tecla => tecla.addEventListener('mousedown', recogerClick));
+    
 }
+
