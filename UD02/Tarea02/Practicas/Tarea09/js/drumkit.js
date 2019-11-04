@@ -18,16 +18,17 @@ function recogerPulsacion(key) {
     playSound(key);
 }
 
-function removeTransition(e) {
+function removeTransition(id) {
 
-   
-    e.target.classList.remove("trans");
+    document.getElementById(id).classList.remove("trans");
+    
 
 }
 
-function recogerClick(e){
+function recogerClick(id){
 
-    recogerPulsacion(e.toElement.parentNode.id);
+    recogerPulsacion(id);
+    
 }
 
 
@@ -42,8 +43,15 @@ window.addEventListener('keydown', function (tecla) {
 window.onload= function(){
 
     const keys = document.querySelectorAll('.boton');
-    keys.forEach(tecla => tecla.addEventListener('transitionend', removeTransition));
-    keys.forEach(tecla => tecla.addEventListener('mousedown', recogerClick));
+    keys.forEach(tecla => {
+        tecla.addEventListener('mousedown', function() {
+            recogerClick(tecla.getAttribute('id'));
+        });
+        tecla.addEventListener('transitionend', function () {
+            removeTransition(tecla.getAttribute('id'))
+        });
+    });
+       
     
 }
 
