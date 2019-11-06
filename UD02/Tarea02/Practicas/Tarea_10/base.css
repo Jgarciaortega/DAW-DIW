@@ -1,0 +1,46 @@
+section .caja {
+
+    width: 1900px;
+    height:50px;
+    background-image: url("cthulhu.svg");
+    background-size: 50% 50% ;
+    background-repeat: no-repeat;
+      
+}
+
+ .linear{
+
+    transition:5s transform linear;
+    
+}
+
+.ease-in{
+
+    transition:5s transform ease-in;
+  
+}
+
+.ease-out{
+
+    transition:5s transform ease-out;
+    
+}
+
+.ease{
+
+    transition:5s transform ease;
+   
+}
+
+
+.ease-in-out{
+
+    transition:5s transform ease-in-out;
+   
+
+} 
+
+.movimiento{
+
+    transform: translateX(50%);
+}
