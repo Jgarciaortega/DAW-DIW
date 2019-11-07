@@ -8,7 +8,7 @@ header{
     width: 800px;
     height: 100px;
     display: grid;
-    grid-template-columns: 2fr repeat(2,1fr);
+    grid-template-columns: 3fr repeat(2,1fr);
 }
 
 container{
@@ -41,7 +41,7 @@ box{
 
     transform: translateX(110%);
     background-color: #e10;
-    
+    z-index: 2;
     
     
 }
@@ -59,9 +59,9 @@ box{
 
    background-color: #441155;
    background-image: url('cthulhu.svg');
-  
    background-size: 100% 100%;
    transition-duration: 0s;
+   z-index: 1;
   
    
 }
@@ -74,28 +74,44 @@ box{
 
 .poderRotar{
 
-    background-image: url('cthulhu.svg'); 
+    background: black;
+    background-image: url('chutu1.png'); 
     background-size: 100% 100%;
 
 }
 
 .poderV{
 
+    background: black;
+    background-image: url('chutu2.png');
+    background-size: 100% 100%;
 
-    background-image: url('cthulhu.svg');
+}
 
+.chuluStop{
+
+    background: black;
+    background-image: url('chuluStop.jpg');
     background-size: 100% 100%;
 
 }
 
 .rotacion{
 
-    background-color: #441155;
-    background-image: url('cthulhu.svg');  
-    background-size: 100% 100%;
     animation-name: rotar;
     animation-duration: 2s;
     animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+}
+
+.movimientoV{  
+
+    position: relative;
+    animation-name: moverV; 
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 
 }
 
@@ -103,18 +119,49 @@ box{
 /* ANIMACIONES */
 
 @keyframes rotar {
+        
+        0%{
+            transform: rotate(0);
 
-    from {
-        top:100px;
-        animation-timing-function:ease-in;
         }
-        50%{
-        top:125px;
-        animation-timing-function:ease-out;
+        100%{
+        
+            transform: rotate(360deg);
         }
-        to {
-        top:150px;
-        }
+                
 }
 
         
+@keyframes moverV {
+    
+    from{
+
+        top:0px;
+        left: 0px;
+    }
+
+    25%{
+
+        top: 30px;
+        left: 30px;
+
+    }
+    50%{
+    
+        top:0px;
+        left:60px;
+    }
+    75%{
+
+        top: 30px;
+        left: 30px;
+
+    }
+    to{
+
+        top:0px;
+        left: 0px;
+
+    }      
+             
+}
