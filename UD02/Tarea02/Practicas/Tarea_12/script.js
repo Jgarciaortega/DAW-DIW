@@ -36,10 +36,10 @@ function desevolucionar(){
 function ultimar(){
 
     this.classList.add('ultimate');
-    this.classList.add('ultimate:hover');
-    
     
 }
+
+
 
 
 
