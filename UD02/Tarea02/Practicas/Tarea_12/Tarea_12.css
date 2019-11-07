@@ -26,13 +26,14 @@ box{
     background-color: #1e0;
     border:3px solid #AABBAA;
     border-radius: 10px;
+    
 }
 
 .evoluciona{
 
-   
     transform: translateX(110%);
     background-color: #e10;
+    
     
     
 }
@@ -42,21 +43,24 @@ box{
     background-color: #10e;
     background-color: #1e0;
     transform: translateX(0%);
+    
 
 }
 
 .ultimate{
 
-    background-color: #441155;
+   background-color: #441155;
    background-image: url('cthulhu.svg');
-   z-index: -9999;
+  
    background-size: 100% 100%;
    transition-duration: 0s;
   
+   
 }
 
 .ultimate:hover{
 
-    transform: scale(1.1);
+    transform: scale(1.2);
+   
     
 }
