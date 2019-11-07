@@ -1,0 +1,120 @@
+body{
+    background-color:grey;
+    padding: 3rem;
+}
+
+header{
+
+    width: 800px;
+    height: 100px;
+    display: grid;
+    grid-template-columns: 2fr repeat(2,1fr);
+}
+
+container{
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: repeat(4,1fr);
+    grid-gap: 2%;
+    width: 800px;
+    height: 1000px;
+
+}
+
+button{
+
+    border: 3px solid darkgrey;
+}
+
+
+box{
+    transition-duration: 1s;
+    transition-property: transform,background-color;
+    background-color: #1e0;
+    border:3px solid #AABBAA;
+    border-radius: 10px;
+    
+}
+
+.evoluciona{
+
+    transform: translateX(110%);
+    background-color: #e10;
+    
+    
+    
+}
+
+.desevoluciona{
+
+    background-color: #10e;
+    background-color: #1e0;
+    transform: translateX(0%);
+    
+
+}
+
+.ultimate{
+
+   background-color: #441155;
+   background-image: url('cthulhu.svg');
+  
+   background-size: 100% 100%;
+   transition-duration: 0s;
+  
+   
+}
+
+.ultimate:hover{
+
+    transform: scale(1.2);
+   
+}
+
+.poderRotar{
+
+    background-image: url('cthulhu.svg'); 
+    background-size: 100% 100%;
+
+}
+
+.poderV{
+
+
+    background-image: url('cthulhu.svg');
+
+    background-size: 100% 100%;
+
+}
+
+.rotacion{
+
+    background-color: #441155;
+    background-image: url('cthulhu.svg');  
+    background-size: 100% 100%;
+    animation-name: rotar;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+
+}
+
+
+/* ANIMACIONES */
+
+@keyframes rotar {
+
+    from {
+        top:100px;
+        animation-timing-function:ease-in;
+        }
+        50%{
+        top:125px;
+        animation-timing-function:ease-out;
+        }
+        to {
+        top:150px;
+        }
+}
+
+        
