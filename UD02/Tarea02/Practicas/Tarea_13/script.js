@@ -115,8 +115,13 @@ function stop() {
 
     let boxs = document.querySelectorAll('box');
 
-    boxs.forEach (box => box.classList.remove('movimientoV'));
-    boxs.forEach (box => box.classList.remove('rotacion'));
+    boxs.forEach (box =>{
+
+        box.classList.remove('movimientoV');
+        box.classList.remove('rotacion');
+
+    } );
+
 }
 
 
