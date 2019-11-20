@@ -14,13 +14,27 @@ FUNCIONES PERDIDAS
 
 */
 
+function aumentarProgreso(){
+
+    alert("ok");
+
+}
+
+
 function startMigration() {
 
     let steps = document.querySelectorAll('[data-step]');
 
+    for (let i = 0; i < steps.length; i++) {
+        
+       
+        
+    }
+
     steps.forEach(step => {
 
         step.classList.add('estabaEscondido');
+        step.addEventListener('transitioned', aumentarProgreso);
 
     });
 
@@ -34,12 +48,6 @@ function init() {
 
     let steps = document.querySelectorAll('[data-step]');
 
-    //Ocultamos todos los pasos en el init
-    steps.forEach(step => {
-
-        step.classList.add('escondido');
-
-    });
 }
 
 // Init the environment when all is ready
