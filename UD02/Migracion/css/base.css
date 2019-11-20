@@ -1,0 +1,165 @@
+/*
+CSS Base for the Miskatonic Herald
+*/
+
+@font-face {
+  font-family: neon;
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
+}
+
+/*
+* CSS for body
+*/
+
+body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    
+    /*background-color:#323232;*/
+    background-image:url("https://picsum.photos/1600/900");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    font-family: 'OuroborosRegular';
+    font-weight: normal;
+    font-style: normal;
+    margin: 0;
+    color:#ffffff;
+}
+
+
+/*
+* CSS for items
+*/
+
+content{
+
+    width: 100%;
+    height: 80%;
+   
+}
+
+h1{
+
+    text-align: center;
+}
+
+items{
+
+display:flex;
+flex-direction: column;
+justify-content: center;
+
+}
+
+item{
+
+   font-size: 1.7em;
+   color:rgb(218, 215, 14);
+   align-self: center;
+   
+}
+
+/*
+* CSS for body
+*/
+
+button{
+    
+   font-size: 1em;
+   align-self: center;
+   margin-bottom: 7%;
+}
+
+button:hover {
+    
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+button:active {
+    
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+
+/*
+* CSS for steps
+* - Includes the opacity for the 
+*   animation that makes this more
+*   dinamyc, but is only a simple
+*   GUI.
+*/
+
+steps{
+    
+     display:grid;
+     grid-template-columns: 1fr 2fr 1fr;
+     grid-gap: 7%; 
+     margin-left: 9%;
+}
+
+
+/*
+* CSS for all the steps
+* with class (estabaEscondido)
+* that turns the element visible
+* with a transition.
+*/
+steps * {
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+.escondido{
+
+    transition-property: visibility;
+    opacity:0;
+   
+    visibility: hidden;
+}
+
+.estabaEscondido{
+
+    transition:visibility 0.3s linear,opacity 2s linear;
+    visibility: visible;
+    opacity: 1;
+    
+}
+
+/*Progress*/
+/*
+* CSS for ProgressBars
+*/
+progress{
+
+   
+  
+}
+
+
+
+finalmsg{
+
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+@keyframes neon {
+ 
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
