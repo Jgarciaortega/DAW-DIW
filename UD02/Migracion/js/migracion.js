@@ -14,25 +14,28 @@ FUNCIONES PERDIDAS
 
 */
 
-function transicionar(dataStep) {
 
-    dataStep++;
+function transicionar(ev) {
+
+    let dataStep = parseInt(ev.target.dataset.step) + 1;
+    let steps = document.querySelectorAll('[data-step]');
     let step = document.querySelector(`[data-step="${dataStep}"]`);
- 
-     if (dataStep < 19) {   
 
-         step.addEventListener('transitionend', transicionar(dataStep));
-         step.classList.add('estabaEscondido');
-        //  if(step.localName == 'steplabel')  step.classList.add('estabaEscondido');
-          if(step.localName == 'progress')   step.classList.add('barra');
-          if(step.localName == 'finalmsg')    console.log(step.localName);
-     
-     }
+    if (dataStep < steps.length+1) {
+
+        step.addEventListener('transitionend', transicionar);
+        step.classList.add('estabaEscondido');
+      
+        // if (step.localName == 'progress') 
+        // if (step.localName == 'finalmsg') 
+
+    }
 }
 
 function startMigration() {
 
-    transicionar(0);
+    document.querySelector(`[data-step="1"]`).addEventListener('transitionend', transicionar);
+    document.querySelector(`[data-step="1"]`).classList.add('estabaEscondido');
 
 }
 

@@ -116,7 +116,7 @@ steps{
 steps * {
 
      transition-property: opacity;
-     transition:opacity 2s linear;
+     transition:opacity 1s linear;
      opacity:0;
  
 }
@@ -135,16 +135,14 @@ steps * {
 progress{
 
     border: 2px solid black;
-   
+    
 }
 
-.barra{
-
-    animation: neon 5s linear infinite;
-    background: #eb7260;
+.progressCompleto{
 
 
 }
+
 
 
 finalmsg{
@@ -157,11 +155,6 @@ finalmsg{
 
 @keyframes neon {
  
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 100%;
-    }
+   
 }
 
