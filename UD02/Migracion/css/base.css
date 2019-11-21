@@ -36,7 +36,7 @@ content{
 
     width: 70%;
     height: 100%;
-    background-color:rgb(0,0,0,0.5);
+   
     
 }
 
@@ -122,7 +122,6 @@ steps * {
 }
 
 
-
 .estabaEscondido{
 
     opacity: 1;
@@ -135,10 +134,17 @@ steps * {
 */
 progress{
 
+    border: 2px solid black;
    
-  
 }
 
+.barra{
+
+    animation: neon 5s linear infinite;
+    background: #eb7260;
+
+
+}
 
 
 finalmsg{
@@ -151,9 +157,11 @@ finalmsg{
 
 @keyframes neon {
  
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
 }
 
