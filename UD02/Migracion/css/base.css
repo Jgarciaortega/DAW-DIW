@@ -33,9 +33,11 @@ body{
 */
 
 content{
-
+  
     width: 70%;
     height: 100%;
+    background: gray;
+    opacity: 0.8;
    
     
 }
@@ -73,7 +75,7 @@ button{
    margin-bottom: 7%;
    background-color: blueviolet;
    border-radius: 4%;
-   width: 900px;
+   width: 500px;
 }
 
 button:hover {
@@ -144,17 +146,37 @@ progress{
 }
 
 
-
 finalmsg{
 
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+    animation-name: neon;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 @keyframes neon {
- 
-   
+
+     0% {
+        color: white;
+       
+    }
+    25% {
+        
+        color: yellow;
+    }
+    50% {
+        color: orange;
+        
+    }
+    75% {
+       
+        color: red;       
+    }
+
+    100%{
+
+        color:white
+    }
 }
+
 
