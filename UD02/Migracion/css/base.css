@@ -70,12 +70,10 @@ item{
 
 button{
     
-   font-size: 1em;
+   font-size: 2em;
    align-self: center;
-   margin-bottom: 7%;
-   background-color: blueviolet;
-   border-radius: 4%;
-   width: 500px;
+   background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);
+   margin-bottom: 5%;
 }
 
 button:hover {
@@ -85,10 +83,7 @@ button:hover {
 
 button:active {
     
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+    background: yellowgreen;
 }
 
 
@@ -103,9 +98,10 @@ button:active {
 steps{
     
      display:grid;
-     grid-template-columns: repeat(3,1fr);
+     grid-template-columns: 1fr 2fr 1fr;
      grid-gap: 7%; 
-     margin-left: 9%;
+     margin-left: 6%;
+     margin-top: 3%;
 }
 
 
@@ -142,6 +138,8 @@ progress{
 
 .progressCompleto{
 
+   background-color: greenyellow;
+
 
 }
 
@@ -177,6 +175,31 @@ finalmsg{
 
         color:white
     }
+}
+
+@keyframes destello {
+
+    0% {
+       color: white;
+      
+   }
+   25% {
+       
+       color: yellow;
+   }
+   50% {
+       color: orange;
+       
+   }
+   75% {
+      
+       color: red;       
+   }
+
+   100%{
+
+       color:white
+   }
 }
 
 

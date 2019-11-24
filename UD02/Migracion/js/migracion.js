@@ -13,8 +13,7 @@ async function avanceBarra(step,dataStep) {
 
     let steps = document.querySelectorAll('[data-step]');
     let cont = 0;
-    dataStep++;
-   
+    
     for (let i = 0; i < 101; i++) {
         
         if (i == 10 + cont) {
@@ -25,6 +24,8 @@ async function avanceBarra(step,dataStep) {
 
         step.setAttribute('value', +i);
     }
+
+    dataStep++;
     //Tras finalizar el incremento de la barra simulamos click para mostrar finalsmg
     if (dataStep < steps.length + 1)   document.querySelector(`[data-step="${dataStep}"]`).click();
    
