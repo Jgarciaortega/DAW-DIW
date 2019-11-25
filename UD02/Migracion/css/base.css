@@ -98,7 +98,7 @@ button:active {
 steps{
     
      display:grid;
-     grid-template-columns: 1fr 2fr 1fr;
+     grid-template-columns: 1fr 1fr 1fr;
      grid-gap: 7%; 
      margin-left: 6%;
      margin-top: 3%;
@@ -133,6 +133,7 @@ steps * {
 progress{
 
     border: 2px solid black;
+    width: 450px;
     
 }
 
