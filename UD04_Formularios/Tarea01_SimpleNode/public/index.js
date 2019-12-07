@@ -4,6 +4,7 @@ function buscarResultados() {
     let cadena;
     let busqueda = this.value.toUpperCase();
     let contenedorResult = document.getElementById('resultados');
+    let table = '<table><tr><th>DIRECCION</th><th>CENTRO</th><th>DISTRITO</th></tr>';
     
     if(busqueda.length == 0){
         
@@ -16,18 +17,25 @@ function buscarResultados() {
         .then(response => response.json())
         .then(data => {
 
+            console.log(data.features[0].properties);
             for (let i = 0; i < data.features.length; i++) {
                 //Las calles comienzan con C/. Por ello reduzco la cadena para mejorar la busqueda
                 cadena = acortarCadena(data.features[i].properties.direccion);
-
                 //Compruebo las dos cadenas
                 if (cadena.substring(0, busqueda.length) == busqueda) {
 
-                    let result = document.createElement('p');
-                    result.innerHTML = data.features[i].properties.direccion;
-                    contenedorResult.appendChild(result);
+                    table += '<tr><td>';
+                    table += data.features[i].properties.direccion;
+                    table += '</td><td>';
+                    table += data.features[i].properties.centro;
+                    table += '</td><td>';
+                    table += data.features[i].properties.n_distrito;
+                    table += '</td></tr>';
                 }
             }
+
+            table += '</table>';
+            contenedorResult.innerHTML = table;
 
         })
     }
