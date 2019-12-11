@@ -1,0 +1,18 @@
+#seleccionFalla {
+  display: flex;
+  flex-direction: column; 
+}
+
+#botonesSecciones {
+  display: block; 
+}
+
+#fichasFallas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); }
+  #fichasFallas img {
+    width: 400px;
+    height: 400px; 
+}
+
+/*# sourceMappingURL=style.css.map */
