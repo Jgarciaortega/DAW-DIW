@@ -8,7 +8,8 @@ header{
 
     width: 100%;
     background-color: #404040;
-    float: left;
+    display: grid;
+    
 }
 
 #logo{

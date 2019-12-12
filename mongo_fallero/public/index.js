@@ -55,30 +55,65 @@ function mostrarFallas() {
 
 
     let filtroSeccion = document.querySelector('select').value;
+    let contFichasFallas = document.getElementById('fichasFallas');
+    let anyoValido = false;
+
+    /*Ya que el formato filtroSeleccion es (Seccion: datoSeccion) he de adaptarlo para coincidir con la busqueda
+    del JSON*/
+     filtroSeccion = adaptarFiltroSeccion(filtroSeccion);
 
     let seccionABuscar;
-    let filtroAnyo;
+    let imgABuscar;
+    let anyoFundacion;
+
+    console.log(datosJSON);
+
+    limpiarNodo(contFichasFallas);
 
     for (let i = 0; i < datosJSON.features.length; i++) {
 
-        // console.log(filtroSeccion);
-        // console.log(datosJSON.features[i].properties.seccion);
+        if(seccionPpalActiva){
 
-        if(seccionPpalActiva) seccionABuscar = datosJSON.features[i].properties.seccion.split(':');
-        else seccionABuscar = datosJSON.features[i].properties.seccion_i.split(':');
+            seccionABuscar = datosJSON.features[i].properties.seccion;
+            imgABuscar = datosJSON.features[i].properties.boceto;
+            anyoFundacion = datosJSON.features[i].properties.anyo_fundacion;
+
+        } 
+        else{
+
+            seccionABuscar = datosJSON.features[i].properties.seccion_i;
+            imgABuscar = datosJSON.features[i].properties.boceto_i;
+            anyoFundacion = datosJSON.features[i].properties.anyo_fundacion_i;
+        }
+
+        anyoValido = validarAnyo(anyoFundacion);
 
         if (filtroSeccion == seccionABuscar || 
-            filtroSeccion == 'Todas las secciones') {
+            filtroSeccion == 'Todas las secciones' && anyoValido) {
 
             let falla = document.createElement('div');
             let img = document.createElement('img');
-            img.setAttribute('src', datosJSON.features[i].properties.boceto);
+            img.setAttribute('src', imgABuscar);
             falla.appendChild(img);
             fichasFallas.appendChild(falla);
+
         }
     }
 
 }
+
+ /*Ya que el formato filtroSeleccion es (Seccion: datoSeccion) he de adaptarlo para coincidir con la busqueda
+    del JSON*/
+function adaptarFiltroSeccion(filtro){
+
+    let cont = filtro.indexOf(":");
+
+    filtro = filtro.slice(++cont);
+
+    return filtro;
+
+}
+
 
 function cargarSelectSeccion() {
 
@@ -140,6 +175,29 @@ function obtenerDatos(datos) {
     mostrarFallas();
 }
 
+function borrarContenido(){
+
+   this.value = "";
+}
+
+function seleccionarAnyo(){
+
+    if(this.value == ''){
+
+        if(this.id == 'anyoDesde') this.value = 'Desde';
+        if(this.id == 'anyoHasta') this.value = 'Hasta';
+
+    }else{
+
+        if(this.id == 'anyoDesde') seleccionDesdeAnyo = this.value;
+        if(this.id == 'anyoHasta') seleccionHastaAnyo = this.value;
+
+    }
+}
+
+
+
+
 function init() {
 
     obtenerJSON();
@@ -149,6 +207,10 @@ function init() {
     document.querySelector('input[value="principal"]').addEventListener('change', cambiarSeccion);
     document.querySelector('input[value="infantil"]').addEventListener('change', cambiarSeccion);
     document.querySelector('select').addEventListener('change', modificarSeccionBuscada);
+    document.getElementById('anyoDesde').addEventListener('focus', borrarContenido);
+    document.getElementById('anyoHasta').addEventListener('focus', borrarContenido);
+    document.getElementById('anyoDesde').addEventListener('blur', seleccionarAnyo);
+    document.getElementById('anyoHasta').addEventListener('blur', seleccionarAnyo);
 
 }
 
@@ -157,5 +219,7 @@ let datosJSON;
 let seccionPpalActiva;
 let seccionesPrincipales;
 let seccionesInfantiles;
+let seleccionDesdeAnyo;
+let seleccionHastaAnyo;
 
 window.addEventListener('load', init);
