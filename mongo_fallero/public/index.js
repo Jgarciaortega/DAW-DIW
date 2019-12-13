@@ -60,7 +60,7 @@ function mostrarFallas() {
 
     /*Ya que el formato filtroSeleccion es (Seccion: datoSeccion) he de adaptarlo para coincidir con la busqueda
     del JSON*/
-     filtroSeccion = adaptarFiltroSeccion(filtroSeccion);
+    filtroSeccion = adaptarFiltroSeccion(filtroSeccion);
 
     //Datos por los que se va a filtrar la busqueda:
     let seccionABuscar;
@@ -73,14 +73,14 @@ function mostrarFallas() {
 
     for (let i = 0; i < datosJSON.features.length; i++) {
 
-        if(seccionPpalActiva){
+        if (seccionPpalActiva) {
 
             seccionABuscar = datosJSON.features[i].properties.seccion;
             imgABuscar = datosJSON.features[i].properties.boceto;
             anyoFundacion = datosJSON.features[i].properties.anyo_fundacion;
 
-        } 
-        else{
+        }
+        else {
 
             seccionABuscar = datosJSON.features[i].properties.seccion_i;
             imgABuscar = datosJSON.features[i].properties.boceto_i;
@@ -89,23 +89,40 @@ function mostrarFallas() {
 
         anyoValido = validarAnyo(anyoFundacion);
 
-        if (filtroSeccion == seccionABuscar || 
+
+        if (filtroSeccion == seccionABuscar ||
             filtroSeccion == 'Todas las secciones' && anyoValido) {
 
             let falla = document.createElement('div');
+
+            let divNombreFalla = document.createElement('div');
+            divNombreFalla.classList.add('nombreFalla');
+            divNombreFalla.innerHTML = datosJSON.features[i].properties.nombre;
+            falla.appendChild(divNombreFalla);
+
+        
+            falla.classList.add('contenedorFalla');
             let img = document.createElement('img');
             img.setAttribute('src', imgABuscar);
             falla.appendChild(img);
             fichasFallas.appendChild(falla);
 
+            let divMetadatos = document.createElement('div');
+            let btnUbicacion = document.createElement('button');
+            divMetadatos.classList.add('contenedorMetadatos');
+            divMetadatos.appendChild(btnUbicacion);
+            falla.appendChild(divMetadatos);
+
         }
+
+        anyoValido = false;
     }
 
 }
 
- /*Ya que el formato filtroSeleccion es (Seccion: datoSeccion) he de adaptarlo para coincidir con la busqueda
-    del JSON*/
-function adaptarFiltroSeccion(filtro){
+/*Ya que el formato filtroSeleccion es (Seccion: datoSeccion) he de adaptarlo para coincidir con la busqueda
+   del JSON*/
+function adaptarFiltroSeccion(filtro) {
 
     let cont = filtro.indexOf(":");
 
@@ -116,13 +133,13 @@ function adaptarFiltroSeccion(filtro){
 }
 
 
-function validarAnyo(anyoFundacion){
+function validarAnyo(anyoFundacion) {
 
-    // console.log(seleccionDesdeAnyo);
-    // console.log(seleccionHastaAnyo);
-    // console.log(anyoFundacion);
+    let anyoValido = false;
 
-   
+    if (anyoFundacion >= seleccionDesdeAnyo && anyoFundacion <= seleccionHastaAnyo) anyoValido = true;
+
+    return anyoValido;
 
 }
 
@@ -130,7 +147,7 @@ function validarAnyo(anyoFundacion){
 function cargarSelectSeccion() {
 
     //Si hay contenido previo lo eliminamos 
-    limpiarNodo( document.querySelector('select'));
+    limpiarNodo(document.querySelector('select'));
 
     let secciones = [];
 
@@ -185,25 +202,25 @@ function obtenerDatos(datos) {
     datosJSON = datos;
     //Mostramos fallas
     mostrarFallas();
-   
+
 }
 
-function borrarContenido(){
+function borrarContenido() {
 
-   this.value = "";
+    this.value = "";
 }
 
-function seleccionarAnyo(){
+function seleccionarAnyo() {
 
-    if(this.value == ''){
+    if (this.value == '') {
 
-        if(this.id == 'anyoDesde') this.value = 'Desde'; 
-        if(this.id == 'anyoHasta') this.value = 'Hasta'; 
+        if (this.id == 'anyoDesde') this.value = 'Desde';
+        if (this.id == 'anyoHasta') this.value = 'Hasta';
 
-    }else{
+    } else {
 
-        if(this.id == 'anyoDesde') seleccionDesdeAnyo = this.value;
-        if(this.id == 'anyoHasta') seleccionHastaAnyo = this.value;
+        if (this.id == 'anyoDesde') seleccionDesdeAnyo = this.value;
+        if (this.id == 'anyoHasta') seleccionHastaAnyo = this.value;
 
     }
 
@@ -216,8 +233,8 @@ function init() {
     seccionPpalActiva = true;
     seccionesPrincipales = [];
     seccionesInfantiles = [];
-    seleccionHastaAnyo = '';
-    seleccionDesdeAnyo = '';
+    seleccionHastaAnyo = 3000;
+    seleccionDesdeAnyo = 0;
     document.querySelector('input[value="principal"]').addEventListener('change', cambiarSeccion);
     document.querySelector('input[value="infantil"]').addEventListener('change', cambiarSeccion);
     document.querySelector('select').addEventListener('change', modificarSeccionBuscada);
