@@ -62,6 +62,7 @@ function mostrarFallas() {
     del JSON*/
      filtroSeccion = adaptarFiltroSeccion(filtroSeccion);
 
+    //Datos por los que se va a filtrar la busqueda:
     let seccionABuscar;
     let imgABuscar;
     let anyoFundacion;
@@ -111,6 +112,17 @@ function adaptarFiltroSeccion(filtro){
     filtro = filtro.slice(++cont);
 
     return filtro;
+
+}
+
+
+function validarAnyo(anyoFundacion){
+
+    // console.log(seleccionDesdeAnyo);
+    // console.log(seleccionHastaAnyo);
+    // console.log(anyoFundacion);
+
+   
 
 }
 
@@ -173,6 +185,7 @@ function obtenerDatos(datos) {
     datosJSON = datos;
     //Mostramos fallas
     mostrarFallas();
+   
 }
 
 function borrarContenido(){
@@ -184,8 +197,8 @@ function seleccionarAnyo(){
 
     if(this.value == ''){
 
-        if(this.id == 'anyoDesde') this.value = 'Desde';
-        if(this.id == 'anyoHasta') this.value = 'Hasta';
+        if(this.id == 'anyoDesde') this.value = 'Desde'; 
+        if(this.id == 'anyoHasta') this.value = 'Hasta'; 
 
     }else{
 
@@ -193,10 +206,9 @@ function seleccionarAnyo(){
         if(this.id == 'anyoHasta') seleccionHastaAnyo = this.value;
 
     }
+
+    mostrarFallas();
 }
-
-
-
 
 function init() {
 
@@ -204,6 +216,8 @@ function init() {
     seccionPpalActiva = true;
     seccionesPrincipales = [];
     seccionesInfantiles = [];
+    seleccionHastaAnyo = '';
+    seleccionDesdeAnyo = '';
     document.querySelector('input[value="principal"]').addEventListener('change', cambiarSeccion);
     document.querySelector('input[value="infantil"]').addEventListener('change', cambiarSeccion);
     document.querySelector('select').addEventListener('change', modificarSeccionBuscada);
