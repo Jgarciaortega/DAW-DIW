@@ -1,61 +1,134 @@
 
-#seleccionFalla{
-
-    display: flex;
-    flex-direction: column;
-    
+#seleccionFalla {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#botonesSecciones{
-
-    display: block;
- 
+#botonesSecciones {
+  display: block;
 }
 
+#fichasFallas {
+  
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 
-#fichasFallas{
-
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-
-
-    .contenedorFalla{
-
-        border:1px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    
-        img{
-    
-            width: 100%;
-            height: 70%;
-            
-        }
-    
-        .nombreFalla{
-    
-        font-family: fantasy;
-        text-align: center;
-        }
-    
-        .contenedorMetadatos{
-    
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    
-            button{
-    
-                width: 50%;
-                height: 20%;
-            }
-        }   
+  .contenedorFalla {
+    margin: auto;
+    border: 3px ridge black;
+    box-shadow: 5px 5px 5px rgb(95, 94, 94);
+    margin-bottom: 5%;
+    position: relative;
+    .contenedorImg {
+      width: 360px;
+      height: 450px;
+      
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
-    
+    .nombreFalla {
+      font-family: fantasy;
+      text-align: center;
+    }
 
+    .contenedorMetadatos {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 5%;
+
+      button {
+        width: 130px;
+        height: 50px;
+        margin: auto;
+        box-shadow: 0px 1px 0px 0px #fff6af;
+        background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+        background-color:#ffec64;
+        border-radius:6px;
+        border:1px solid #ffaa22;
+        display:inline-block;
+        cursor:pointer;
+        color:#333333;
+        font-family:Arial;
+        font-size:15px;
+        font-weight:bold;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #ffee66;
+      }
+
+      button:hover{
+        background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+        background-color:#ffab23;
+
+      }
+
+      .puntuacion{
+        /*La propiedad direction: rtl; cambia la dirección de escritura  de 
+        derecha a izquierda ( right to left )*/
+        direction: rtl;/* right to left */
+        /*Se utiliza junto con la propiedad direction para cambiar  la dirección 
+        del texto */
+        unicode-bidi: bidi-override;/* bidi de bidireccional*/
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      input{
+
+        display: none;
+       
+      }
+
+      input:checked ~ label {
+        color: orange;
+      }
+
+      label{
+
+        color:grey;
+        font-size: 2em;
+      }
+
+      label:hover{
+          color:orange;
+      }
+
+      label:hover ~ label{
+          color:orange;
+        }
+    
+    }
+  }
 }
 
 
 
+@media (min-width: 500px){
 
+    #fichasFallas {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+
+    #map{
+
+      width: 500px;
+      height: 600px;
+      box-shadow: 5px 5px 5px #888;
+      position: absolute;
+      // left: 10px; 
+      // top: 40px;
+    
+    }
+   
+}

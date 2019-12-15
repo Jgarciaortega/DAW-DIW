@@ -14,9 +14,6 @@ function obtenerJSON() {
 
 function obtenerSecciones(datos) {
 
-    seccionesPrincipales.push('Todas las secciones');
-    seccionesInfantiles.push('Todas las secciones');
-
     datos.features.forEach(dato => {
 
         if (seccionesPrincipales.indexOf(dato.properties.seccion) == -1) {
@@ -31,24 +28,35 @@ function obtenerSecciones(datos) {
 
     });
 
-    //TO DO: ordenar datos antes de mostrar
-    //seccionesInfantiles.sort();
+    //Ordenar datos antes de mostrar
+    ordenarSecciones();
+
+}
+
+function ordenarSecciones() {
+
+    //Secciones principales ordenadas con .sort
+    seccionesPrincipales.sort();
+    //TO-DO:Ordenamiento .sort en secciones infantiles no funciona correctamente 
+    seccionesInfantiles.sort();
 
     //Mostramos el dato con Seccion delante...
-    for (let i = 0; i < seccionesPrincipales.length; i++) {
+    anyadirTexto(seccionesPrincipales);
+    anyadirTexto(seccionesInfantiles);
 
-        if (seccionesPrincipales[i] != 'Todas las secciones')
-            seccionesPrincipales[i] = 'Seccion :' + seccionesPrincipales[i];
+}
+
+function anyadirTexto(seccion) {
+
+    for (let i = 0; i < seccion.length; i++) {
+
+        if (seccion[i] == 'E') seccion[i] = 'Seccion Especial';
+        else if (seccion[i] == 'FC') seccion[i] = 'Fuera de categoria';
+        else seccion[i] = 'Seccion :' + seccion[i];
 
     }
 
-    for (let i = 0; i < seccionesInfantiles.length; i++) {
-
-        if (seccionesInfantiles[i] != 'Todas las secciones')
-            seccionesInfantiles[i] = 'Seccion :' + seccionesInfantiles[i];
-
-    }
-
+    seccion.push('Todas las secciones');
 }
 
 function mostrarFallas() {
@@ -58,16 +66,17 @@ function mostrarFallas() {
     let contFichasFallas = document.getElementById('fichasFallas');
     let anyoValido = false;
 
-    /*Ya que el formato filtroSeleccion es (Seccion: datoSeccion) he de adaptarlo para coincidir con la busqueda
-    del JSON*/
+    /*Ya que el formato filtroSeleccion se ha modificado para que sea mas legible he de adaptarlo para coincidir 
+    con la busqueda en el JSON */
     filtroSeccion = adaptarFiltroSeccion(filtroSeccion);
 
     //Datos por los que se va a filtrar la busqueda:
     let seccionABuscar;
     let imgABuscar;
     let anyoFundacion;
+    let ubicacionFalla;
 
-    console.log(datosJSON);
+    // console.log(datosJSON);
 
     limpiarNodo(contFichasFallas);
 
@@ -87,31 +96,69 @@ function mostrarFallas() {
             anyoFundacion = datosJSON.features[i].properties.anyo_fundacion_i;
         }
 
-        anyoValido = validarAnyo(anyoFundacion);
+        ubicacionFalla = datosJSON.features[i].geometry.coordinates;
+        anyoValido = validarAnyo(parseInt(anyoFundacion));
 
+        if (anyoValido && filtroSeccion == seccionABuscar || filtroSeccion == 'Todas las secciones') {
 
-        if (filtroSeccion == seccionABuscar ||
-            filtroSeccion == 'Todas las secciones' && anyoValido) {
-
+            console.log(anyoFundacion);
+            //Contenedor principal con toda la info de la falla
             let falla = document.createElement('div');
+            falla.classList.add('contenedorFalla');
+            fichasFallas.appendChild(falla);
 
+            //Contenedor del titulo-nombre falla
             let divNombreFalla = document.createElement('div');
             divNombreFalla.classList.add('nombreFalla');
             divNombreFalla.innerHTML = datosJSON.features[i].properties.nombre;
             falla.appendChild(divNombreFalla);
 
-        
-            falla.classList.add('contenedorFalla');
+            //Contenedor imagen e imagen falla
+            let divImgFalla = document.createElement('div');
+            divImgFalla.classList.add('contenedorImg');
             let img = document.createElement('img');
             img.setAttribute('src', imgABuscar);
-            falla.appendChild(img);
-            fichasFallas.appendChild(falla);
+            divImgFalla.appendChild(img);
+            falla.appendChild(divImgFalla);
 
+            //Contenedor con toda la info extra(ubicacion,puntuacion...)
             let divMetadatos = document.createElement('div');
+            falla.appendChild(divMetadatos);
+
+            //Boton ubicacion
             let btnUbicacion = document.createElement('button');
+            btnUbicacion.innerHTML = 'UBICACIÓN';
+            btnUbicacion.setAttribute('value', ubicacionFalla);
+            btnUbicacion.addEventListener('click', mostrarUbicacion);
             divMetadatos.classList.add('contenedorMetadatos');
             divMetadatos.appendChild(btnUbicacion);
-            falla.appendChild(divMetadatos);
+
+            //Puntuacion falla
+            let formPuntuacion = document.createElement('form');
+            let p = document.createElement('p');
+            p.classList.add('puntuacion');
+            for (let x = idLabelPtos, y = 5; x < idLabelPtos + 5; x++ , y--) {
+
+                let input = document.createElement('input');
+                input.setAttribute('id', 'radio' + x);
+                input.setAttribute('type', 'radio');
+                input.setAttribute('name', 'estrellas');
+                input.setAttribute('value', y);
+                p.appendChild(input);
+
+                let label = document.createElement('label');
+                label.setAttribute('for', 'radio' + x);
+                label.innerHTML = '★';
+                label.addEventListener('mouseup', anotarPuntuacion);
+                p.appendChild(label);
+
+            }
+            /*Incrementamos la variable global en 5 para que sean distintas la siguiente tanda de estrellas
+            De no ser asi cuando pulsamos sobre una estrella con un id igual a otra aplica cambios a la que tiene
+            mismo id*/
+            idLabelPtos += 5;
+            formPuntuacion.appendChild(p);
+            divMetadatos.appendChild(formPuntuacion);
 
         }
 
@@ -120,23 +167,31 @@ function mostrarFallas() {
 
 }
 
-/*Ya que el formato filtroSeleccion es (Seccion: datoSeccion) he de adaptarlo para coincidir con la busqueda
-   del JSON*/
+function anotarPuntuacion() {
+
+    console.log(this.previousSibling.value);
+
+}
+
+/*Ya que el formato filtroSeleccion se ha modificado para que sea mas legible he de adaptarlo para coincidir 
+con la busqueda en el JSON */
 function adaptarFiltroSeccion(filtro) {
 
-    let cont = filtro.indexOf(":");
+    if (filtro == 'Seccion Especial') filtro = 'E';
+    else if (filtro == 'Fuera de categoria') filtro = 'FC';
+    else {
+        let cont = filtro.indexOf(":");
+        filtro = filtro.slice(++cont);
 
-    filtro = filtro.slice(++cont);
-
+    }
     return filtro;
-
 }
 
 
 function validarAnyo(anyoFundacion) {
 
     let anyoValido = false;
-
+    
     if (anyoFundacion >= seleccionDesdeAnyo && anyoFundacion <= seleccionHastaAnyo) anyoValido = true;
 
     return anyoValido;
@@ -205,9 +260,57 @@ function obtenerDatos(datos) {
 
 }
 
+function mostrarUbicacion() {
+
+    // let coordenadas = convertirCoordenada(this.value);
+
+
+    let divMapa = document.createElement('div');
+    divMapa.setAttribute('id', 'map');
+    document.querySelector('body').appendChild(divMapa);
+
+    let altura = 600;
+    let anchura = 500;
+    console.log(window.screen.height);
+    console.log(window.screen.width);
+    let y = parseInt((window.screen.height / 2) - (altura / 2));
+    let x = parseInt((window.screen.width / 2) - (anchura / 2));
+
+    divMapa.style.left = x + 'px';
+    divMapa.style.top = y + 'px';
+
+
+    var map = L.map('map').
+        setView([41.66, -4.72],
+            14);
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
+    }).addTo(map);
+
+    L.control.scale().addTo(map);
+
+}
+
+
+function convertirCoordenada(coordenadas) {
+
+    let firstProjection = '+proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs';
+    let secondProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+
+    //coordenadas = proj4(firstProjection, secondProjection, coordenadas);
+
+
+}
+
 function borrarContenido() {
 
     this.value = "";
+
+    if (this.id == 'anyoDesde') seleccionDesdeAnyo = 0;
+    if (this.id == 'anyoHasta') seleccionHastaAnyo = 3000;
+
 }
 
 function seleccionarAnyo() {
@@ -235,6 +338,7 @@ function init() {
     seccionesInfantiles = [];
     seleccionHastaAnyo = 3000;
     seleccionDesdeAnyo = 0;
+    idLabelPtos = 1;
     document.querySelector('input[value="principal"]').addEventListener('change', cambiarSeccion);
     document.querySelector('input[value="infantil"]').addEventListener('change', cambiarSeccion);
     document.querySelector('select').addEventListener('change', modificarSeccionBuscada);
@@ -252,5 +356,7 @@ let seccionesPrincipales;
 let seccionesInfantiles;
 let seleccionDesdeAnyo;
 let seleccionHastaAnyo;
+let idLabelPtos; //La combinacion input-label de las estrellas de puntuacion requieren id distintos
+
 
 window.addEventListener('load', init);
