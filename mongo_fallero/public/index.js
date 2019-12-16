@@ -169,7 +169,9 @@ function mostrarFallas() {
 
 function anotarPuntuacion() {
 
+    
     console.log(this.previousSibling.value);
+   
 
 }
 
@@ -262,7 +264,7 @@ function obtenerDatos(datos) {
 
 function mostrarUbicacion() {
 
-    // let coordenadas = convertirCoordenada(this.value);
+     let coordenadas = convertirCoordenada(this.value);
 
 
     let divMapa = document.createElement('div');
@@ -299,7 +301,7 @@ function convertirCoordenada(coordenadas) {
     let firstProjection = '+proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs';
     let secondProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
-    //coordenadas = proj4(firstProjection, secondProjection, coordenadas);
+    coordenadas = proj4(firstProjection, secondProjection, coordenadas);
 
 
 }
