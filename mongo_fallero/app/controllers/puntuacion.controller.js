@@ -37,4 +37,5 @@ exports.create = (req,res)=>{
             message: err.message|| "Something was wrong creating puntuacion"
         });
     });
+
 };

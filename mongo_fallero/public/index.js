@@ -21,9 +21,12 @@ function obtenerSecciones(datos) {
             seccionesPrincipales.push(dato.properties.seccion);
         }
 
-        if (seccionesInfantiles.indexOf(dato.properties.seccion_i) == -1) {
+        //.sort no ordena las fallas infantiles ya que ordena por ASCII. Por ello parseo a int y comprueba
+        //que todos los parses sean numeros (!isNan)
+        if (seccionesInfantiles.indexOf(parseInt(dato.properties.seccion_i)) == -1 && 
+        !isNaN(parseInt(dato.properties.seccion_i)) ) {
 
-            seccionesInfantiles.push(dato.properties.seccion_i);
+            seccionesInfantiles.push(parseInt(dato.properties.seccion_i));
         }
 
     });
@@ -33,12 +36,19 @@ function obtenerSecciones(datos) {
 
 }
 
+function sortNumber(a,b){
+    return a - b;
+}
+
 function ordenarSecciones() {
 
     //Secciones principales ordenadas con .sort
     seccionesPrincipales.sort();
     //TO-DO:Ordenamiento .sort en secciones infantiles no funciona correctamente 
-    seccionesInfantiles.sort();
+    // seccionesInfantiles = Array.from(seccionesInfantiles).sort();
+    seccionesInfantiles.sort(sortNumber);
+    //seccionesInfantiles.sort((o1, o2) => o1.localeCompare(o2));
+    //console.log(seccionesInfantiles);
 
     //Mostramos el dato con Seccion delante...
     anyadirTexto(seccionesPrincipales);
@@ -75,8 +85,8 @@ function mostrarFallas() {
     let imgABuscar;
     let anyoFundacion;
     let ubicacionFalla;
-
-    // console.log(datosJSON);
+    let coordenadas = convertirCoordenada(this.value);
+    console.log(datosJSON);
 
     limpiarNodo(contFichasFallas);
 
@@ -101,7 +111,6 @@ function mostrarFallas() {
 
         if (anyoValido && filtroSeccion == seccionABuscar || filtroSeccion == 'Todas las secciones') {
 
-            console.log(anyoFundacion);
             //Contenedor principal con toda la info de la falla
             let falla = document.createElement('div');
             falla.classList.add('contenedorFalla');
@@ -144,6 +153,7 @@ function mostrarFallas() {
                 input.setAttribute('type', 'radio');
                 input.setAttribute('name', 'estrellas');
                 input.setAttribute('value', y);
+                input.setAttribute('idFalla', datosJSON.features[i].properties.id);
                 p.appendChild(input);
 
                 let label = document.createElement('label');
@@ -169,11 +179,26 @@ function mostrarFallas() {
 
 function anotarPuntuacion() {
 
-    
-    console.log(this.previousSibling.value);
-   
+    let ptos = this.previousSibling.value;
+    let id = this.previousSibling.attributes.idfalla.value;
+
+  
+
+    let url = '/api/puntuaciones';
+    let data = {idFalla:id,ip:'',puntuacion:ptos};
+ 
+    fetch(url, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data), // data can be `string` or {object}!
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
 
 }
+
 
 /*Ya que el formato filtroSeleccion se ha modificado para que sea mas legible he de adaptarlo para coincidir 
 con la busqueda en el JSON */
@@ -264,7 +289,7 @@ function obtenerDatos(datos) {
 
 function mostrarUbicacion() {
 
-     let coordenadas = convertirCoordenada(this.value);
+    //  let coordenadas = convertirCoordenada(this.value);
 
 
     let divMapa = document.createElement('div');
@@ -301,7 +326,7 @@ function convertirCoordenada(coordenadas) {
     let firstProjection = '+proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs';
     let secondProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
-    coordenadas = proj4(firstProjection, secondProjection, coordenadas);
+    // coordenadas = proj4(firstProjection, secondProjection, coordenadas);
 
 
 }

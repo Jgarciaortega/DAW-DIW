@@ -8,8 +8,6 @@ const map = require('proj4');
 const dbConfig = require('./config/database.config');
 const mongoose = require('mongoose');
 
-
-
 // Utilizaremos body-parser para "parsear lo que nos pidan"
 app.use(bodyParser.urlencoded({
     extended:true
