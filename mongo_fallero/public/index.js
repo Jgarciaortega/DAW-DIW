@@ -179,25 +179,36 @@ function mostrarFallas() {
 
 function anotarPuntuacion() {
 
-    let ptos = this.previousSibling.value;
-    let id = this.previousSibling.attributes.idfalla.value;
-
-  
+    // let ptos = this.previousSibling.value;
+    // let id = this.previousSibling.attributes.idfalla.value;
+    // let url = '/api/puntuaciones';
+    // let data = {idFalla:id,ip:'',puntuacion:ptos};
+    //enviarAlServidor(url,data,'POST');
 
     let url = '/api/puntuaciones';
-    let data = {idFalla:id,ip:'',puntuacion:ptos};
+
  
-    fetch(url, {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(data), // data can be `string` or {object}!
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response));
+    
 
 }
+
+
+function enviarAlServidor(url,data,metodo){
+
+
+    fetch(url, {
+        method: metodo,
+        body: JSON.stringify(data), 
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
+
+}
+
+
 
 
 /*Ya que el formato filtroSeleccion se ha modificado para que sea mas legible he de adaptarlo para coincidir 

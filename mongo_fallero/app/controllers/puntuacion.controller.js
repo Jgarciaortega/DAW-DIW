@@ -13,6 +13,21 @@ exports.findAll = (req,res) => {
 
 };
 
+//Encontrar un ID
+exports.findOne =  (req,res)=>{
+
+   Puntuacion.find({idFalla:req.params.puntuacionId}).then(puntuaciones1 =>{
+       res.send(puntuaciones1);
+    }).catch(err =>{
+        res.status(500).send({
+            message: err.message || "Javi paquete"
+        });
+    });
+    
+
+
+};
+
 // Crear y salvar
 exports.create = (req,res)=>{
 
@@ -32,6 +47,7 @@ exports.create = (req,res)=>{
 
     puntuacion.save().then(data =>{
         res.send(data);
+        console.log(data);
     }).catch(err => {
         res.status(500).send({
             message: err.message|| "Something was wrong creating puntuacion"

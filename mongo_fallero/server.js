@@ -27,10 +27,10 @@ mongoose.connect(dbConfig.url,{
         process.exit();
     });
 
-// Vamos a definir un "punto de inicio"
-app.get('/api/',(req,res)=>{
-    res.json({"message":"API de MongoFallero"});
-});
+// // Vamos a definir un "punto de inicio"
+// app.get('/api/',(req,res)=>{
+//     res.json({"message":"API de MongoFallero"});
+// });
 
 // Paginas publicas (estaticas)
 app.use(express.static(path.join(__dirname, 'public')));
