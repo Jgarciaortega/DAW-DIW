@@ -20,7 +20,7 @@ exports.findOne =  (req,res)=>{
        res.send(puntuaciones1);
     }).catch(err =>{
         res.status(500).send({
-            message: err.message || "Javi paquete"
+            message: err.message || " Algo fue mal mientras los capturabamos a todos"
         });
     });
     

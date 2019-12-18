@@ -179,22 +179,19 @@ function mostrarFallas() {
 
 function anotarPuntuacion() {
 
-    // let ptos = this.previousSibling.value;
-    // let id = this.previousSibling.attributes.idfalla.value;
-    // let url = '/api/puntuaciones';
-    // let data = {idFalla:id,ip:'',puntuacion:ptos};
-    //enviarAlServidor(url,data,'POST');
-
+    let ptos = this.previousSibling.value;
+    let id = this.previousSibling.attributes.idfalla.value;
     let url = '/api/puntuaciones';
+    let data = {idFalla:id,ip:'',puntuacion:ptos};
+   
+    //  enviarAlServidor(url,data,'POST');
 
- 
-    
+     enviarAlServidor('/api/puntuaciones',6,'GET');
 
 }
 
 
 function enviarAlServidor(url,data,metodo){
-
 
     fetch(url, {
         method: metodo,
