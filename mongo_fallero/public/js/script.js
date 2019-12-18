@@ -23,8 +23,8 @@ function obtenerSecciones(datos) {
 
         //.sort no ordena las fallas infantiles ya que ordena por ASCII. Por ello parseo a int y comprueba
         //que todos los parses sean numeros (!isNan)
-        if (seccionesInfantiles.indexOf(parseInt(dato.properties.seccion_i)) == -1 && 
-        !isNaN(parseInt(dato.properties.seccion_i)) ) {
+        if (seccionesInfantiles.indexOf(parseInt(dato.properties.seccion_i)) == -1 &&
+            !isNaN(parseInt(dato.properties.seccion_i))) {
 
             seccionesInfantiles.push(parseInt(dato.properties.seccion_i));
         }
@@ -36,7 +36,7 @@ function obtenerSecciones(datos) {
 
 }
 
-function sortNumber(a,b){
+function sortNumber(a, b) {
     return a - b;
 }
 
@@ -86,7 +86,7 @@ function mostrarFallas() {
     let anyoFundacion;
     let ubicacionFalla;
     let coordenadas = convertirCoordenada(this.value);
-    console.log(datosJSON);
+    //console.log(datosJSON);
 
     limpiarNodo(contFichasFallas);
 
@@ -182,28 +182,37 @@ function anotarPuntuacion() {
     let ptos = this.previousSibling.value;
     let id = this.previousSibling.attributes.idfalla.value;
     let url = '/api/puntuaciones';
-    let data = {idFalla:id,ip:'',puntuacion:ptos};
-   
-    //  enviarAlServidor(url,data,'POST');
+    let data = { idFalla: 1};
+    let metodo = 'GET';
 
-     enviarAlServidor('/api/puntuaciones',6,'GET');
-
-}
-
-
-function enviarAlServidor(url,data,metodo){
 
     fetch(url, {
         method: metodo,
-        body: JSON.stringify(data), 
-        headers:{
-          'Content-Type': 'application/json'
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
         }
-      }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+
+
 
 }
+
+// function enviarAlServidor(url,data,metodo){
+
+//     fetch(url, {
+//         method: metodo,
+//         body: JSON.stringify(data), 
+//         headers:{
+//           'Content-Type': 'application/json'
+//         }
+//       }).then(res => res.json())
+//       .catch(error => console.error('Error:', error))
+//       .then(response => console.log('Success:', response));
+
+// }
 
 
 
@@ -226,7 +235,7 @@ function adaptarFiltroSeccion(filtro) {
 function validarAnyo(anyoFundacion) {
 
     let anyoValido = false;
-    
+
     if (anyoFundacion >= seleccionDesdeAnyo && anyoFundacion <= seleccionHastaAnyo) anyoValido = true;
 
     return anyoValido;

@@ -24,8 +24,6 @@ exports.findOne =  (req,res)=>{
         });
     });
     
-
-
 };
 
 // Crear y salvar
