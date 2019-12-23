@@ -4,6 +4,7 @@ const PuntuacionSchema = mongoose.Schema({
     idFalla:String,
     ip:String,
     puntuacion:Number
+    
 },{
     timestamps:true
 });

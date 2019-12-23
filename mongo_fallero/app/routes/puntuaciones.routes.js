@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.get('/api/puntuaciones', puntuaciones.findAll);
 
     // Retrieve a single puntuaciones with puntuacionId
-    app.get('/api/puntuaciones/:puntuacionId', puntuaciones.findOne);
+    app.get('/api/puntuaciones/existe/:idFalla/:ip', puntuaciones.existe);
 
     // Update a puntuaciones with puntuacionId
     //app.put('/puntuaciones/:puntuacionId', puntuaciones.update);

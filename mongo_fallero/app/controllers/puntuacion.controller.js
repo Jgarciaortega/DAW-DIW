@@ -13,11 +13,15 @@ exports.findAll = (req,res) => {
 
 };
 
-//Encontrar un ID
-exports.findOne =  (req,res)=>{
+//Encontrar si existe la votacion del usuario (coincide idFalla & ip)
+exports.existe =  (req,res)=>{
 
-   Puntuacion.find({idFalla:req.params.puntuacionId}).then(puntuaciones1 =>{
-       res.send(puntuaciones1);
+   Puntuacion.find({"idFalla":req.params.idFalla,"ip":req.params.ip})
+   .then(coincidencias =>{
+       
+        if(coincidencias == '') res.send(false);
+        else res.send(true);
+           
     }).catch(err =>{
         res.status(500).send({
             message: err.message || " Algo fue mal mientras los capturabamos a todos"
