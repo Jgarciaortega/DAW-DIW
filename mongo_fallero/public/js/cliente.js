@@ -138,7 +138,7 @@ function mostrarFallas() {
             //Boton ubicacion
             let btnUbicacion = document.createElement('button');
             btnUbicacion.innerHTML = 'UBICACIÓN';
-            btnUbicacion.setAttribute('value', ubicacionFalla);
+            btnUbicacion.setAttribute('value', i);
             btnUbicacion.addEventListener('click', mostrarUbicacion);
             divMetadatos.classList.add('contenedorMetadatos');
             divMetadatos.appendChild(btnUbicacion);
@@ -357,9 +357,13 @@ function mostrarPuntuacionPublico(datos) {
         try {
 
             let divNombreFalla = document.getElementById(arrayFallas[i].idFalla).childNodes[0];
+            let divFalla = document.getElementById(arrayFallas[i].idFalla);
             let p = document.createElement('p');
             let text = document.createTextNode('Valoración público: ');
             p.appendChild(text);
+
+            if(ptos >= 4)  divFalla.classList.add('resaltado');
+           
 
             //Creo estrellas desde 0 hasta los ptos de media que ha obtenido
             for (let x = 0; x < ptos; x++) {
@@ -527,7 +531,10 @@ function cierraVentanaEmergente(){
 
 function mostrarUbicacion() {
 
-    // let coordenadas = convertirCoordenada(this.value);
+    let coordenadas = datosJSON.features[this.value].geometry.coordinates;
+    
+     coordenadas = convertirCoordenada(coordenadas);
+
     let divFullScreen = document.createElement('div');  
     divFullScreen.setAttribute('id', 'fullScreen');
     divFullScreen.classList.add('opacidad');
@@ -544,27 +551,30 @@ function mostrarUbicacion() {
     document.querySelector('body').appendChild(divFullScreen);
 
     //Bloquea scroll tras cerrar ventana emergente
-    // document.getElementsByTagName("html")[0].style.overflow = "hidden";
+    document.getElementsByTagName("html")[0].style.overflow = "hidden";
 
     let altura = window.screen.height;
     let anchura = window.screen.width;
 
     console.log(altura + " " + anchura);
-    let y = parseInt((window.screen.height / 2) -(altura / 2)) + window.scrollY;
-    let x = parseInt((window.screen.width / 2) - (anchura / 2));
+    let y =  window.scrollY;
+    let x = 0;
 
     divFullScreen.style.left = x + 'px';
     divFullScreen.style.top  = y + 'px';
 
     let map = L.map('map').
-        setView([41.66, -4.72],
+        setView([coordenadas[0], coordenadas[1]],
             14);
 
+    
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
         maxZoom: 18
     }).addTo(map);
+
+    L.marker([coordenadas[0], coordenadas[1]]).addTo(map);
 
     L.control.scale().addTo(map);
 
@@ -631,11 +641,22 @@ function crearPtosFicticios() {
             //Puntuamos del 1 al 5 de forma aletaroia
             ptos = Math.floor(Math.random() * (6 - 1)) + 1;
             datos = { idFalla: id, ip: ip, puntuacion: ptos };
-            conexionServer(url, 'POST', datos, 'Se han creado puntuaciones aleatorias.' +
-                'Comenta la linea 408 del cliente.js para no repetir el proceso');
+           
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(datos),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(res => res.json())
+                    .catch(error => console.error('Error:', error));
+            
         }
 
     }
+
+    alert('Puntuaciones ficticias creadas. Para no repetir este proceso comenta la línea 515 de public/cliente.js');
+
 }
 
 

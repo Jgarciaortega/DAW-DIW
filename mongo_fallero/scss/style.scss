@@ -33,9 +33,11 @@ header {
     background-image: url($logo_src);
     background-size: contain;
     background-repeat: no-repeat;
+    
   }
 
 }
+
 
 #fichasFallas {
   display: grid;
@@ -163,24 +165,33 @@ header {
     }
   }
 
-  #fullScreen {
-    height: 1080px;
-    width: 499px;
-    background: grey;
-    opacity: 0.9;
-    position: absolute;
-
-    #map {
-      width: 200px;
-      height: 300px;
-      box-shadow: 5px 5px 5px #888;
-      margin: 0 auto;
-    }
-
-    i {
-    }
+  .resaltado{
+    border: 5px solid orange;
+    
   }
 }
+
+#fullScreen {
+  height: 1080px;
+  width: 499px;
+  background: grey;
+  opacity: 0.9;
+  position: absolute;
+
+  #map {
+    width: 300px;
+    height: 500px;
+    box-shadow: 5px 5px 5px #888;
+    margin: 0 auto;
+  }
+
+  i {
+    margin-left: 77%;
+    font-size: 22px;
+  }
+}
+
+
 
 @media (min-width: 500px) {
   #fichasFallas {

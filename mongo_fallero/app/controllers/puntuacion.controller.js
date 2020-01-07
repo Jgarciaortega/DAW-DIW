@@ -81,6 +81,7 @@ exports.create = (req, res) => {
 
     puntuacion.save().then(data => {
         res.send(data);
+        console.log(res);
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Something was wrong creating puntuacion"
