@@ -1,19 +1,43 @@
+$header_Color: red;
+$contenedorFalla_Color: white;
+$logo_src: "";
 
-#seleccionFalla {
-  display: flex;
-  flex-direction: column;
-  width: 95%;
+$company:chtulhu;
+
+@if ($company == chtulhu) {
+  $header_Color: #325935;
+  $contenedorFalla_Color: #b4d9b6;
+  $logo_src: "../img/cthulhu.jpg";
+
+} @else {
+  $header_Color: #592331;
+  $contenedorFalla_Color: #F2F2F2;
+  $logo_src: "../img/evilcorp.png";
+}
+
+header {
+  border: 1px solid black;
+  background: $header_Color;
+  margin-bottom: 2%;
+  color: white;
   margin-left: auto;
   margin-right: auto;
 }
 
-#botonesSecciones {
-  display: block;
+#seleccionFalla {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  
+
+  #logo {
+    background-image: url($logo_src);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
 }
 
-
 #fichasFallas {
-  
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   width: 70%;
@@ -26,10 +50,11 @@
     box-shadow: 5px 5px 5px rgb(95, 94, 94);
     margin-bottom: 5%;
     position: relative;
+    background: $contenedorFalla_Color;
     .contenedorImg {
       width: 360px;
       height: 450px;
-      
+
       img {
         width: 100%;
         height: 100%;
@@ -51,94 +76,135 @@
         height: 50px;
         margin: auto;
         box-shadow: 0px 1px 0px 0px #fff6af;
-        background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-        background-color:#ffec64;
-        border-radius:6px;
-        border:1px solid #ffaa22;
-        display:inline-block;
-        cursor:pointer;
-        color:#333333;
-        font-family:Arial;
-        font-size:15px;
-        font-weight:bold;
-        text-decoration:none;
-        text-shadow:0px 1px 0px #ffee66;
+        background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+        background-color: #ffec64;
+        border-radius: 6px;
+        border: 1px solid #ffaa22;
+        display: inline-block;
+        cursor: pointer;
+        color: #333333;
+        font-family: Arial;
+        font-size: 15px;
+        font-weight: bold;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #ffee66;
       }
 
-      button:hover{
-        background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
-        background-color:#ffab23;
-
-      }
-
-      .puntuacion{
-        /*La propiedad direction: rtl; cambia la dirección de escritura  de 
-        derecha a izquierda ( right to left )*/
-        direction: rtl;/* right to left */
-        /*Se utiliza junto con la propiedad direction para cambiar  la dirección 
-        del texto */
-        unicode-bidi: bidi-override;/* bidi de bidireccional*/
+      .contenedorPuntuacion {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
+
+        button {
+          width: 110px;
+          height: 35px;
+          margin: auto;
+          box-shadow: 0px 1px 0px 0px #e7bfb7;
+          background: linear-gradient(to bottom, #f36c4f 5%, #f62b00 100%);
+          background-color: red;
+          border-radius: 6px;
+          border: 1px solid #f62b00;
+          display: inline-block;
+          cursor: pointer;
+          color: #333333;
+          font-family: Arial;
+          font-size: 15px;
+          font-weight: bold;
+          text-decoration: none;
+        }
+
+        button:hover {
+          background: linear-gradient(to bottom, #f62b00 5%, #f36c4f 100%);
+          background-color: red;
+        }
       }
 
-      input{
+      button:hover {
+        background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+        background-color: #ffab23;
+      }
 
+      form {
+        margin-left: 11%;
+      }
+      .puntuacion {
+        /*La propiedad direction: rtl; cambia la dirección de escritura  de 
+        derecha a izquierda ( right to left )*/
+        direction: rtl; /* right to left */
+        /*Se utiliza junto con la propiedad direction para cambiar  la dirección 
+        del texto */
+        unicode-bidi: bidi-override; /* bidi de bidireccional*/
+      }
+
+      .unchecked {
+        color: grey;
+      }
+
+      input {
         display: none;
-       
       }
 
       input:checked ~ label {
-        color: orange;
+        color:orange;
       }
 
-      label{
-
-        color:grey;
+      label {
+        color: grey;
         font-size: 2em;
       }
 
-      label:hover{
-          color:orange;
+      label:hover {
+        color: orange;
       }
 
-      label:hover ~ label{
-          color:orange;
-        }
-    
+      label:hover ~ label {
+        color: orange;
+      }
+    }
+  }
+
+  #fullScreen {
+    height: 1080px;
+    width: 499px;
+    background: grey;
+    opacity: 0.9;
+    position: absolute;
+
+    #map {
+      width: 200px;
+      height: 300px;
+      box-shadow: 5px 5px 5px #888;
+      margin: 0 auto;
+    }
+
+    i {
     }
   }
 }
 
-input{
+@media (min-width: 500px) {
+  #fichasFallas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-  display: none;
- 
-}
+  #fullScreen {
+    height: 1080px;
+    width: 1920px;
+    background: grey;
+    opacity: 0.9;
+    position: absolute;
 
-
-
-@media (min-width: 500px){
-
-    #fichasFallas {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-
-    }
-
-    #map{
-
+    #map {
       width: 500px;
       height: 600px;
       box-shadow: 5px 5px 5px #888;
-      position: absolute;
-      // left: 10px; 
-      // top: 40px;
-    
+      margin: 0 auto;
     }
-   
+
+    i {
+      margin-left: 63%;
+      font-size: 35px;
+    }
+  }
 }
-
-
-

@@ -1,4 +1,6 @@
 
+
+
 function obtenerJSON() {
 
     let request = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
@@ -44,11 +46,9 @@ function ordenarSecciones() {
 
     //Secciones principales ordenadas con .sort
     seccionesPrincipales.sort();
-    //TO-DO:Ordenamiento .sort en secciones infantiles no funciona correctamente 
+
     // seccionesInfantiles = Array.from(seccionesInfantiles).sort();
     seccionesInfantiles.sort(sortNumber);
-    //seccionesInfantiles.sort((o1, o2) => o1.localeCompare(o2));
-    //console.log(seccionesInfantiles);
 
     //Mostramos el dato con Seccion delante...
     anyadirTexto(seccionesPrincipales);
@@ -143,6 +143,11 @@ function mostrarFallas() {
             divMetadatos.classList.add('contenedorMetadatos');
             divMetadatos.appendChild(btnUbicacion);
 
+            //Contenedor con los botones borrar y  puntuacion
+            let divPuntuacion = document.createElement('div');
+            divPuntuacion.classList.add('contenedorPuntuacion');
+            divMetadatos.appendChild(divPuntuacion);
+
             //Puntuacion falla
             let formPuntuacion = document.createElement('form');
             let p = document.createElement('p');
@@ -152,7 +157,7 @@ function mostrarFallas() {
                 let input = document.createElement('input');
                 input.setAttribute('id', 'radio' + x);
                 input.setAttribute('type', 'radio');
-                input.setAttribute('name', 'estrellas');
+                input.setAttribute('name', 'estrellas' + x);
                 input.setAttribute('value', y);
                 input.setAttribute('idFalla', datosJSON.features[i].properties.id);
                 p.appendChild(input);
@@ -160,7 +165,7 @@ function mostrarFallas() {
                 let label = document.createElement('label');
                 label.setAttribute('for', 'radio' + x);
                 label.innerHTML = '★';
-                label.addEventListener('mouseup', comprobarSiExiste);
+                label.addEventListener('mouseup', anotarPuntuacion);
                 p.appendChild(label);
 
             }
@@ -169,35 +174,156 @@ function mostrarFallas() {
             mismo id*/
             idLabelPtos += 5;
             formPuntuacion.appendChild(p);
-            divMetadatos.appendChild(formPuntuacion);
+            divPuntuacion.appendChild(formPuntuacion);
+
+            //Boton borrar puntuacion
+            let btnDelete = document.createElement('button');
+            btnDelete.innerHTML = 'BORRAR';
+            btnDelete.setAttribute('value', borrarPuntuacion);
+            btnDelete.setAttribute('idFalla', datosJSON.features[i].properties.id);
+            btnDelete.addEventListener('click', borrarPuntuacion);
+            divPuntuacion.appendChild(btnDelete);
+
 
         }
 
         anyoValido = false;
     }
 
-
-    /*Obtenemos los datos que tenemos recopilados en la BBDD y mostramos las puntuaciones 
-    de cada falla*/
+    /*Obtenemos los datos que tenemos recopilados en la BBDD para mostrar las votaciones medias
+    del publico y para comprobar si desde el cliente ya se ha puntuado alguna falla (y mostrarla
+        en caso de que exista la puntuacion)*/
     obtiene_BBDD();
 
 }
 
 function obtiene_BBDD() {
 
-    fetch('/api/puntuaciones')
+    conexionGET('/api/puntuaciones', mostrarPuntuacionPublico);
+
+}
+
+function borrarPuntuacion() {
+
+    let id = this.attributes.idFalla.value;
+    let datos = { idFalla: id, ip: ipCliente, puntuacion: 0 };
+    let form = document.getElementById(id).childNodes[2].childNodes[1].childNodes[0];
+
+    //Primero eliminamos las estrellas del front End
+    eliminarChecked(form);
+
+    /*Segundo la borramos del back End
+    Existe nos devuelve un json con el _id de mongo*/
+    fetch('/api/puntuaciones/existe/' + id + '/' + ipCliente)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (myJson) {
+            //Aplicamos delete sobre el _id devuelto
+            if (myJson != false) {
+                url = '/api/puntuaciones/' + myJson[0]._id;
+                fetch(url, {
+                    method: 'DELETE',
+                    body: JSON.stringify(datos),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(res => res.json())
+                    .catch(error => console.error('Error:', error))
+                    .then(alert('Puntuacion borrada'));
+
+            }
+        });
+
+}
+
+//Si desde esa ip se han hecho votos...
+function averiguaSiClienteVoto() {
+
+    for (let i = 0; i < datosJSON.features.length; i++)
+
+        fetch('/api/puntuaciones/existe/' + datosJSON.features[i].properties.id + '/' + ipCliente)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                if (myJson != false) {
+                    mostrarPuntuacionCliente(myJson);
+                }
+            });
+}
+
+function actualizarPuntuacion(form, puntuacion) {
+
+    let res = 5 - puntuacion;
+
+    form[res].checked = true;
+
+}
+
+function eliminarChecked(form) {
+
+    for (let input of form) {
+
+        input.checked = false;
+
+    }
+}
+
+//Cargamos las puntuaciones que el cliente tiene registradas en la BBDD
+function mostrarPuntuacionCliente(datos) {
+
+    for (let i = 0; i < datos.length; i++) {
+
+        try {
+            let form = document.getElementById(datos[i].idFalla).childNodes[2].childNodes[1].childNodes[0];
+            let puntuacion = datos[i].puntuacion;
+
+            actualizarPuntuacion(form, puntuacion);
+
+        } catch (TypeError) {
+
+            /*si no se selecciona ver todas las secciones, hay elementos del dom que no son accesibles
+            por ello se pone un try catch*/
+        }
+
+    }
+
+}
+
+function anotarPuntuacion() {
+
+    let ptos = this.previousSibling.value;
+    let id = this.previousSibling.attributes.idfalla.value;
+    let url;
+    let datos = { idFalla: id, ip: ipCliente, puntuacion: ptos };
+
+    fetch('/api/puntuaciones/existe/' + id + '/' + ipCliente)
         .then(function (response) {
             return response.json();
         })
         .then(function (myJson) {
 
-            mostrarPuntuaciones(myJson);
+            if (myJson == false) {
+
+                url = '/api/puntuaciones';
+                conexionServer(url, 'POST', datos, 'Lla puntuacion se ha registrado correctamente');
+
+            } else {
+
+                url = '/api/puntuaciones/' + myJson[0]._id;
+                conexionServer(url, 'PUT', datos, 'La puntuacion se ha modificado correctamente');
+                let form = document.getElementById(id).childNodes[2].childNodes[1].childNodes[0];
+                eliminarChecked(form);
+                actualizarPuntuacion(form, ptos);
+
+            }
         });
 
 }
 
-//Muestra la media de estrellas obtenidas por las votaciones de los usuarios
-function mostrarPuntuaciones(datos) {
+//Muestra la media de estrellas obtenidas por las votaciones de los usuarios y si el cliente ha votado muestra su voto
+function mostrarPuntuacionPublico(datos) {
 
     //Creamos un array con objetos fallas creados a partir de los datos de la BBDD
     let arrayFallas = [];
@@ -215,37 +341,44 @@ function mostrarPuntuaciones(datos) {
             falla.vecesVotada++;
             falla.mediaPtos = falla.ptosTotales / falla.vecesVotada;
 
-
         } else {
 
-            let falla = new Falla(id, ptos, 1, ptos);
+            let falla = new Falla(id, ptos, 1, ptos, ip);
             arrayFallas.push(falla);
 
         }
-
     }
-
-    console.log(arrayFallas);
 
     for (let i = 0; i < arrayFallas.length; i++) {
 
+        //PUNTUACIONES PUBLICO
         let ptos = Math.round(arrayFallas[i].ptosTotales);
-        let divNombreFalla = document.getElementById(arrayFallas[i].idFalla).childNodes[0];
-        let p = document.createElement('p');
-        let text = document.createTextNode('Valoración: ');
-        p.appendChild(text);
 
-        //Creo estrellas desde 0 hasta los ptos de media que ha obtenido
-        for (let x = 0; x < ptos; x++) {
+        try {
 
-            let label = document.createElement('label');
-            label.innerHTML = '★';
-            p.appendChild(label);
+            let divNombreFalla = document.getElementById(arrayFallas[i].idFalla).childNodes[0];
+            let p = document.createElement('p');
+            let text = document.createTextNode('Valoración público: ');
+            p.appendChild(text);
+
+            //Creo estrellas desde 0 hasta los ptos de media que ha obtenido
+            for (let x = 0; x < ptos; x++) {
+
+                let label = document.createElement('label');
+                label.innerHTML = '★';
+                p.appendChild(label);
+            }
+
+            divNombreFalla.appendChild(p);
+
+        } catch (TypeError) {
+
+            /*si no se selecciona ver todas las secciones, hay elementos del dom que no son accesibles
+            por ello se pone un try catch*/
         }
 
-        divNombreFalla.appendChild(p);
     }
-
+    averiguaSiClienteVoto();
 }
 
 //Devuelve el objeto falla si este existe
@@ -259,49 +392,35 @@ function buscaFalla(idFalla, arrayFalla) {
 
             falla = arrayFalla[i];
         }
-
     }
 
     return falla;
 }
 
-//Primero consultamos si esa ip ha realizado votacion sobre esa falla
-function comprobarSiExiste() {
-
-    let ptos = this.previousSibling.value;
-    let id = this.previousSibling.attributes.idfalla.value;
-    let ip = '127.0.0.1';
-
-    let url = '/api/puntuaciones/existe/' + id + '/' + ip;
+function conexionGET(url, funcion) {
 
     fetch(url)
         .then(function (response) {
             return response.json();
         })
         .then(function (myJson) {
-            //Si id+puntuacion no existe procedemos a registrarla en Mongo
-            if (myJson == false) {
 
-                anotarPuntuacion(id, ip, ptos);
-            }
+            funcion(myJson);
+        });
 
-        })
 }
 
-function anotarPuntuacion(id, ip, ptos) {
-
-    var url = '/api/puntuaciones';
-    var data = { idFalla: id, ip: ip, puntuacion: ptos };
+function conexionServer(url, metodo, datos, mensaje) {
 
     fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
+        method: metodo,
+        body: JSON.stringify(datos),
         headers: {
             'Content-Type': 'application/json'
         }
     }).then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
+        .then(alert(mensaje));
 
 }
 
@@ -388,34 +507,62 @@ function obtenerDatos(datos) {
     datosJSON = datos;
     //Mostramos fallas
     mostrarFallas();
+    //Para testeo creamos puntuaciones en la BBDD
+    //crearPtosFicticios();
+
+}
+
+
+function cierraVentanaEmergente(){
+
+    let div = document.getElementById('fullScreen');
+    let body = document.querySelector('body');
+
+    body.removeChild(div);
+
+    //Permite scroll tras cerrar ventana emergente
+    document.getElementsByTagName("html")[0].style.overflow = "auto";
 
 }
 
 function mostrarUbicacion() {
 
-    //  let coordenadas = convertirCoordenada(this.value);
+    // let coordenadas = convertirCoordenada(this.value);
+    let divFullScreen = document.createElement('div');  
+    divFullScreen.setAttribute('id', 'fullScreen');
+    divFullScreen.classList.add('opacidad');
 
     let divMapa = document.createElement('div');
     divMapa.setAttribute('id', 'map');
-    document.querySelector('body').appendChild(divMapa);
 
-    let altura = 600;
-    let anchura = 500;
-    console.log(window.screen.height);
-    console.log(window.screen.width);
-    let y = parseInt((window.screen.height / 2) - (altura / 2));
+    let i = document.createElement('i');
+    i.classList.add("far","fa-times-circle");
+    i.addEventListener('click', cierraVentanaEmergente);
+    divFullScreen.appendChild(i);
+
+    divFullScreen.appendChild(divMapa);
+    document.querySelector('body').appendChild(divFullScreen);
+
+    //Bloquea scroll tras cerrar ventana emergente
+    // document.getElementsByTagName("html")[0].style.overflow = "hidden";
+
+    let altura = window.screen.height;
+    let anchura = window.screen.width;
+
+    console.log(altura + " " + anchura);
+    let y = parseInt((window.screen.height / 2) -(altura / 2)) + window.scrollY;
     let x = parseInt((window.screen.width / 2) - (anchura / 2));
 
-    divMapa.style.left = x + 'px';
-    divMapa.style.top = y + 'px';
+    divFullScreen.style.left = x + 'px';
+    divFullScreen.style.top  = y + 'px';
 
-
-    var map = L.map('map').
+    let map = L.map('map').
         setView([41.66, -4.72],
             14);
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
         maxZoom: 18
     }).addTo(map);
 
@@ -429,9 +576,9 @@ function convertirCoordenada(coordenadas) {
     let firstProjection = '+proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs';
     let secondProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
-    // coordenadas = proj4(firstProjection, secondProjection, coordenadas);
+    nuevaCoordenada = proj4(firstProjection, secondProjection, coordenadas);
 
-
+    return [nuevaCoordenada[1], nuevaCoordenada[0]];
 }
 
 function borrarContenido() {
@@ -460,6 +607,38 @@ function seleccionarAnyo() {
     mostrarFallas();
 }
 
+//Para testeo de app introduciremos puntuaciones en Mongo
+function crearPtosFicticios() {
+
+    var url = '/api/puntuaciones';
+    let ptos;
+    let datos;
+    let ip = 1000;
+    let listaIdsFalla = new Set();
+
+    //averiguamos todos los idFalla que existen en el JSON para asignarles puntuaciones
+    for (let i = 0; i < datosJSON.features.length; i++) {
+
+        listaIdsFalla.add(datosJSON.features[i].properties.id);
+
+    }
+
+    for (let id of listaIdsFalla) {
+
+        for (let x = 0; x < 5; x++) {
+
+            ip++;
+            //Puntuamos del 1 al 5 de forma aletaroia
+            ptos = Math.floor(Math.random() * (6 - 1)) + 1;
+            datos = { idFalla: id, ip: ip, puntuacion: ptos };
+            conexionServer(url, 'POST', datos, 'Se han creado puntuaciones aleatorias.' +
+                'Comenta la linea 408 del cliente.js para no repetir el proceso');
+        }
+
+    }
+}
+
+
 function init() {
 
     obtenerJSON();
@@ -476,8 +655,17 @@ function init() {
     document.getElementById('anyoHasta').addEventListener('focus', borrarContenido);
     document.getElementById('anyoDesde').addEventListener('blur', seleccionarAnyo);
     document.getElementById('anyoHasta').addEventListener('blur', seleccionarAnyo);
+    getIP();
+
 
 }
+
+function getIP(json) {
+
+    if (json != undefined) ipCliente = json.ip;
+
+}
+
 
 //VARIABLES GLOBALES
 let datosMongo;
@@ -488,16 +676,18 @@ let seccionesInfantiles;
 let seleccionDesdeAnyo;
 let seleccionHastaAnyo;
 let idLabelPtos; //La combinacion input-label de las estrellas de puntuacion requieren id distintos
+let ipCliente;
+
 
 
 /** OBJETO FALLA */
-function Falla(idFalla = 0, ptosTotales = 0, vecesVotada = 0, media = 0) {
+function Falla(idFalla = 0, ptosTotales = 0, vecesVotada = 0, media = 0, ip = '0') {
 
     this.idFalla = idFalla;
     this.ptosTotales = ptosTotales;
     this.vecesVotada = vecesVotada;
     this.mediaPtos = media;
-
+    this.ip = ip;
 }
 
 window.addEventListener('load', init);
