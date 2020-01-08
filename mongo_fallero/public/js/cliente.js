@@ -195,6 +195,8 @@ function mostrarFallas() {
         en caso de que exista la puntuacion)*/
     obtiene_BBDD();
 
+    //alert('Para crear puntuaciones ficticias de diferentes usuarios pon la línea 515 de public/cliente.js como no comentada');
+
 }
 
 function obtiene_BBDD() {
@@ -512,7 +514,7 @@ function obtenerDatos(datos) {
     //Mostramos fallas
     mostrarFallas();
     //Para testeo creamos puntuaciones en la BBDD
-    //crearPtosFicticios();
+   //crearPtosFicticios();
 
 }
 
@@ -635,7 +637,7 @@ function crearPtosFicticios() {
 
     for (let id of listaIdsFalla) {
 
-        for (let x = 0; x < 5; x++) {
+        for (let x = 0; x < 3; x++) {
 
             ip++;
             //Puntuamos del 1 al 5 de forma aletaroia
@@ -649,16 +651,24 @@ function crearPtosFicticios() {
                         'Content-Type': 'application/json'
                     }
                 }).then(res => res.json())
-                    .catch(error => console.error('Error:', error));
-            
+                    .catch(error => console.error('Error:', error));          
         }
-
     }
-
-    alert('Puntuaciones ficticias creadas. Para no repetir este proceso comenta la línea 515 de public/cliente.js');
-
 }
 
+function despliegaFormulario(){
+
+    let form =  document.getElementById('form');
+  
+    if(form.classList.contains('noVisible')){
+
+        form.classList.remove('noVisible');
+
+    }else{
+
+        form.classList.add('noVisible');
+    }
+}
 
 function init() {
 
@@ -676,6 +686,7 @@ function init() {
     document.getElementById('anyoHasta').addEventListener('focus', borrarContenido);
     document.getElementById('anyoDesde').addEventListener('blur', seleccionarAnyo);
     document.getElementById('anyoHasta').addEventListener('blur', seleccionarAnyo);
+    document.getElementById('hamburger').addEventListener('click', despliegaFormulario);
     getIP();
 
 
