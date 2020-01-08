@@ -309,7 +309,7 @@ function anotarPuntuacion() {
             if (myJson == false) {
 
                 url = '/api/puntuaciones';
-                conexionServer(url, 'POST', datos, 'Lla puntuacion se ha registrado correctamente');
+                conexionServer(url, 'POST', datos, 'La puntuacion se ha registrado correctamente');
 
             } else {
 

@@ -5,7 +5,7 @@ $menu:'';
 
 // chtulhu
 // evilCorp
-$company: chtulhu;
+$company: evilCorp;
 
 @if ($company == chtulhu) {
   $header_Color: #325935;
@@ -184,7 +184,8 @@ header {
   display: none;
 }
 
-@media (max-width: 500px) {
+
+
   #fullScreen {
     height: 1080px;
     width: 499px;
@@ -207,9 +208,50 @@ header {
       font-size: 45px;
     }
   }
-}
+
 
 @media (min-width: 500px) {
+
+  header{
+
+    
+
+  #seleccionFalla {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 0fr 6fr;
+
+    #form{
+      
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      margin-right: 20%;
+
+      p{
+        margin-top:2%;
+      }
+
+      #botonesSecciones{
+        margin-top:1%;
+      }
+    }
+
+    #logo {
+      margin-left: 0%;
+     
+    }
+    #hamburger{
+
+      display: none;
+      
+    }
+   }
+  }
+  .noVisible{
+    display: block;
+  }
+
   #seleccionFalla {
     display: grid;
     grid-template-columns: 1fr 5fr;
@@ -236,10 +278,10 @@ header {
     #map {
       width: 55%;
       height: 45%;
-      box-shadow: 5px 5px 5px #888;
-      margin-top: 8%;
-      margin-left: auto;
-      margin-right: auto;
+      // box-shadow: 5px 5px 5px #888;
+      // margin-top: 8%;
+      // margin-left: auto;
+      // margin-right: auto;
     }
 
     i {
@@ -249,7 +291,4 @@ header {
     }
   }
 
-  .contenedorFalla:hover {
-    transform: scale(1.1);
-  }
 }
