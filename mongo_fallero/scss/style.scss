@@ -5,11 +5,11 @@ $menu_src:'';
 
 // chtulhu
 // evilCorp
-$company: evilCorp;
+$company: chtulhu;
 
 @if ($company == chtulhu) {
-  $header_Color: #325935;
-  $contenedorFalla_Color: #325935;
+  $header_Color:#327337;
+  $contenedorFalla_Color: #327337;
   $logo_src: "../img/cthulhu.jpg";
   $menu_src: "../img/hamburguesa.png";
 } @else if ($company == evilCorp) {
@@ -20,6 +20,7 @@ $company: evilCorp;
 }
 
 header {
+
   border: 1px solid black;
   background: $header_Color;
   margin-bottom: 2%;
@@ -27,21 +28,19 @@ header {
 
   #seleccionFalla {
     display: grid;
-    grid-template-rows: 5fr 1fr;
+    grid-template-rows: 100px 65px;
 
     #logo {
-      margin-left: 21%;
+      margin-left: 40%;
       background-image: url($logo_src);
       background-size: contain;
       background-repeat: no-repeat;
     }
 
     #hamburger{
-
-      margin-top: 5%;
-      height: 100%;
-      position: relative;
-      display: block;
+      margin: 5px;
+      margin-left: 45%;
+      height: 50px;
       background-image: url($menu_src);
       background-size: contain;
       background-repeat: no-repeat;

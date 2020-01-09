@@ -714,8 +714,10 @@ function fijarHeader() {
 
 function getIP(json) {
 
+    
     if (json != undefined) ipCliente = json.ip;
 
+    
 }
 
 
