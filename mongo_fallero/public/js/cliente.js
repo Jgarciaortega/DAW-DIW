@@ -364,8 +364,8 @@ function mostrarPuntuacionPublico(datos) {
             let text = document.createTextNode('Valoración público: ');
             p.appendChild(text);
 
-            if(ptos >= 4)  divFalla.classList.add('resaltado');
-           
+            if (ptos >= 4) divFalla.classList.add('resaltado');
+
 
             //Creo estrellas desde 0 hasta los ptos de media que ha obtenido
             for (let x = 0; x < ptos; x++) {
@@ -514,12 +514,12 @@ function obtenerDatos(datos) {
     //Mostramos fallas
     mostrarFallas();
     //Para testeo creamos puntuaciones en la BBDD
-   //crearPtosFicticios();
+    //crearPtosFicticios();
 
 }
 
 
-function cierraVentanaEmergente(){
+function cierraVentanaEmergente() {
 
     let div = document.getElementById('fullScreen');
     let body = document.querySelector('body');
@@ -534,10 +534,10 @@ function cierraVentanaEmergente(){
 function mostrarUbicacion() {
 
     let coordenadas = datosJSON.features[this.value].geometry.coordinates;
-    
-     coordenadas = convertirCoordenada(coordenadas);
 
-    let divFullScreen = document.createElement('div');  
+    coordenadas = convertirCoordenada(coordenadas);
+
+    let divFullScreen = document.createElement('div');
     divFullScreen.setAttribute('id', 'fullScreen');
     divFullScreen.classList.add('opacidad');
 
@@ -545,7 +545,7 @@ function mostrarUbicacion() {
     divMapa.setAttribute('id', 'map');
 
     let i = document.createElement('i');
-    i.classList.add("far","fa-times-circle");
+    i.classList.add("far", "fa-times-circle");
     i.addEventListener('click', cierraVentanaEmergente);
     divFullScreen.appendChild(i);
 
@@ -559,20 +559,20 @@ function mostrarUbicacion() {
     let anchura = window.screen.width;
 
     console.log(altura + " " + anchura);
-    let y =  window.scrollY;
+    let y = window.scrollY;
     let x = 0;
 
     divFullScreen.style.left = x + 'px';
-    divFullScreen.style.top  = y + 'px';
+    divFullScreen.style.top = y + 'px';
 
     let map = L.map('map').
         setView([coordenadas[0], coordenadas[1]],
             14);
 
-    
+
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
-        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
         maxZoom: 18
     }).addTo(map);
 
@@ -643,28 +643,28 @@ function crearPtosFicticios() {
             //Puntuamos del 1 al 5 de forma aletaroia
             ptos = Math.floor(Math.random() * (6 - 1)) + 1;
             datos = { idFalla: id, ip: ip, puntuacion: ptos };
-           
-                fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify(datos),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(res => res.json())
-                    .catch(error => console.error('Error:', error));          
+
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(datos),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error));
         }
     }
 }
 
-function despliegaFormulario(){
+function despliegaFormulario() {
 
-    let form =  document.getElementById('form');
-  
-    if(form.classList.contains('noVisible')){
+    let form = document.getElementById('form');
+
+    if (form.classList.contains('noVisible')) {
 
         form.classList.remove('noVisible');
 
-    }else{
+    } else {
 
         form.classList.add('noVisible');
     }
@@ -689,6 +689,26 @@ function init() {
     document.getElementById('hamburger').addEventListener('click', despliegaFormulario);
     getIP();
 
+
+}
+
+function fijarHeader() {
+
+    if (screen.width > 1500) {
+
+        // Get the header
+        var header = document.querySelector('header');
+
+        // Get the offset position of the navbar
+        var sticky = header.offsetTop;
+
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+
+    }
 
 }
 
@@ -722,4 +742,5 @@ function Falla(idFalla = 0, ptosTotales = 0, vecesVotada = 0, media = 0, ip = '0
     this.ip = ip;
 }
 
+window.addEventListener('scroll', fijarHeader);
 window.addEventListener('load', init);

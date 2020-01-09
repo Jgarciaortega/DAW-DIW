@@ -1,7 +1,7 @@
 $header_Color:'';
 $contenedorFalla_Color:'';
 $logo_src: '';
-$menu:'';
+$menu_src:'';
 
 // chtulhu
 // evilCorp
@@ -11,12 +11,12 @@ $company: evilCorp;
   $header_Color: #325935;
   $contenedorFalla_Color: #325935;
   $logo_src: "../img/cthulhu.jpg";
-   
+  $menu_src: "../img/hamburguesa.png";
 } @else if ($company == evilCorp) {
   $header_Color: #bf214b;
   $contenedorFalla_Color: #bf214b;
   $logo_src: "../img/evilcorp.png";
-  
+  $menu_src: "../img/evilcorp.png";
 }
 
 header {
@@ -39,12 +39,12 @@ header {
     #hamburger{
 
       margin-top: 5%;
+      height: 100%;
       position: relative;
-
-      i{
-        margin-left: 47%;
-        font-size: xx-large;
-      }
+      display: block;
+      background-image: url($menu_src);
+      background-size: contain;
+      background-repeat: no-repeat;
     }
 
    }
@@ -184,6 +184,11 @@ header {
   display: none;
 }
 
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
 
 
   #fullScreen {
@@ -214,7 +219,7 @@ header {
 
   header{
 
-    
+    z-index: 1;
 
   #seleccionFalla {
     display: grid;
@@ -278,10 +283,8 @@ header {
     #map {
       width: 55%;
       height: 45%;
-      // box-shadow: 5px 5px 5px #888;
-      // margin-top: 8%;
-      // margin-left: auto;
-      // margin-right: auto;
+      margin-top: 1%;
+     
     }
 
     i {
