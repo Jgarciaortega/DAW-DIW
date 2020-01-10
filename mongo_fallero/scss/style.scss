@@ -5,7 +5,7 @@ $menu_src:'';
 
 // chtulhu
 // evilCorp
-$company: chtulhu;
+$company: evilCorp;
 
 @if ($company == chtulhu) {
   $header_Color:#327337;
@@ -213,18 +213,30 @@ header {
     }
   }
 
-
 @media (min-width: 500px) {
 
   header{
 
     z-index: 1;
-
-  #seleccionFalla {
     display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 0fr 6fr;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 100px;
 
+    #seleccionFalla{
+
+      #hamburger{
+
+        display: none;
+        
+      }
+
+      #logo {
+        margin-left: 0%;
+        width: 100%;
+       
+      }
+
+    }
     #form{
       
       display: flex;
@@ -237,40 +249,21 @@ header {
       }
 
       #botonesSecciones{
-        margin-top:1%;
-      }
-    }
-
-    #logo {
-      margin-left: 0%;
-     
-    }
-    #hamburger{
-
-      display: none;
-      
+        margin-top:1%;    
     }
    }
+
   }
   .noVisible{
     display: block;
   }
 
-  #seleccionFalla {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-
-    #logo {
-      background-image: url($logo_src);
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-  }
-
   #fichasFallas {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-gap:5%;
   }
+
 
   #fullScreen {
     height: 1080px;
@@ -280,14 +273,15 @@ header {
     position: absolute;
 
     #map {
-      width: 55%;
+      width: 45%;
       height: 45%;
       margin-top: 1%;
+      margin-left: 19%;
      
     }
 
     i {
-      margin-left: 50%;
+      margin-left: 40%;
       margin-top: 9%;
       font-size: 45px;
     }
