@@ -526,8 +526,7 @@ function cierraVentanaEmergente() {
 
     body.removeChild(div);
 
-    //Permite scroll tras cerrar ventana emergente
-    document.getElementsByTagName("html")[0].style.overflow = "auto";
+    enableScroll();
 
 }
 
@@ -552,19 +551,12 @@ function mostrarUbicacion() {
     divFullScreen.appendChild(divMapa);
     document.querySelector('body').appendChild(divFullScreen);
 
-    //Bloquea scroll tras cerrar ventana emergente
-    document.getElementsByTagName("html")[0].style.overflow = "hidden";
-
-    let altura = window.screen.height;
-    let anchura = window.screen.width;
-
-    console.log(altura + " " + anchura);
     let y = window.scrollY;
-    let x = 0;
-
-    divFullScreen.style.left = x + 'px';
+    
     divFullScreen.style.top = y + 'px';
 
+    disableScroll();
+   
     let map = L.map('map').
         setView([coordenadas[0], coordenadas[1]],
             14);
@@ -582,6 +574,15 @@ function mostrarUbicacion() {
 
 }
 
+function disableScroll(){  
+    var x = window.scrollX;
+    var y = window.scrollY;
+    window.onscroll = function(){ window.scrollTo(x, y) };
+}
+
+function enableScroll(){  
+    window.onscroll = null;
+}
 
 function convertirCoordenada(coordenadas) {
 
@@ -710,6 +711,8 @@ function fijarHeader() {
 
     }
 
+    
+
 }
 
 function getIP(json) {
@@ -743,6 +746,7 @@ function Falla(idFalla = 0, ptosTotales = 0, vecesVotada = 0, media = 0, ip = '0
     this.mediaPtos = media;
     this.ip = ip;
 }
+
 
 window.addEventListener('scroll', fijarHeader);
 window.addEventListener('load', init);

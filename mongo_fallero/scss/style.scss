@@ -5,7 +5,7 @@ $menu_src:'';
 
 // chtulhu
 // evilCorp
-$company: evilCorp;
+$company: chtulhu;
 
 @if ($company == chtulhu) {
   $header_Color:#327337;
@@ -31,7 +31,7 @@ header {
     grid-template-rows: 100px 65px;
 
     #logo {
-      margin-left: 40%;
+      margin-left: 38%;
       background-image: url($logo_src);
       background-size: contain;
       background-repeat: no-repeat;
@@ -39,7 +39,7 @@ header {
 
     #hamburger{
       margin: 5px;
-      margin-left: 45%;
+      margin-left: 44.1%;
       height: 50px;
       background-image: url($menu_src);
       background-size: contain;
@@ -51,7 +51,7 @@ header {
 
 #fichasFallas {
   display: grid;
-  width: 70%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 
@@ -191,11 +191,14 @@ header {
 
 
   #fullScreen {
+ 
     height: 1080px;
-    width: 499px;
+    width: 360px;
     background: grey;
     opacity: 0.9;
     position: absolute;
+    left: 28px;
+   
 
     #map {
       width: 300px;
@@ -207,7 +210,7 @@ header {
     }
 
     i {
-      margin-left: 48%;
+      margin-left: 47%;
       margin-top: 11%;
       font-size: 45px;
     }
@@ -262,6 +265,7 @@ header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap:5%;
+    width: 75%;
   }
 
 
