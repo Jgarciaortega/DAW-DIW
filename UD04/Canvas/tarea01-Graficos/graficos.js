@@ -14,12 +14,18 @@ function buildGrafico() {
     let barGraphic = false;
     let maxNum;
 
-    //variables point graphic:
-    let pointGraphic = true;
+    //Init canvas:
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    // if(selectedType == 'Grafico tarta') circleGraphic = true;
-    // else if (selectedType == 'Grafico barras') barGraphic = true;
-    // else if (selectedType == 'Grafico barras') pointGraphic = true;
+    //Init legend
+    document.querySelector('legend[for="myCanvas"]');
+
+    //variables point graphic:
+    let pointGraphic = false;
+
+    if(selectedType == 'Grafico tarta') circleGraphic = true;
+    else if (selectedType == 'Grafico barras') barGraphic = true;
+    else if (selectedType == 'Grafico puntos') pointGraphic = true;
 
     if(barGraphic || pointGraphic){
          //averigua el mayor valor de los datos recogidos
@@ -46,11 +52,11 @@ function buildGrafico() {
 
             } else if (barGraphic) {
 
-                buildBarGraphic(canvas, ctx, maxNum, valor, colores[i], i);
+                buildBarGraphic(canvas, ctx, maxNum, valor, colores[i], i, colores2[i]) ;
                
             } else if (pointGraphic){
 
-                buildPointGraphic(canvas, ctx, maxNum, valor, colores[i], i);
+                //buildPointGraphic(canvas, ctx, maxNum, valor, colores[i], i);
             }
 
         }
@@ -110,6 +116,7 @@ function createLegend(){
 /* PINTA ESCALA GRAFICA */
 function paintGrid(canvas, ctx, maxNum, valor, color, index){
 
+    console.log('paintingGrid');
     //distancia en pixeles del borde del canvas hasta la gráfica
     let padding = 20;
     let canvasActualHeight = canvas.height - padding * 2;
@@ -133,7 +140,7 @@ function paintGrid(canvas, ctx, maxNum, valor, color, index){
     }
 }
 
-function buildBarGraphic(canvas, ctx, maxNum, valor, color, index) {
+function buildBarGraphic(canvas, ctx, maxNum, valor, color, index,color2) {
 
     let padding = 20;
     let canvasActualWidth  = canvas.width  - padding * 2; 
@@ -143,7 +150,9 @@ function buildBarGraphic(canvas, ctx, maxNum, valor, color, index) {
     let barHeight = Math.round(canvasActualHeight * valor/maxNum);
     let barSize = (canvasActualWidth) / numberOfBars;
     
+    drawBar(ctx, (padding + barIndex  * barSize) + 5, (canvas.height - barHeight - padding) - 5, barSize, barHeight, color2);
     drawBar(ctx, (padding + barIndex  * barSize), (canvas.height - barHeight - padding), barSize, barHeight, color);
+
 
 }
 
@@ -249,6 +258,7 @@ function init() {
 
 }
 
+const colores2 = ['','darkred','darkblue','darkgreen','orange'];
 const colores = ['', 'red', 'blue', 'green', 'yellow'];
 
 window.onload = init;
