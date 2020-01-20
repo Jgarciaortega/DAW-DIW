@@ -1,3 +1,9 @@
+main{
+  display: flex;
+  flex-direction: column;
+}
+
+
 .right{
     float: right;
     width: 45%;
@@ -51,7 +57,17 @@ pre {
   line-height: 18.5667px;
 }
 
-canvas{
+#grafico{
 
-    border: 1px solid black;
+    margin: 0 auto;
+    padding-top: 5%;
+    display: flex;
+    flex-direction: row;
+}
+
+#legend li{
+
+  list-style: none;
+  padding: 5px;
+  
 }
