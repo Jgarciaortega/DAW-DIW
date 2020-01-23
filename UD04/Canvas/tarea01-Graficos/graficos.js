@@ -1,5 +1,5 @@
 function buildGrafico() {
-
+    console.log('*Building Graphic');
     //variables comunes:
     const canvas = document.querySelector('canvas');
     let ctx = canvas.getContext('2d');
@@ -33,11 +33,11 @@ function buildGrafico() {
     else if (selectedType == 'Grafico barras') barGraphic = true;
     else if (selectedType == 'Grafico puntos') pointGraphic = true;
 
-     //averigua el mayor valor de los datos recogidos
-     maxNum = getMaxNum();
+    //averigua el mayor valor de los datos recogidos
+    maxNum = getMaxNum();
 
     if (barGraphic || pointGraphic) {
-       
+
         paintGrid(canvas, ctx, maxNum);
         createLegend();
     }
@@ -61,33 +61,33 @@ function buildGrafico() {
 
             } else if (barGraphic) {
 
-                buildBarGraphic(canvas, ctx, maxNum, valor, colores[i], i, colores2[i], padding, canvasActualWidth,  canvasActualHeight);
+                buildBarGraphic(canvas, ctx, maxNum, valor, colores[i], i, colores2[i], padding, canvasActualWidth, canvasActualHeight);
 
             } else if (pointGraphic) {
 
-                valor = parseInt(valor); 
-                endX  += canvas.width / 4 - 2;        
-                endY  = canvas.height - (Math.round(canvasActualHeight * valor  / maxNum) + padding);
+                valor = parseInt(valor);
+                endX += canvas.width / 4 - 2;
+                endY = canvas.height - (Math.round(canvasActualHeight * valor / maxNum) + padding);
 
-                buildPointGraphic(ctx, startX, startY, endX, endY, colores[i]);  
-                
+                buildPointGraphic(ctx, startX, startY, endX, endY, colores[i]);
+
                 startX = endX;
                 startY = endY;
             }
-            
+
         }
     }
 
-   
+
 }
 
-function buildPointGraphic(ctx, startX ,startY,endX, endY, color) {
+function buildPointGraphic(ctx, startX, startY, endX, endY, color) {
 
-    drawLine(ctx,startX,startY, endX, endY, color);
-    
+    drawLine(ctx, startX, startY, endX, endY, color, 2);
+
     ctx.beginPath();
     ctx.moveTo(startX, startY);
-    ctx.arc(endX, endY, 5, 0, 2*Math.PI);
+    ctx.arc(endX, endY, 5, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fill();
 }
@@ -120,13 +120,13 @@ function paintGrid(canvas, ctx, maxNum) {
     //valor inicial de la escala
     let gridValue = 0;
     //incremento de los valores de la escala
-    let gridScale = Math.round (maxNum / 5);
+    let gridScale = Math.round(maxNum / 5);
     let gridY;
 
     while (gridValue <= maxNum) {
 
         gridY = canvasActualHeight * (1 - gridValue / maxNum) + padding;
-        drawLine(ctx, 0, gridY, canvas.width, gridY, "#4C4B49");
+        drawLine(ctx, 0, gridY, canvas.width, gridY, "#4C4B49", 1);
         ctx.save();
         ctx.fillStyle = "#4C4B49";
         ctx.font = "bold 15pt Calibri";
@@ -137,31 +137,45 @@ function paintGrid(canvas, ctx, maxNum) {
     }
 }
 
-function buildBarGraphic(canvas, ctx, maxNum, valor, color, index, color2, padding, canvasActualWidth,  canvasActualHeight ) {
+function buildBarGraphic(canvas, ctx, maxNum, valor, color, index, color2, padding, canvasActualWidth, canvasActualHeight) {
 
     let barIndex = index - 1;
     let numberOfBars = 4;
     let barHeight = Math.round(canvasActualHeight * valor / maxNum);
-    let barSize = (canvasActualWidth-28) / numberOfBars;
+    let barSize = (canvasActualWidth - 50) / numberOfBars;
+    let marginRight = 12;
+    let marginLeft = 35;
 
-    drawBar(ctx, (padding + barIndex * barSize) + 40, (canvas.height - barHeight - padding) - 5, barSize, barHeight, color2);
-    drawBar(ctx, (padding + barIndex * barSize) + 35, (canvas.height - barHeight - padding), barSize, barHeight, color);
+    let startX = (padding + barIndex * barSize) + marginRight + marginLeft;
+    let startY = (canvas.height - barHeight - padding);
 
+    let anchuraTrazo = 4;
+
+    /*PINTA PROFUNDIDAD*/
+    drawBar(ctx, startX + 5, startY - 5, barSize - marginRight, barHeight, color2);
+    /*PINTA RECTANGULO*/
+    drawBar(ctx, startX, startY, barSize - marginRight, barHeight, color);
+    /* TRAZO 1 CERRAR ESQUINA IZQ*/
+    drawLine(ctx, startX, startY, startX + 5, startY - 5, color2, anchuraTrazo);
+    /* TRAZO 2 CERRAR ESQUINA DER*/
+    drawLine(ctx, startX + barSize - marginRight, startY, startX + barSize - marginRight + 5, startY - 5, color2, anchuraTrazo - 3);
+    /* TRAZO 3 CERRAR ESQUINA INF DER*/
+    drawLine(ctx, startX + barSize - marginRight, startY + barHeight, startX + barSize - marginRight + 5, startY - 5 + barHeight, color2, anchuraTrazo);
 
 }
 
-function drawLine(ctx, startX, startY, endX, endY, color) {
+function drawLine(ctx, startX, startY, endX, endY, color, anchuraTrazo) {
 
     ctx.save();
     ctx.strokeStyle = color;
     ctx.beginPath();
+    ctx.lineWidth = anchuraTrazo;
     ctx.moveTo(startX, startY);
     ctx.lineTo(endX, endY);
     ctx.stroke();
     ctx.restore();
 }
 
-/* PINTA LAS BARRAS */
 function drawBar(ctx, upperLeftCornerX, upperLeftCornerY, width, height, color) {
     ctx.save();
     ctx.fillStyle = color;
@@ -213,16 +227,16 @@ function getMaxNum() {
 
     for (let i = 1; i < 5; i++) {
 
-        clave = document.querySelector("input[name='key_" + i + "']");
-        valor = document.querySelector("input[name='value_" + i + "']");
+        clave = parseInt(document.querySelector("input[name='key_" + i + "']"));
+        valor = parseInt(document.querySelector("input[name='value_" + i + "']").value);
+      
+        if (valor > maxNum){
 
-        if (clave.value != '' && valor.value != '') {
-
-            if (valor.value > maxNum) maxNum = valor.value;
-
-        }
+            maxNum = valor;
+        } 
 
     }
+  
     return maxNum;
 }
 
