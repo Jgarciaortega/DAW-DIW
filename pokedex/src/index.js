@@ -8,36 +8,34 @@ import EntradaTexto from './lib/EntradaTexto.js';
 
 class Pokedex extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = null;
+      }
+    
     componentDidMount() {
 
-        let url = 'https://pokeapi.co/api/v2/pokedex/1';
+        let url = 'https://pokeapi.co/api/v2/pokemon?limit=1000';
         fetch(url)
             .then(response => response.json())
-            .then(elements => pokemons = elements);
+            .then(elements => this.setState({pokemons : elements}));
     }
 
     buscarPokemon = (nombrePokemon) => {
        
-        pokemons.pokemon_entries.forEach(pokemon => {
-           if(nombrePokemon == pokemon.pokemon_species.name){
+      this.state.pokemons.results.forEach(element => {
+          
+        console.log(element);
+      });
 
-            this.mostrarResultado(pokemon);
-           }
-        });
-        
     }
 
-    mostrarResultado(pokemon){
-
-        console.log(pokemon);
-    }
 
     render() {
-        console.log("angel");
+       
         return (
             <div className="Pokedex">
                 <EntradaTexto onClick={this.buscarPokemon} />
-
             </div>
         );
     }
@@ -50,5 +48,3 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-//Variables globales
-let pokemons;

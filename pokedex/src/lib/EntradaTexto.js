@@ -13,9 +13,9 @@ class EntradaTexto extends React.Component {
     }
 
     render() {
-        console.log("Ptata");
+    
         return (
-            <div>
+            <div id="form">
             <input ref={this.refBuscar} type="text" ></input>
             <button onClick={this.handleClick} >Buscar</button>
             </div>
