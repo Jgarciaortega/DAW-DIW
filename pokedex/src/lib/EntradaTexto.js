@@ -7,21 +7,21 @@ class EntradaTexto extends React.Component {
         this.refBuscar = React.createRef();
     }
 
-    handleClick = () => {
+    handleKeyPress = (e) =>{
         let value = this.refBuscar.current.value;
-        this.props.onClick(value);
+        if(value != ''){
+            this.props.onKeyPress(value);
+        }
     }
 
     render() {
     
         return (
             <div id="form">
-            <input ref={this.refBuscar} type="text" ></input>
-            <button onClick={this.handleClick} >Buscar</button>
+            <input onKeyPress={this.handleKeyPress} ref={this.refBuscar} type="text" placeholder="introduce pokemon..." ></input>
             </div>
         );
     }
 }
-
 
 export default EntradaTexto;

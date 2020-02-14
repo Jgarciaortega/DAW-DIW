@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ContainerPok extends React.Component {
+class Pokemons extends React.Component {
 
     constructor(props){
 
@@ -13,7 +13,7 @@ class ContainerPok extends React.Component {
 
         return (
 
-            <div className="containerPok">
+            <div className="pokemons">
                 
 
             </div>
@@ -25,4 +25,4 @@ class ContainerPok extends React.Component {
 
 }
 
-export default ContainerPok;
+export default Pokemons;
