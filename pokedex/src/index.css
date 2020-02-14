@@ -1,19 +1,15 @@
-#header{
-
-    margin: 0px auto;
-    height: 300px;
-    width:1020px ;
-    background-image: url('assets/img/logo.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-
-}
+#header {
+  width: 1020px;
+  height: 230px;
+  background-image: url("assets/img/logo.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 0px auto; }
 
 #form {
-   
-    margin-left: 40%;
-}
+  width: 15%;
+  margin: 0px auto; }
+  #form input {
+    width: 100%; }
 
-#form button{
-    margin:1%;
-}
+/*# sourceMappingURL=index.css.map */
