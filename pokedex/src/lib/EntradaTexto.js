@@ -2,10 +2,6 @@ import React from 'react';
 
 class EntradaTexto extends React.Component {
 
-    constructor(props) {
-        super(props);
-        
-    }
 
     handleKeyPress = (e) => {
         let value = e.target.value;
