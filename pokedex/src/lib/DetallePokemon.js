@@ -8,60 +8,76 @@ export default class DetallePokemon extends React.Component {
         super(props);
         this.state = {
 
-          
+            nameAbilitie1: null,
+            nameAbilitie2: null,
+            nameAbilitie3: null,
+            abilitie1: null,
+            abilitie2: null,
+            abilitie3: null
 
         }
 
     }
 
-    componentDidMount() {
+    async descargarDatos() {
 
-       console.log(this.props.detallesPokemon);
+        for (let i = 0; i < this.props.detallesPokemon.abilities.length; i++) {
 
-       this.props.detallesPokemon.abilities.forEach(element => {
-           
-            fetch(element.url)
-            .then(res => res.json())
-            .then(datos => console.log(datos));
-           
+            let url = this.props.detallesPokemon.abilities[i].url;
 
-       });
-       
+            const promesa = await fetch(url);
+            const datos = await promesa.json();
 
-        // urls.forEach(url => {
+            switch (i) {
 
-        //     fetch(url)
-        //         .then(res => res.json())
-        //         .then(datos => {
+                case (0): this.setState({ nameAbilitie1: datos.name, abilitie1: datos.effect_entries[0].effect }); break;
+                case (1): this.setState({ nameAbilitie2: datos.name, abilitie2: datos.effect_entries[0].effect }); break;
+                case (2): this.setState({ nameAbilitie3: datos.name, abilitie3: datos.effect_entries[0].effect }); break;
 
-        //             this.setState({ names: datos.name, effects: datos.effect_entries[0] })              
-        //         })
+            }
 
-        // })
+
+        }
 
     }
 
+    async componentDidMount() {
 
-
-    crearHabilidades = () => {
-
-        console.log(this.state.names);
-        return '<p>'+this.state.names +'</p>'
+        await this.descargarDatos();
 
     }
+
+    crearCabecera = () => {
+
+        return (
+            <div id="cabeceraDetalle">
+                <h3>{this.props.detallesPokemon.name}</h3>
+                <img src={this.props.detallesPokemon.sprite} />
+            </div>
+        )
+
+    }
+
+    crearContenido = () => {
+        return (
+            <div id="contenidoDetalle">
+                <h4>{this.state.nameAbilitie1}</h4>
+                <p>{this.state.abilitie1}</p>
+                <h4>{this.state.nameAbilitie2}</h4>
+                <p>{this.state.abilitie2}</p>
+                <h4>{this.state.nameAbilitie3}</h4>
+                <p>{this.state.abilitie3}</p>
+            </div>)
+    }
+
+    // https://material-ui.com/es/components/progress/
 
     render() {
 
         return (
             <div className="detallePokemon">
-                {/* {console.log(this.props.detallesPokemon)} */}
-                <div id="cabeceraDetalle">
-                    {/* {this.crearDiv()} */}
-                    <img src={this.props.detallesPokemon.sprite}></img>
-                    <h3>{this.props.detallesPokemon.name}</h3>
-                    <h3>HABILIDADES</h3>
-                    {/* {this.crearHabilidades()} */}
-                </div>
+                {this.crearCabecera()}
+                {this.crearContenido()}
             </div>
 
         );

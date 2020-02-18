@@ -67,7 +67,7 @@ class Pokedex extends React.Component {
                 .then(response => response.json())
                 .then(element => {
                     let pokemon;
-                    
+                    console.log(element);
                     if (element.sprites.front_default != null && element.name != null && element.abilities.length === 3) {
 
                         pokemon = {
