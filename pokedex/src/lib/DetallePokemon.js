@@ -1,32 +1,70 @@
 import React from 'react';
 
 
-class DetallePokemon extends React.Component {
+export default class DetallePokemon extends React.Component {
 
-    constructor(props){
+    constructor(props) {
 
         super(props);
-        this.state = null;
+        this.state = {
+
+          
+
+        }
 
     }
 
-mostrarDetalles(){
-    
-    return this.props.abilities;
-   
+    componentDidMount() {
 
-}
+       console.log(this.props.detallesPokemon);
 
-    render(){
-        
+       this.props.detallesPokemon.abilities.forEach(element => {
+           
+            fetch(element.url)
+            .then(res => res.json())
+            .then(datos => console.log(datos));
+           
+
+       });
+       
+
+        // urls.forEach(url => {
+
+        //     fetch(url)
+        //         .then(res => res.json())
+        //         .then(datos => {
+
+        //             this.setState({ names: datos.name, effects: datos.effect_entries[0] })              
+        //         })
+
+        // })
+
+    }
+
+
+
+    crearHabilidades = () => {
+
+        console.log(this.state.names);
+        return '<p>'+this.state.names +'</p>'
+
+    }
+
+    render() {
+
         return (
-              <div className="detallesPokemons">
-                  <h1>Hola2</h1>
-              </div>
+            <div className="detallePokemon">
+                {/* {console.log(this.props.detallesPokemon)} */}
+                <div id="cabeceraDetalle">
+                    {/* {this.crearDiv()} */}
+                    <img src={this.props.detallesPokemon.sprite}></img>
+                    <h3>{this.props.detallesPokemon.name}</h3>
+                    <h3>HABILIDADES</h3>
+                    {/* {this.crearHabilidades()} */}
+                </div>
+            </div>
 
         );
     }
 
 }
-
-export default DetallePokemon;

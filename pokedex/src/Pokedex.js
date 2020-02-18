@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
 import EntradaTexto from './lib/EntradaTexto.js';
 import Pokemons from './lib/Pokemons.js';
 
 
-
-class Pokedex extends React.Component {
+export default class Pokedex extends React.Component {
 
     constructor(props) {
         super(props);
@@ -61,37 +58,33 @@ class Pokedex extends React.Component {
             }
         });
 
+        let cont = 0;
+
         busquedaPokemons.forEach(element => {
            
+            cont++;
+
             fetch(element.url)
                 .then(response => response.json())
                 .then(element => {
                     let pokemon;
                     
-                    if (element.sprites.front_default != null && element.name != null && element.abilities.length === 3) {
+                    if (element.sprites.front_default != null && element.name != null && element.abilities.length == 3) {
 
                         pokemon = {
 
                             name: element.name,
                             sprite: element.sprites.front_default,
                             url: element.species.url,
-                            abilities: [
-                            {
-                                name:element.abilities[0].ability.name,
-                                url:element.abilities[0].ability.url
-                            },
 
-                            {
-                                name:element.abilities[1].ability.name,
-                                url:element.abilities[1].ability.url
-                            },
-
-                            {
-                                name:element.abilities[2].ability.name,
-                                url:element.abilities[2].ability.url
+                            abilities: {
+                                name1: element.abilities[0].ability.name,
+                                url1: element.abilities[0].ability.url,
+                                name2: element.abilities[1].ability.name,
+                                url2: element.abilities[1].ability.url,
+                                name3: element.abilities[2].ability.name,
+                                url3: element.abilities[2].ability.url
                             }
-
-                            ]
                         }
 
                         listaPokemons.push(pokemon);
@@ -99,7 +92,7 @@ class Pokedex extends React.Component {
                        
                     }
 
-                    if (nombrePokemon === '') {
+                    if (nombrePokemon == '') {
 
                         listaPokemons = [];
                         this.setState({ pokemons: listaPokemons });
@@ -126,11 +119,3 @@ class Pokedex extends React.Component {
         );
     }
 }
-
-// ========================================
-
-ReactDOM.render(
-    <Pokedex />,
-    document.getElementById('root')
-);
-

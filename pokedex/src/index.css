@@ -61,6 +61,20 @@
   font-size: large;
 }
 
+.contenedorDetalle .detallePokemon {
+  border: 1px solid black;
+  width: 550px;
+  margin: 0px auto;
+}
+.contenedorDetalle .detallePokemon #cabeceraDetalle {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  text-transform: uppercase;
+  font-size: 180%;
+  color: #444444;
+  background: #ffffff;
+}
+
 @keyframes saltarin {
   from {
     top: 0px;

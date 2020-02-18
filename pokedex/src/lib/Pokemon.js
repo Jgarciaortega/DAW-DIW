@@ -1,17 +1,21 @@
 import React from 'react';
 
-class Pokemon extends React.Component {
+export default class Pokemon extends React.Component {
+
+    mostrarDetalle =() =>{
+
+        this.props.onClick(this.props);
+    }
 
 
     render() {
 
         return (
-            <div key={this.props.name} className="contenedorPokemon" onClick={this.props.detallePokemon}>
+            <div className="contenedorPokemon" onClick={this.mostrarDetalle}>
                 <h3>{this.props.name}</h3>
-                <img src={this.props.sprite}></img>
+                <img src={this.props.sprite} alt={this.props.name}></img>
             </div>)
     }
 
 }
 
-export default Pokemon;
