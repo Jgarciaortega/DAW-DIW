@@ -43,11 +43,8 @@ export default class DetallePokemon extends React.Component {
                     this.setState({ nameAbilitie3: datos.name, abilitie3: datos.effect_entries[0].effect });
                     break;
                 }
-
-
             }
         }
-
 
     }
 
@@ -88,8 +85,6 @@ export default class DetallePokemon extends React.Component {
                 </div>
             </div>)
     }
-
-    // https://material-ui.com/es/components/progress/
 
     render() {
 

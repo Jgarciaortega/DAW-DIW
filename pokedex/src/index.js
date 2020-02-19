@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import EntradaTexto from './lib/EntradaTexto.js';
 import Pokemons from './lib/Pokemons.js';
+import Header from './lib/Header'
+import logo from './assets/img/logo.png'
 
 
 
@@ -132,9 +134,9 @@ class Pokedex extends React.Component {
 
         return (
             <div className="Pokedex">
+                {<Header url={logo}/>}
                 {<EntradaTexto onKeyUp={this.buscarPokemon} />}
                 <p  style={this.mensajeError()} id="mensajeError">Pokemon no localizado. Has de buscarlo introduciendo su nombre exacto</p>
-                <div className="loading" style={this.loadState()}> </div>
                 {<Pokemons pokemons={this.state.pokemons} />}
             </div>
         );
