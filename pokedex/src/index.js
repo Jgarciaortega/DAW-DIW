@@ -13,7 +13,8 @@ class Pokedex extends React.Component {
         this.state = {
             busqueda: null,
             pokemons: [],
-            buscando: false
+            buscando: false,
+            mensajeError: false
 
         };
 
@@ -26,6 +27,14 @@ class Pokedex extends React.Component {
             visibility : this.state.buscando ? 'visible' : 'hidden'
         }
        
+    }
+
+    mensajeError(){
+
+        return{
+
+            visibility : this.state.mensajeError ? 'visible' : 'hidden'
+        }
     }
 
 
@@ -51,15 +60,19 @@ class Pokedex extends React.Component {
         this.state.busqueda.results.forEach(element => {
 
             if (element.name.startsWith(nombrePokemon)) {
-
+               
                 busquedaPokemons.push(element);
 
             } else {
 
                 listaPokemons = [];
-                this.setState({ pokemons: listaPokemons });
+                this.setState({ pokemons: listaPokemons});
+                
             }
         });
+
+        if(busquedaPokemons.length == 0) this.setState({mensajeError : true})
+        else  this.setState({mensajeError : false})
 
         busquedaPokemons.forEach(element => {
            
@@ -67,7 +80,7 @@ class Pokedex extends React.Component {
                 .then(response => response.json())
                 .then(element => {
                     let pokemon;
-                    console.log(element);
+                
                     if (element.sprites.front_default != null && element.name != null && element.abilities.length === 3) {
 
                         pokemon = {
@@ -120,6 +133,7 @@ class Pokedex extends React.Component {
         return (
             <div className="Pokedex">
                 {<EntradaTexto onKeyUp={this.buscarPokemon} />}
+                <p  style={this.mensajeError()} id="mensajeError">Pokemon no localizado. Has de buscarlo introduciendo su nombre exacto</p>
                 <div className="loading" style={this.loadState()}> </div>
                 {<Pokemons pokemons={this.state.pokemons} />}
             </div>

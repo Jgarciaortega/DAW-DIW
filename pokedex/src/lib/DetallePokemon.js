@@ -13,7 +13,8 @@ export default class DetallePokemon extends React.Component {
             nameAbilitie3: null,
             abilitie1: null,
             abilitie2: null,
-            abilitie3: null
+            abilitie3: null,
+            nameChinese: null
 
         }
 
@@ -27,17 +28,26 @@ export default class DetallePokemon extends React.Component {
 
             const promesa = await fetch(url);
             const datos = await promesa.json();
-
+            this.setState({ nameChinese: datos.names[7].name })
             switch (i) {
 
-                case (0): this.setState({ nameAbilitie1: datos.name, abilitie1: datos.effect_entries[0].effect }); break;
-                case (1): this.setState({ nameAbilitie2: datos.name, abilitie2: datos.effect_entries[0].effect }); break;
-                case (2): this.setState({ nameAbilitie3: datos.name, abilitie3: datos.effect_entries[0].effect }); break;
+                case (0): {
+                    this.setState({ nameAbilitie1: datos.name, abilitie1: datos.effect_entries[0].effect });
+                    break;
+                }
+                case (1): {
+                    this.setState({ nameAbilitie2: datos.name, abilitie2: datos.effect_entries[0].effect });
+                    break;
+                }
+                case (2): {
+                    this.setState({ nameAbilitie3: datos.name, abilitie3: datos.effect_entries[0].effect });
+                    break;
+                }
+
 
             }
-
-
         }
+
 
     }
 
@@ -51,7 +61,10 @@ export default class DetallePokemon extends React.Component {
 
         return (
             <div id="cabeceraDetalle">
-                <h3>{this.props.detallesPokemon.name}</h3>
+                <div className="nombre">
+                    <h3>{this.props.detallesPokemon.name}</h3>
+                    <h3>{this.state.nameChinese}</h3>
+                </div>
                 <img src={this.props.detallesPokemon.sprite} />
             </div>
         )
@@ -61,12 +74,18 @@ export default class DetallePokemon extends React.Component {
     crearContenido = () => {
         return (
             <div id="contenidoDetalle">
-                <h4>{this.state.nameAbilitie1}</h4>
-                <p>{this.state.abilitie1}</p>
-                <h4>{this.state.nameAbilitie2}</h4>
-                <p>{this.state.abilitie2}</p>
-                <h4>{this.state.nameAbilitie3}</h4>
-                <p>{this.state.abilitie3}</p>
+                <div className="abilitie">
+                    <h4>{this.state.nameAbilitie1}</h4>
+                    <p>{this.state.abilitie1}</p>
+                </div>
+                <div className="abilitie">
+                    <h4>{this.state.nameAbilitie2}</h4>
+                    <p>{this.state.abilitie2}</p>
+                </div>
+                <div className="abilitie">
+                    <h4>{this.state.nameAbilitie3}</h4>
+                    <p>{this.state.abilitie3}</p>
+                </div>
             </div>)
     }
 

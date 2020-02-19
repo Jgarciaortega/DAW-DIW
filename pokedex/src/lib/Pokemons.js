@@ -2,7 +2,7 @@ import React from 'react';
 import DetallePokemon from './DetallePokemon';
 import Pokemon from './Pokemon'
 
-class Pokemons extends React.Component {
+export default class Pokemons extends React.Component {
 
     constructor(props) {
 
@@ -20,12 +20,17 @@ class Pokemons extends React.Component {
 
     }
 
+    cierreVentana = () =>{
+
+       this.setState({mostrarDetalle : false})
+    }
+
     render() {
 
         if (this.state.mostrarDetalle) {
 
             return (
-                <div className="contenedorDetalle">
+                <div className="contenedorDetalle" onClick={this.cierreVentana}>
                 <DetallePokemon detallesPokemon={this.state.pokemonDetalle} />
                 </div>
             );
@@ -45,6 +50,3 @@ class Pokemons extends React.Component {
     }
 }
 
-
-
-export default Pokemons;
