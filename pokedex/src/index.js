@@ -27,37 +27,37 @@ class Pokedex extends React.Component {
         let middleHeight = this.heightDisplay();
         let middleWidth = this.widthDisplay();
 
-        return{
-            top:  middleHeight,
-            left:  middleWidth,
-            visibility : this.state.buscando ? 'visible' : 'hidden'
+        return {
+            top: middleHeight,
+            left: middleWidth,
+            visibility: this.state.buscando ? 'visible' : 'hidden'
         }
-       
+
     }
 
-    widthDisplay = () =>{
+    widthDisplay = () => {
 
         let anchura = 375;
 
-        let x=parseInt((window.screen.width/2)-(anchura/2));
+        let x = parseInt((window.screen.width / 2) - (anchura / 2));
 
-        return x; 
+        return x;
     }
 
-    heightDisplay = () =>{
+    heightDisplay = () => {
 
         let altura = 387;
 
-        let y=parseInt((window.screen.height/2)-(altura/2));
+        let y = parseInt((window.screen.height / 2) - (altura / 2));
 
         return y;
     }
 
-    mensajeError(){
+    mensajeError() {
 
-        return{
+        return {
 
-            visibility : this.state.mensajeError ? 'visible' : 'hidden'
+            visibility: this.state.mensajeError ? 'visible' : 'hidden'
         }
     }
 
@@ -71,7 +71,6 @@ class Pokedex extends React.Component {
 
     }
 
-  
     buscarPokemon = (nombrePokemon) => {
 
         //lista las opciones tecleadas en el input
@@ -80,85 +79,90 @@ class Pokedex extends React.Component {
         let listaPokemons = [];
 
         this.setState({ buscando: true })
-       
+
         this.state.busqueda.results.forEach(element => {
 
-            if (element.name.startsWith(nombrePokemon)) {
-               
-                busquedaPokemons.push(element);
-
-            } else {
+            if (element.name.startsWith(nombrePokemon)) busquedaPokemons.push(element);
+            else {
 
                 listaPokemons = [];
-                this.setState({ pokemons: listaPokemons});
-                
+                this.setState({ pokemons: listaPokemons });
+
             }
         });
 
-        if(busquedaPokemons.length == 0) this.setState({mensajeError : true})
-        else  this.setState({mensajeError : false})
+        /* MOSTRAR MENSAJE CUANDO NO EXISTE BUSQUEDA*/
+        if (busquedaPokemons.length === 0){
 
-        busquedaPokemons.forEach(element => {
-           
-            fetch(element.url)
-                .then(response => response.json())
-                .then(element => {
-                    let pokemon;
-                
-                    if (element.sprites.front_default != null && element.name != null && element.abilities.length === 3) {
+            this.setState({ mensajeError: true }) ;
+            console.log('0')
+        } 
+        else this.setState({ mensajeError: false })
 
-                        pokemon = {
+        if (nombrePokemon === '') {
 
-                            name: element.name,
-                            sprite: element.sprites.front_default,
-                            url: element.species.url,
-                            abilities: [
-                            {
-                                name:element.abilities[0].ability.name,
-                                url:element.abilities[0].ability.url
-                            },
+            listaPokemons = [];
+            this.setState({ pokemons: listaPokemons, buscando: false });
+            
 
-                            {
-                                name:element.abilities[1].ability.name,
-                                url:element.abilities[1].ability.url
-                            },
+        } else {
+            busquedaPokemons.forEach(element => {
 
-                            {
-                                name:element.abilities[2].ability.name,
-                                url:element.abilities[2].ability.url
+                fetch(element.url)
+                    .then(response => response.json())
+                    .then(element => {
+                        let pokemon;
+
+                        if (element.sprites.front_default != null && element.name != null && element.abilities.length === 3) {
+
+                            pokemon = {
+
+                                name: element.name,
+                                sprite: element.sprites.front_default,
+                                url: element.species.url,
+                                abilities: [
+                                    {
+                                        name: element.abilities[0].ability.name,
+                                        url: element.abilities[0].ability.url
+                                    },
+
+                                    {
+                                        name: element.abilities[1].ability.name,
+                                        url: element.abilities[1].ability.url
+                                    },
+
+                                    {
+                                        name: element.abilities[2].ability.name,
+                                        url: element.abilities[2].ability.url
+                                    }
+
+                                ]
                             }
 
-                            ]
+                            listaPokemons.push(pokemon);
+
                         }
 
-                        listaPokemons.push(pokemon);
-                        this.setState({ pokemons: listaPokemons });
-                       
-                    }
 
-                    if (nombrePokemon === '') {
+                    })
+            })
 
-                        listaPokemons = [];
-                        this.setState({ pokemons: listaPokemons });
-                        this.setState({ buscando: false })
-                    }
+            setTimeout(this.temporizador = () => {
+                this.setState({ buscando: false })
+            }, 500);
 
-                //   setTimeout(this.temporizador = () =>{
-                //     this.setState({ buscando: false })
-                //   },4000);
+            this.setState({ pokemons: listaPokemons });
 
-                })
-        })
-        
+        }
     }
-  
+
     render() {
 
         return (
             <div className="Pokedex">
-                {<Header url={logo}/>}
+                {<Header url={logo} />}
                 {<EntradaTexto onKeyUp={this.buscarPokemon} />}
-                <p  style={this.mensajeError()} id="mensajeError">Pokemon no localizado. Has de buscarlo introduciendo su nombre exacto</p>
+                <p style={this.mensajeError()} id="mensajeError">Pokemon no localizado. Has de buscarlo introduciendo su nombre exacto</p>
                 {<Pokemons pokemons={this.state.pokemons} />}
                 <div id="circleProgress" style={this.loadState()}>
                     <img src={pikachu}></img>
