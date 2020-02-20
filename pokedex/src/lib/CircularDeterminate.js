@@ -16,8 +16,8 @@ export default function CircularIndeterminate() {
 
   return (
     <div className={classes.root}>
-      <CircularProgress color="
-      inherit" />
+      <p>Cargando...</p>
+      <CircularProgress color="inherit" />
     </div>
   );
 }

@@ -5,8 +5,8 @@ import EntradaTexto from './lib/EntradaTexto.js';
 import Pokemons from './lib/Pokemons.js';
 import Header from './lib/Header'
 import logo from './assets/img/logo.png'
-
-
+import CircularDeterminate from './lib/CircularDeterminate'
+import pikachu from './assets/img/pikachu.gif'
 
 class Pokedex extends React.Component {
 
@@ -24,11 +24,33 @@ class Pokedex extends React.Component {
 
     loadState() {
 
-        return{
+        let middleHeight = this.heightDisplay();
+        let middleWidth = this.widthDisplay();
 
+        return{
+            top:  middleHeight,
+            left:  middleWidth,
             visibility : this.state.buscando ? 'visible' : 'hidden'
         }
        
+    }
+
+    widthDisplay = () =>{
+
+        let anchura = 375;
+
+        let x=parseInt((window.screen.width/2)-(anchura/2));
+
+        return x; 
+    }
+
+    heightDisplay = () =>{
+
+        let altura = 387;
+
+        let y=parseInt((window.screen.height/2)-(altura/2));
+
+        return y;
     }
 
     mensajeError(){
@@ -121,9 +143,9 @@ class Pokedex extends React.Component {
                         this.setState({ buscando: false })
                     }
 
-                  setTimeout(this.temporizador = () =>{
-                    this.setState({ buscando: false })
-                  },1200);
+                //   setTimeout(this.temporizador = () =>{
+                //     this.setState({ buscando: false })
+                //   },4000);
 
                 })
         })
@@ -138,6 +160,10 @@ class Pokedex extends React.Component {
                 {<EntradaTexto onKeyUp={this.buscarPokemon} />}
                 <p  style={this.mensajeError()} id="mensajeError">Pokemon no localizado. Has de buscarlo introduciendo su nombre exacto</p>
                 {<Pokemons pokemons={this.state.pokemons} />}
+                <div id="circleProgress" style={this.loadState()}>
+                    <img src={pikachu}></img>
+                    <CircularDeterminate />
+                </div>
             </div>
         );
     }

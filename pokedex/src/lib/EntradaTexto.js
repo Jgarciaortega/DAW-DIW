@@ -1,40 +1,23 @@
 import React from 'react';
-import CircularDeterminate from './CircularDeterminate'
-
-class EntradaTexto extends React.Component {
 
 
-    handleKeyPress = (e) => {
-        let value = e.target.value;
-        this.props.onKeyUp(value);
+export default class EntradaTexto extends React.Component {
 
-    }
 
-    progress = () => {
+        handleKeyPress = (e) => {
+            let value = e.target.value;
+            this.props.onKeyUp(value);
 
-        // setTimeout(this.temporizador = () => {
-        //     this.setState({ buscando: false })
-        // }, 1200);
-
-        return {
-
-            // visibility: this.state.buscando ? 'visible' : 'hidden'
-            visibility: 'visible'
         }
 
-    }
+        render() {
 
-    render() {
-
-        return (
-            <div id="form">
-                <input onKeyUp={this.handleKeyPress} type="text" placeholder="Introduce pokemon..." ></input>
-                <div id="circleProgress" style={this.progress()}>
-                    {<CircularDeterminate />}
+            return (
+                <div id="form">
+                    <input onKeyUp={this.handleKeyPress} type="text" placeholder="Introduce pokemon..." ></input>
                 </div>
-            </div>
-        );
+            );
+        }
     }
-}
 
-export default EntradaTexto;
+    
